@@ -1,4 +1,4 @@
-package com.example.foodity.ui.notifications
+package com.example.foodity.ui.tools
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.foodity.R
 
-class NotificationsFragment : Fragment() {
+class ToolsFragment : Fragment() {
 
-    private lateinit var notificationsViewModel: NotificationsViewModel
+    private lateinit var toolsViewModel: ToolsViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        notificationsViewModel =
-                ViewModelProviders.of(this).get(NotificationsViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_notifications, container, false)
+        toolsViewModel =
+                ViewModelProviders.of(this).get(ToolsViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_tools, container, false)
         val textView: TextView = root.findViewById(R.id.text_notifications)
-        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
+        toolsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

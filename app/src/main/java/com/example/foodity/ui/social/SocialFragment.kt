@@ -1,4 +1,4 @@
-package com.example.foodity.ui.dashboard
+package com.example.foodity.ui.social
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,23 +7,23 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.example.foodity.R
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class DashboardFragment : Fragment() {
+@AndroidEntryPoint
+class SocialFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
+    @Inject lateinit var socialViewModel: SocialViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel =
-                ViewModelProviders.of(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        val root = inflater.inflate(R.layout.fragment_social, container, false)
         val textView: TextView = root.findViewById(R.id.text_dashboard)
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
+        socialViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

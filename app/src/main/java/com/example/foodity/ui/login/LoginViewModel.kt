@@ -8,9 +8,12 @@ import com.example.foodity.data.LoginRepository
 import com.example.foodity.data.Result
 
 import com.example.foodity.R
+import javax.inject.Inject
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
-
+class LoginViewModel @Inject constructor (
+    private val loginRepository: LoginRepository
+) : ViewModel()
+{
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
 

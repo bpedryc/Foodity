@@ -3,7 +3,6 @@ package com.example.foodity.ui.login
 import android.app.Activity
 import android.content.Intent
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -11,38 +10,34 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.Button
 import android.widget.EditText
-import android.widget.ProgressBar
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProviders
 import com.example.foodity.MainActivity
 
 import com.example.foodity.R
-import kotlinx.android.synthetic.main.activity_login.*
+import com.example.foodity.databinding.ActivityLoginBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var loginViewModel: LoginViewModel
+    @Inject lateinit var loginViewModel: LoginViewModel
+    private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setContentView(R.layout.activity_login)
-
-        //val username = findViewById<EditText>(R.id.username)
-        //val password = findViewById<EditText>(R.id.password)
-        //val login = findViewById<Button>(R.id.loginButton)
-        //val loading = findViewById<ProgressBar>(R.id.loading)
-
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
-            .get(LoginViewModel::class.java)
+        val username = binding.username
+        val password = binding.password
+//        loginViewModel = ViewModelProvider(this, LoginViewModelFactory()).get(LoginViewModel::class.java)
 
         loginViewModel.loginFormState.observe(this, Observer {
             val loginState = it ?: return@Observer
 
-            // disable login button unless both username / password is valid
-            loginButton.isEnabled = loginState.isDataValid
+            binding.loginButton.isEnabled = loginState.isDataValid
 
             if (loginState.usernameError != null) {
                 username.error = getString(loginState.usernameError)
@@ -55,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.loginResult.observe(this, Observer {
             val loginResult = it ?: return@Observer
 
-            loading.visibility = View.GONE
+            binding.loading.visibility = View.GONE
             if (loginResult.error != null) {
                 showLoginFailed(loginResult.error)
             }
@@ -95,8 +90,8 @@ class LoginActivity : AppCompatActivity() {
                 false
             }
 
-            loginButton.setOnClickListener {
-                loading.visibility = View.VISIBLE
+            binding.loginButton.setOnClickListener {
+                binding.loading.visibility = View.VISIBLE
                 loginViewModel.login(username.text.toString(), password.text.toString())
             }
         }
@@ -111,8 +106,7 @@ class LoginActivity : AppCompatActivity() {
             "$welcome $displayName",
             Toast.LENGTH_LONG
         ).show()*/
-        val mainActivity = Intent(this@LoginActivity, MainActivity::class.java)
-        startActivity(mainActivity)
+        startActivity(Intent(this, MainActivity::class.java))
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {

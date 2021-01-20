@@ -1,13 +1,14 @@
-package com.example.foodity.ui.home
+package com.example.foodity.ui.notes
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
+class NotesViewModel @Inject constructor(): ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+        value = "This is the Notes Fragment"
     }
     val text: LiveData<String> = _text
 }
