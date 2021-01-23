@@ -55,13 +55,9 @@ class LoginActivity : AppCompatActivity() {
                 showLoginFailed(loginResult.error)
             }
             if (loginResult.success != null) {
-                updateUiWithUser(loginResult.success)
+                startActivity(Intent(this, MainActivity::class.java))
             }
             setResult(Activity.RESULT_OK)
-
-            //Complete and destroy login activity once successful
-            //finish()
-
         })
 
         username.afterTextChanged {
@@ -95,18 +91,6 @@ class LoginActivity : AppCompatActivity() {
                 loginViewModel.login(username.text.toString(), password.text.toString())
             }
         }
-    }
-
-    private fun updateUiWithUser(model: LoggedInUserView) {
-        /*val welcome = getString(R.string.welcome)
-        val displayName = model.displayName
-        // TODO : initiate successful logged in experience
-        Toast.makeText(
-            applicationContext,
-            "$welcome $displayName",
-            Toast.LENGTH_LONG
-        ).show()*/
-        startActivity(Intent(this, MainActivity::class.java))
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {

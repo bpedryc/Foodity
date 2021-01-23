@@ -1,9 +1,7 @@
 package com.example.foodity.ui.social
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -28,4 +26,9 @@ class SocialFragment : Fragment() {
         })
         return root
     }
+
+   /* override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        *//*menu?.add(Menu.NONE, R.id.my_toolbar, 10, R.string.app_name)
+        return super.onCreateOptionsMenu(menu)*//*
+    }*/
 }
