@@ -19,7 +19,7 @@ class BootActivity : ComponentActivity()
 
         val username = "" //get from cache
         val password = "" //get from cache
-        //loginRepository.login(username, password)
+        loginRepository.login(username, password)
 
         if (loginRepository.isLoggedIn){
             startActivity(Intent(this, MainActivity::class.java))

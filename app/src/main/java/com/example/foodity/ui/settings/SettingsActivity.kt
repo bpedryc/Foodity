@@ -3,6 +3,7 @@ package com.example.foodity.ui.settings
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import com.example.foodity.R
 import com.example.foodity.ui.login.LoginActivity
@@ -14,10 +15,12 @@ class SettingsActivity : AppCompatActivity() {
 
         setSupportActionBar(findViewById(R.id.settings_activity_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
 
-        val logoutButton: Button = findViewById(R.id.button_logout)
-        logoutButton.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
-        }
+    fun logOut(view: View) {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
     }
 }
