@@ -26,7 +26,7 @@ class LoginViewModel @Inject constructor (
 
         if (result is Result.Success) {
             _loginResult.value =
-                LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
+                LoginResult(success = LoggedInUserView(displayName = result.data.username))
         } else {
             _loginResult.value = LoginResult(error = R.string.login_failed)
         }
