@@ -9,3 +9,4 @@ class FoodityServerApplication
 fun main(args: Array<String>) {
 	runApplication<FoodityServerApplication>(*args)
 }
+
