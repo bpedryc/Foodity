@@ -1,6 +1,16 @@
 package com.example.foodity.data
 
+import androidx.lifecycle.MutableLiveData
+import com.example.foodity.LoginCallback
+import com.example.foodity.R
+import com.example.foodity.UserService
 import com.example.foodity.data.model.User
+import com.example.foodity.ui.login.LoggedInUserView
+import com.example.foodity.ui.login.LoginResult
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.IOException
 import javax.inject.Inject
 
 /**
@@ -9,8 +19,9 @@ import javax.inject.Inject
  */
 
 class LoginRepository @Inject constructor(
-    val dataSource: LoginDataSource
+        private val userService : UserService
 ) {
+
     // in-memory cache of the loggedInUser object
     var user: User? = null
         private set
@@ -26,18 +37,29 @@ class LoginRepository @Inject constructor(
 
     fun logout() {
         user = null
-        dataSource.logout()
+//        dataSource.logout()
     }
 
-    fun login(username: String, password: String): Result<User> {
+    fun login(username: String, password: String, loginCallback: LoginCallback) {
+        userService.getUsersByUsername(username)
+                .enqueue(object : Callback<User> {
+                    override fun onResponse(call: Call<User>, response: Response<User>) {
+                        if (response.body()?.password == password) {
+                            loginCallback.onSuccess(response.body()!!)
+                        } else {
+                            loginCallback.onError(R.string.login_failed)
+                        }
+                    }
+                    override fun onFailure(call: Call<User>, t: Throwable) {
+                        loginCallback.onError(R.string.login_failed)
+                    }
+                })
         // handle login
-        val result = dataSource.login(username, password)
+//        val result = dataSource.login(username, password)
 
-        if (result is Result.Success) {
+        /*if (result is Result.Success) {
             setLoggedInUser(result.data)
-        }
-
-        return result
+        }*/
     }
 
     private fun setLoggedInUser(user: User) {

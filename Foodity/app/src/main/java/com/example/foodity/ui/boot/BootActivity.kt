@@ -16,8 +16,8 @@ class BootActivity : ComponentActivity()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val username = "" //get from cache
+        startActivity(Intent(this, LoginActivity::class.java))
+/*        val username = "" //get from cache
         val password = "" //get from cache
         loginRepository.login(username, password)
 
@@ -25,6 +25,6 @@ class BootActivity : ComponentActivity()
             startActivity(Intent(this, MainActivity::class.java))
         } else {
             startActivity(Intent(this, LoginActivity::class.java))
-        }
+        }*/
     }
 }
