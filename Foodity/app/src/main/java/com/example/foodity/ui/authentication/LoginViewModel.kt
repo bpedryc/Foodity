@@ -1,4 +1,4 @@
-package com.example.foodity.ui.login
+package com.example.foodity.ui.authentication
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,13 +7,8 @@ import android.util.Patterns
 import com.example.foodity.LoginCallback
 
 import com.example.foodity.R
-import com.example.foodity.ServiceBuilder
-import com.example.foodity.UserService
 import com.example.foodity.data.LoginRepository
 import com.example.foodity.data.model.User
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor (

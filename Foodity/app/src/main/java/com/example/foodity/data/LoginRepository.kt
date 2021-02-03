@@ -1,16 +1,12 @@
 package com.example.foodity.data
 
-import androidx.lifecycle.MutableLiveData
 import com.example.foodity.LoginCallback
 import com.example.foodity.R
 import com.example.foodity.UserService
 import com.example.foodity.data.model.User
-import com.example.foodity.ui.login.LoggedInUserView
-import com.example.foodity.ui.login.LoginResult
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.IOException
 import javax.inject.Inject
 
 /**

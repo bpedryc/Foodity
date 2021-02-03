@@ -1,4 +1,4 @@
-package com.example.foodity.ui.login
+package com.example.foodity.ui.authentication
 
 /**
  * User details post authentication that is exposed to the UI

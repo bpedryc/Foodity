@@ -1,4 +1,4 @@
-package com.example.foodity.ui.login
+package com.example.foodity.ui.authentication
 
 /**
  * Data validation state of the login form.

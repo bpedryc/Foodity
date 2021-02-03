@@ -4,9 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import com.example.foodity.R
-import com.example.foodity.ui.login.LoginActivity
+import com.example.foodity.ui.authentication.AuthenticationActivity
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,7 +17,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     fun logOut(view: View) {
-        val intent = Intent(this, LoginActivity::class.java)
+        val intent = Intent(this, AuthenticationActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()

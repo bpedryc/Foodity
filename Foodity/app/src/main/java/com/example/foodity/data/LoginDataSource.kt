@@ -1,9 +1,5 @@
 package com.example.foodity.data
 
-import com.example.foodity.ServiceBuilder
-import com.example.foodity.UserService
-import com.example.foodity.data.model.User
-import java.io.IOException
 import javax.inject.Inject
 
 /**
@@ -11,7 +7,7 @@ import javax.inject.Inject
  */
 class LoginDataSource @Inject constructor() {
 
-    fun login(username: String, password: String): Result<User> {
+   /* fun login(username: String, password: String): Result<User> {
         try {
             val request = ServiceBuilder().buildService(UserService::class.java)
             val call = request.getUsersByUsername(username)
@@ -20,7 +16,7 @@ class LoginDataSource @Inject constructor() {
                 Result.Success(user)
             }
             return Result.Error(Exception("Wrong credentials"))
-            /*call.enqueue(object : Callback<User> {
+            *//*call.enqueue(object : Callback<User> {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     if (!response.isSuccessful) return
                     val user: User? = response.body()
@@ -31,11 +27,11 @@ class LoginDataSource @Inject constructor() {
                 override fun onFailure(call: Call<User>, t: Throwable) {
                     return
                 }
-            })*/
+            })*//*
         } catch (e: Throwable) {
             return Result.Error(IOException("Error logging in", e))
         }
-    }
+    }*/
 
     fun logout() {
         // TODO: revoke authentication

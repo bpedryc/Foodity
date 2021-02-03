@@ -25,7 +25,8 @@
         </activity>
 
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name=".ui.authentication.AuthenticationActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:noHistory="true">
         </activity>
 

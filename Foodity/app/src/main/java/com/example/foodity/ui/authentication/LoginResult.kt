@@ -1,4 +1,4 @@
-package com.example.foodity.ui.login
+package com.example.foodity.ui.authentication
 
 /**
  * Authentication result : success (user details) or error message.
