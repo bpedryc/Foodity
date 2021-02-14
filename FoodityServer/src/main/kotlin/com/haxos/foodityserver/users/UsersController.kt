@@ -1,4 +1,4 @@
-package com.haxos.foodityserver
+package com.haxos.foodityserver.users
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
@@ -21,5 +21,4 @@ class UsersController (
     fun getByUsername(@RequestParam username: String): User {
         return repository.findByUsername(username)
     }
-
 }

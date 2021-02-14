@@ -1,5 +1,6 @@
-package com.haxos.foodityserver
+package com.haxos.foodityserver.users
 
+import com.haxos.foodityserver.JPAPersistable
 import javax.persistence.Entity
 
 @Entity
