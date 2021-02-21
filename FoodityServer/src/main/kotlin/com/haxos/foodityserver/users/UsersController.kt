@@ -1,11 +1,14 @@
-package com.haxos.foodityserver
+package com.haxos.foodityserver.users
 
-import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.lang.RuntimeException
+import java.net.URI
 
 @RestController
 class UsersController (
-    @Autowired val repository: UserRepository
+    val service: UserService,
+    val repository: UserRepository
 ){
     @RequestMapping("/users", method = [RequestMethod.GET])
     fun getAll(): MutableList<User> {
@@ -22,4 +25,12 @@ class UsersController (
         return repository.findByUsername(username)
     }
 
+    @RequestMapping(value = ["/users"], method = [RequestMethod.POST])
+    fun createUser(@RequestBody user: UserRequest): ResponseEntity<URI>{
+        val response = service.createUser(user)
+        if (response.status != 201) {
+            throw RuntimeException("Error creating user")
+        }
+        return ResponseEntity.created(response.location).build()
+    }
 }

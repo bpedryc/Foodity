@@ -33,8 +33,9 @@ dependencies {
 	implementation("org.hibernate:hibernate-core:5.4.27.Final")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	annotationProcessor("android.arch.persistence.room:compiler:1.1.1")
-	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server:2.4.2")
-
+	implementation("org.springframework.boot:spring-boot-starter-webflux:2.4.2")
+	implementation("org.keycloak:keycloak-spring-boot-starter:11.0.3")
+	implementation("org.keycloak:keycloak-admin-client:11.0.3")
 }
 
 tasks.withType<KotlinCompile> {
