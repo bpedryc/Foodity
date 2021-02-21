@@ -1,0 +1,7 @@
+<account-authenticator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accountType="com.haxos.foodity"
+    android:icon="@drawable/foodity_logo"
+    android:smallIcon="@drawable/foodity_logo"
+    android:label="@string/app_name"
+    android:accountPreferences="@xml/account_preferences"
+    />
