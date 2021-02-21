@@ -20,6 +20,7 @@ import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
 import com.haxos.foodity.MainActivity
 import com.haxos.foodity.databinding.FragmentLoginBinding
+import com.haxos.foodity.ui.boot.BootActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.Executors
 import javax.inject.Inject
@@ -29,12 +30,6 @@ class LoginFragment : Fragment() {
 
     @Inject lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: FragmentLoginBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-//        loginViewModel = ViewModelProvider(this, LoginViewModelFactory()).get(LoginViewModel::class.java)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -63,17 +58,11 @@ class LoginFragment : Fragment() {
                 showLoginFailed(loginResult.error)
             }
             if (loginResult.success != null) {
-
-
-
-
-
-
                 val accountManager: AccountManager = AccountManager.get(activity)
                 Account(username.text.toString(), "com.haxos.foodity").also { account ->
                     accountManager.addAccountExplicitly(account, password.text.toString(), null)
                 }
-                startActivity(Intent(activity, MainActivity::class.java))
+                startActivity(Intent(activity, BootActivity::class.java))
             }
             activity?.setResult(Activity.RESULT_OK)
         })

@@ -9,9 +9,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import com.haxos.foodity.data.model.Token
 import com.haxos.foodity.ui.authentication.AuthenticationActivity
+import retrofit2.Call
+import retrofit2.Response
+import retrofit2.Callback
 
-class AccountAuthenticator(val context: Context?) : AbstractAccountAuthenticator(context) {
+class AccountAuthenticator(
+        val context: Context,
+        private val authService: AuthService
+) : AbstractAccountAuthenticator(context) {
+
     override fun addAccount(response: AccountAuthenticatorResponse?, accountType: String?, authTokenType: String?, requiredFeatures: Array<out String>?, options: Bundle?): Bundle {
         val intent = Intent(context, AuthenticationActivity::class.java)
         /*intent.putExtra(AuthenticatorActivity.ARG_ACCOUNT_TYPE, accountType);
@@ -26,12 +34,12 @@ class AccountAuthenticator(val context: Context?) : AbstractAccountAuthenticator
 
     override fun getAuthToken(response: AccountAuthenticatorResponse?, account: Account, authTokenType: String?, options: Bundle?): Bundle {
         val accountManager = AccountManager.get(context)
-        val authToken: String = accountManager.peekAuthToken(account, authTokenType)
+        var authToken: String? = accountManager.peekAuthToken(account, authTokenType)
 
         if (TextUtils.isEmpty(authToken)) {
             val password = accountManager.getPassword(account)
             if (password != null) {
-                //zaloguj przez webserwis
+                authToken = authService.getToken(account.name, password).execute().body()?.accessToken
             }
         }
 

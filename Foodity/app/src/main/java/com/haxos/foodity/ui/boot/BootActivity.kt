@@ -1,5 +1,6 @@
 package com.haxos.foodity.ui.boot
 
+import android.accounts.Account
 import android.accounts.AccountManager
 import android.accounts.AccountManagerCallback
 import android.accounts.AccountManagerFuture
@@ -16,23 +17,31 @@ import javax.inject.Inject
 class BootActivity : ComponentActivity()
 {
     @Inject lateinit var loginRepository: LoginRepository
+    private lateinit var accountManager: AccountManager
+
+    private val userAccount : Account?
+        get() {
+            val accounts = accountManager.getAccountsByType("com.haxos.foodity")
+            if (accounts.isNotEmpty()) {
+                return accounts[0]
+            }
+            return null
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val accountManager = AccountManager.get(this)
-        val options = Bundle()
+        accountManager = AccountManager.get(this)
 
-        val accounts = accountManager.getAccountsByType("com.haxos.foodity")
-        if (accounts.isEmpty()){
+        if (userAccount == null){
             startActivity(Intent(this, AuthenticationActivity::class.java))
             return
         }
 
         accountManager.getAuthToken(
-            accounts[0],
+            userAccount,
             "USER_ACCESS",
-            options,
+            Bundle(),
             this,
             OnTokenAcquired(),
             null
@@ -46,6 +55,7 @@ class BootActivity : ComponentActivity()
             if (token == null){
                 startActivity(Intent(this@BootActivity, AuthenticationActivity::class.java))
             }
+            loginRepository.login(userAccount!!.name, accountManager.getPassword(userAccount), null)
             startActivity(Intent(this@BootActivity, MainActivity::class.java))
         }
     }
