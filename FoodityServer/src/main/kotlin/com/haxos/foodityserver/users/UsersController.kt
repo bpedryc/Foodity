@@ -26,11 +26,12 @@ class UsersController (
     }
 
     @RequestMapping(value = ["/users"], method = [RequestMethod.POST])
-    fun createUser(@RequestBody user: UserRequest): ResponseEntity<URI>{
+    fun createUser(@RequestBody user: UserRequest): UserRequest {
         val response = service.createUser(user)
         if (response.status != 201) {
             throw RuntimeException("Error creating user")
         }
-        return ResponseEntity.created(response.location).build()
+        return user
+        //return ResponseEntity.created(response.location).build()
     }
 }
