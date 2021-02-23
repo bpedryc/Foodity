@@ -5,54 +5,50 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.haxos.foodity.R
+import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.lifecycle.Observer
+import com.haxos.foodity.data.GeneralCallback
+import com.haxos.foodity.databinding.FragmentRegisterBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RegisterFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+@AndroidEntryPoint
 class RegisterFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    @Inject lateinit var registerViewModel: RegisterViewModel
+    private lateinit var binding: FragmentRegisterBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false)
+                              savedInstanceState: Bundle?): View {
+        binding = FragmentRegisterBinding.inflate(layoutInflater)
+
+        val username = binding.username
+        val password = binding.password
+
+        registerViewModel.registerResult.observe(viewLifecycleOwner, Observer {
+            val registerResult = it ?: return@Observer
+
+            binding.loading.visibility = View.GONE
+
+            if (registerResult.error != null) {
+                showMessage(registerResult.error)
+            }
+            if (registerResult.success != null) {
+                showMessage(registerResult.success)
+                binding.backButton.callOnClick()
+            }
+        })
+
+        binding.registerButton.setOnClickListener {
+            binding.loading.visibility = View.VISIBLE
+            registerViewModel.register(username.text.toString(), password.text.toString())
+        }
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RegisterFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                RegisterFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
+    private fun showMessage(@StringRes errorString: Int) {
+        Toast.makeText(activity?.applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }
 }

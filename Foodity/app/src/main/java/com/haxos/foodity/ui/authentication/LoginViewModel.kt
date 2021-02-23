@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
-import com.haxos.foodity.LoginCallback
+import com.haxos.foodity.data.LoginCallback
 
 import com.haxos.foodity.R
 import com.haxos.foodity.data.LoginRepository

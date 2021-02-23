@@ -29,8 +29,10 @@ class SettingsActivity : AppCompatActivity() {
         val loggedOutUser = loginRepository.logout()
         val accountManager = AccountManager.get(this)
 
-        Account(loggedOutUser?.username, "com.haxos.foodity").also { account ->
-            accountManager.removeAccount(account, this, null, null)
+        if (loggedOutUser != null) {
+            Account(loggedOutUser.username, "com.haxos.foodity").also { account ->
+                accountManager.removeAccount(account, this, null, null)
+            }
         }
 
         val intent = Intent(this, AuthenticationActivity::class.java)

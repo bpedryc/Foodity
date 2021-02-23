@@ -32,7 +32,7 @@ class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = FragmentLoginBinding.inflate(layoutInflater)
         val username = binding.username
         val password = binding.password
@@ -59,6 +59,7 @@ class LoginFragment : Fragment() {
             }
             if (loginResult.success != null) {
                 val accountManager: AccountManager = AccountManager.get(activity)
+                //TODO: Delete existing accounts
                 Account(username.text.toString(), "com.haxos.foodity").also { account ->
                     accountManager.addAccountExplicitly(account, password.text.toString(), null)
                 }
@@ -99,7 +100,6 @@ class LoginFragment : Fragment() {
             }
         }
         return binding.root
-        //return inflater.inflate(root, container, false)
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {

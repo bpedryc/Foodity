@@ -1,7 +1,5 @@
 package com.haxos.foodity.data
 
-import android.accounts.Account
-import android.accounts.AccountManager
 import com.haxos.foodity.*
 import com.haxos.foodity.data.model.Token
 import com.haxos.foodity.data.model.User

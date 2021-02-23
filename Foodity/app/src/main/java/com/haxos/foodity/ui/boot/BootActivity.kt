@@ -4,11 +4,14 @@ import android.accounts.Account
 import android.accounts.AccountManager
 import android.accounts.AccountManagerCallback
 import android.accounts.AccountManagerFuture
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import com.haxos.foodity.data.LoginCallback
 import com.haxos.foodity.MainActivity
 import com.haxos.foodity.data.LoginRepository
+import com.haxos.foodity.data.model.User
 import com.haxos.foodity.ui.authentication.AuthenticationActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -54,9 +57,24 @@ class BootActivity : ComponentActivity()
             val token: String? = bundle.getString(AccountManager.KEY_AUTHTOKEN)
             if (token == null){
                 startActivity(Intent(this@BootActivity, AuthenticationActivity::class.java))
+                return
             }
-            loginRepository.login(userAccount!!.name, accountManager.getPassword(userAccount), null)
-            startActivity(Intent(this@BootActivity, MainActivity::class.java))
+            loginRepository.login(userAccount!!.name, accountManager.getPassword(userAccount),
+            object : LoginCallback {
+                override fun onSuccess(user: User) {
+                    startActivity(Intent(this@BootActivity, MainActivity::class.java))
+                }
+                override fun onError(error: Int) {
+                    val dialog = AlertDialog.Builder(this@BootActivity)
+                            .setTitle("Warning")
+                            .setMessage("This app requires an active internet connection")
+                            .setPositiveButton(android.R.string.yes) { _, _ ->
+                                finish()
+                            }
+                            .show()
+                }
+            })
+
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.haxos.foodity
+package com.haxos.foodity.data
 
 import com.haxos.foodity.data.model.User
 
