@@ -1,31 +1,47 @@
 package com.haxos.foodity.ui.tools
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.haxos.foodity.R
+import com.haxos.foodity.databinding.FragmentRegisterBinding
+import com.haxos.foodity.databinding.FragmentToolsBinding
+import com.haxos.foodity.ui.settings.SettingsActivity
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ToolsFragment : Fragment() {
 
-    private lateinit var toolsViewModel: ToolsViewModel
+    @Inject lateinit var toolsViewModel: ToolsViewModel
+    private lateinit var binding: FragmentToolsBinding
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
-        toolsViewModel =
-                ViewModelProviders.of(this).get(ToolsViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_tools, container, false)
-        val textView: TextView = root.findViewById(R.id.text_notifications)
+    ): View {
+        binding = FragmentToolsBinding.inflate(inflater)
+
+        val toolbar: Toolbar = binding.toolbarFragmentTools
+        toolbar.title = "Tools"
+        toolbar.setNavigationOnClickListener {
+            startActivity(Intent(activity, SettingsActivity::class.java))
+        }
+
+        val textView: TextView = binding.textNotifications
         toolsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
-        return root
+
+        return binding.root
     }
 }

@@ -1,11 +1,16 @@
 package com.haxos.foodity.ui.social
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.haxos.foodity.R
+import com.haxos.foodity.databinding.FragmentSocialBinding
+import com.haxos.foodity.ui.settings.SettingsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -13,18 +18,26 @@ import javax.inject.Inject
 class SocialFragment : Fragment() {
 
     @Inject lateinit var socialViewModel: SocialViewModel
+    private lateinit var binding: FragmentSocialBinding
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
-        val root = inflater.inflate(R.layout.fragment_social, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
+    ): View {
+        binding = FragmentSocialBinding.inflate(inflater)
+
+        val toolbar: Toolbar = binding.toolbarActivityMain
+        toolbar.setNavigationOnClickListener {
+            startActivity(Intent(activity, SettingsActivity::class.java))
+        }
+
+        val textView: TextView = binding.textDashboard
         socialViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
-        return root
+
+        return binding.root
     }
 
    /* override fun onCreateOptionsMenu(menu: Menu?): Boolean {

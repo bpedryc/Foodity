@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.tools.ToolsFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_fragment_tools"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="4dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_settings"
+        app:contentInsetStartWithNavigation="50dp"
+        app:contentInsetEnd="50dp"
+        android:background="@color/white" />
+
     <TextView
         android:id="@+id/text_notifications"
         android:layout_width="match_parent"

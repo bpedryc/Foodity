@@ -1,10 +1,8 @@
 package com.haxos.foodity.ui.authentication
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
@@ -21,7 +19,7 @@ class RegisterFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        binding = FragmentRegisterBinding.inflate(layoutInflater)
+        binding = FragmentRegisterBinding.inflate(inflater)
 
         val username = binding.username
         val password = binding.password

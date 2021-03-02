@@ -17,7 +17,8 @@
         android:usesCleartextTraffic="true">
         <meta-data
             android:name="com.google.android.actions"
-            android:resource="@xml/authenticator" />
+            android:resource="@xml/authenticator"
+        />
 
         <service
             android:name=".AuthenticationService"
@@ -26,10 +27,10 @@
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
-
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator" />
+                android:resource="@xml/authenticator"
+            />
         </service>
 
         <activity
@@ -37,17 +38,25 @@
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.authentication.AuthenticationActivity"
             android:noHistory="true"
             android:windowSoftInputMode="adjustNothing" />
+
         <activity
             android:name=".MainActivity"
-            android:label="" />
+            android:label="">
+        <intent-filter>
+            <action android:name="android.intent.action.SEARCH" />
+        </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                       android:resource="@xml/searchable" />
+        </activity>
+
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:label="Settings"

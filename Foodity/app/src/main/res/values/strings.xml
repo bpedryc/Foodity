@@ -19,4 +19,5 @@
     <string name="action_back">Back</string>
     <string name="register_failed">Failed to register</string>
     <string name="register_success">Registration successful</string>
+    <string name="notebook_search_title">Search for entries</string>
 </resources>
