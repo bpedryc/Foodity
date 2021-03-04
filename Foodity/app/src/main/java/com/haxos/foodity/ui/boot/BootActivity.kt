@@ -9,12 +9,12 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import com.haxos.foodity.data.LoginCallback
-import com.haxos.foodity.MainActivity
 import com.haxos.foodity.data.LoginRepository
 import com.haxos.foodity.data.model.User
 import com.haxos.foodity.ui.authentication.AuthenticationActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import com.haxos.foodity.ui.main.MainActivity
 
 @AndroidEntryPoint
 class BootActivity : ComponentActivity()

@@ -7,18 +7,18 @@
 
     <fragment
         android:id="@+id/navigation_notes"
-        android:name="com.haxos.foodity.ui.notes.NotesFragment"
+        android:name="com.haxos.foodity.ui.main.notes.NotesFragment"
         tools:layout="@layout/fragment_notes" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.haxos.foodity.ui.social.SocialFragment"
+        android:name="com.haxos.foodity.ui.main.social.SocialFragment"
         android:label="@string/title_social"
         tools:layout="@layout/fragment_social" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.haxos.foodity.ui.tools.ToolsFragment"
+        android:name="com.haxos.foodity.ui.main.tools.ToolsFragment"
         android:label="@string/title_tools"
         tools:layout="@layout/fragment_tools" />
 </navigation>

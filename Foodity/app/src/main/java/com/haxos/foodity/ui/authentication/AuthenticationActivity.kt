@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.haxos.foodity.R
-import com.haxos.foodity.UserService
+import com.haxos.foodity.retrofit.UserService
 import com.haxos.foodity.data.model.KeycloakUser
 import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call

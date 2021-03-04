@@ -1,7 +1,5 @@
-package com.haxos.foodity
+package com.haxos.foodity.retrofit
 
-import com.google.gson.FieldNamingPolicy
-import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,7 +7,6 @@ import dagger.hilt.android.components.ApplicationComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Qualifier
 import javax.inject.Singleton
 
 /*@Qualifier

@@ -21,7 +21,7 @@
         />
 
         <service
-            android:name=".AuthenticationService"
+            android:name=".services.AuthenticationService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -48,7 +48,7 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.main.MainActivity"
             android:label="">
         <intent-filter>
             <action android:name="android.intent.action.SEARCH" />
@@ -60,10 +60,10 @@
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:label="Settings"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".ui.main.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.haxos.foodity.MainActivity" />
+                android:value="com.haxos.foodity.ui.main.MainActivity" />
         </activity>
     </application>
 

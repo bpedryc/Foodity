@@ -1,4 +1,4 @@
-package com.haxos.foodity
+package com.haxos.foodity.retrofit
 
 import com.haxos.foodity.data.model.Token
 import retrofit2.Call

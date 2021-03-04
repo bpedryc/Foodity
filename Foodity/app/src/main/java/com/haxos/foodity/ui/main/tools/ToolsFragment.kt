@@ -1,4 +1,4 @@
-package com.haxos.foodity.ui.tools
+package com.haxos.foodity.ui.main.tools
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,13 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import com.haxos.foodity.R
-import com.haxos.foodity.databinding.FragmentRegisterBinding
 import com.haxos.foodity.databinding.FragmentToolsBinding
 import com.haxos.foodity.ui.settings.SettingsActivity
 import dagger.hilt.android.AndroidEntryPoint

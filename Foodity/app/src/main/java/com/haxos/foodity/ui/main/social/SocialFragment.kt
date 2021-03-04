@@ -1,14 +1,12 @@
-package com.haxos.foodity.ui.social
+package com.haxos.foodity.ui.main.social
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.haxos.foodity.R
 import com.haxos.foodity.databinding.FragmentSocialBinding
 import com.haxos.foodity.ui.settings.SettingsActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,8 +26,7 @@ class SocialFragment : Fragment() {
         binding = FragmentSocialBinding.inflate(inflater)
 
         val toolbar: Toolbar = binding.toolbarActivityMain
-        toolbar.setNavigationOnClickListener {
-            startActivity(Intent(activity, SettingsActivity::class.java))
+        toolbar.setNavigationOnClickListener {            startActivity(Intent(activity, SettingsActivity::class.java))
         }
 
         val textView: TextView = binding.textDashboard

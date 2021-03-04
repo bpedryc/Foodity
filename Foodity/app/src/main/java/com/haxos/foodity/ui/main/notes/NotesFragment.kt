@@ -1,17 +1,11 @@
-package com.haxos.foodity.ui.notes
+package com.haxos.foodity.ui.main.notes
 
-import android.app.ActionBar
-import android.app.SearchManager
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.SearchView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.haxos.foodity.R
@@ -48,6 +42,19 @@ class NotesFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.notes_menu, menu)
+
+
+        binding.mySearchView.setOnQueryTextListener(
+                object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextChange (newText: String): Boolean {
+                        return false
+                    }
+                    override fun onQueryTextSubmit(query: String): Boolean {
+                        return false
+                    }
+                }
+        )
+
         //val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         /*(menu.findItem(R.id.search).actionView as SearchView).apply {
             //setSearchableInfo(searchManager.getSearchableInfo(componentName))

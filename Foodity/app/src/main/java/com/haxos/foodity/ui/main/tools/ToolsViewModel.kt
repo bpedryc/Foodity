@@ -1,14 +1,14 @@
-package com.haxos.foodity.ui.notes
+package com.haxos.foodity.ui.main.tools
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import javax.inject.Inject
 
-class NotesViewModel @Inject constructor(): ViewModel() {
+class ToolsViewModel @Inject constructor(): ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is the Notes Fragment"
+        value = "This is the Tools Fragment"
     }
     val text: LiveData<String> = _text
 }

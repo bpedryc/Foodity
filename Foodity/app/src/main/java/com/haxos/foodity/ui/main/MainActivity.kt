@@ -1,14 +1,13 @@
-package com.haxos.foodity
+package com.haxos.foodity.ui.main
 
 import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.haxos.foodity.ui.settings.SettingsActivity
+import com.haxos.foodity.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

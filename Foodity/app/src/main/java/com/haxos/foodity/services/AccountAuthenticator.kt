@@ -1,4 +1,4 @@
-package com.haxos.foodity
+package com.haxos.foodity.services
 
 import android.accounts.AbstractAccountAuthenticator
 import android.accounts.Account
@@ -9,11 +9,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import com.haxos.foodity.data.model.Token
+import com.haxos.foodity.retrofit.AuthService
 import com.haxos.foodity.ui.authentication.AuthenticationActivity
-import retrofit2.Call
-import retrofit2.Response
-import retrofit2.Callback
 
 class AccountAuthenticator(
         val context: Context,

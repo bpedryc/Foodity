@@ -3,8 +3,7 @@ package com.haxos.foodity.ui.authentication
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.haxos.foodity.R
-import com.haxos.foodity.UserService
-import com.haxos.foodity.data.GeneralCallback
+import com.haxos.foodity.retrofit.UserService
 import com.haxos.foodity.data.model.KeycloakUser
 import retrofit2.Call
 import retrofit2.Callback

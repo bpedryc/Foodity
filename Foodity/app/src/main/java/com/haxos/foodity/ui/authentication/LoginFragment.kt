@@ -5,8 +5,6 @@ import android.accounts.AccountManager
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.fragment.app.Fragment
@@ -18,11 +16,9 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
-import com.haxos.foodity.MainActivity
 import com.haxos.foodity.databinding.FragmentLoginBinding
 import com.haxos.foodity.ui.boot.BootActivity
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.concurrent.Executors
 import javax.inject.Inject
 
 @AndroidEntryPoint
