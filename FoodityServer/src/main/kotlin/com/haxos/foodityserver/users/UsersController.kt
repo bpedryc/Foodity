@@ -1,29 +1,26 @@
 package com.haxos.foodityserver.users
 
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.lang.RuntimeException
-import java.net.URI
 
 @RestController
 class UsersController (
-    val service: UserService,
-    val repository: UserRepository
+        val service: UsersService,
 ){
-    @RequestMapping("/users", method = [RequestMethod.GET])
-    fun getAll(): MutableList<User> {
-        return repository.findAll()
+    /*@RequestMapping("/users", method = [RequestMethod.GET])
+    fun getAll(): MutableList<Profile> {
+        return service.findAll()
     }
 
     @RequestMapping(value = ["/users"], params = ["email"], method = [RequestMethod.GET])
-    fun getByEmail(@RequestParam email: String): User {
-        return repository.findByEmail(email)
+    fun getByEmail(@RequestParam email: String): Profile {
+        return service.findByEmail(email)
     }
 
     @RequestMapping(value = ["/users"], params = ["username"], method = [RequestMethod.GET])
-    fun getByUsername(@RequestParam username: String): User {
-        return repository.findByUsername(username)
-    }
+    fun getByUsername(@RequestParam username: String): Profile {
+        return service.findByUsername(username)
+    }*/
 
     @RequestMapping(value = ["/users"], method = [RequestMethod.POST])
     fun createUser(@RequestBody user: UserRequest): UserRequest {

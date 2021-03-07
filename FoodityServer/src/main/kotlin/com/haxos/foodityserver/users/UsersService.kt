@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 import javax.ws.rs.core.Response
 
 @Service
-class UserService (
+class UsersService (
     private val keycloak: Keycloak,
     @Value("\${keycloak.realm}") private val realm: String
 ){

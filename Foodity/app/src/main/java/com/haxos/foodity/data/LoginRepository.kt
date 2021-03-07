@@ -36,7 +36,7 @@ class LoginRepository @Inject constructor(
                 .enqueue(object : Callback<Token> {
                     override fun onResponse(call: Call<Token>, response: Response<Token>) {
                         if (response.body() != null){
-                            val user = User("0", username, "TEST", "TEST")
+                            val user = User(0, username, "TEST", "TEST")
                             loginCallback?.onSuccess(user)
                             setLoggedInUser(user)
                         } else {
