@@ -33,9 +33,12 @@ class SearchResultAdapter(
 
     override fun getItemCount(): Int = profileList.size
 
-    fun addProfiles(profiles: List<Profile>) {
+    fun setProfiles(profiles: List<Profile>) {
+        profileList.clear()
         profileList.addAll(profiles)
+        notifyDataSetChanged()
     }
+
 
 
     /*override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {

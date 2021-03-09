@@ -2,8 +2,11 @@ package com.haxos.foodity.ui.main.social
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.*
 import android.widget.TextView
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -37,10 +40,13 @@ class SocialFragment : Fragment() {
         usersRecyclerView.adapter = profilesAdapter
         socialViewModel.profileLiveData.observe(viewLifecycleOwner, Observer {
             it?.let {
-                profilesAdapter.addProfiles(it)
-                profilesAdapter.notifyDataSetChanged()
+                profilesAdapter.setProfiles(it)
             }
         })
+
+        val searchView = binding.mySearchView
+        searchView.setOnQueryTextListener(socialViewModel.searchListener)
+//        searchView.setOnCloseListener(socialViewModel.closeSearchListener)
 
         val toolbar: Toolbar = binding.toolbarActivityMain
         toolbar.setNavigationOnClickListener {
@@ -54,6 +60,7 @@ class SocialFragment : Fragment() {
 
         return binding.root
     }
+
 
    /* override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         *//*menu?.add(Menu.NONE, R.id.my_toolbar, 10, R.string.app_name)

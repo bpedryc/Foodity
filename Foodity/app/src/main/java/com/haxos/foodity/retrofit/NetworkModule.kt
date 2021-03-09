@@ -17,7 +17,7 @@ class NetworkModule {
     @Singleton
     fun provideResourceRetrofit(): Retrofit {
         return Retrofit.Builder()
-                .baseUrl("http://192.168.8.115:8080/")
+                .baseUrl("http://192.168.1.4:8080/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(OkHttpClient.Builder().build())
                 .build()
