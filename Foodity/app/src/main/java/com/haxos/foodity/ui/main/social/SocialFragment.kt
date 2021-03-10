@@ -33,25 +33,24 @@ class SocialFragment : Fragment() {
     ): View {
         binding = FragmentSocialBinding.inflate(inflater)
 
-        val usersRecyclerView: RecyclerView = binding.recyclerViewUsers
-        usersRecyclerView.layoutManager = LinearLayoutManager(context)
+        val toolbar: Toolbar = binding.toolbarActivityMain
+        toolbar.setNavigationOnClickListener {
+            startActivity(Intent(activity, SettingsActivity::class.java))
+        }
+
+        val searchView = binding.mySearchView
+        searchView.setOnQueryTextListener(socialViewModel.searchListener)
+
+        val profilesRecyclerView: RecyclerView = binding.recyclerViewUsers
+        profilesRecyclerView.layoutManager = LinearLayoutManager(context)
 
         val profilesAdapter = SearchResultAdapter()
-        usersRecyclerView.adapter = profilesAdapter
+        profilesRecyclerView.adapter = profilesAdapter
         socialViewModel.profileLiveData.observe(viewLifecycleOwner, Observer {
             it?.let {
                 profilesAdapter.setProfiles(it)
             }
         })
-
-        val searchView = binding.mySearchView
-        searchView.setOnQueryTextListener(socialViewModel.searchListener)
-//        searchView.setOnCloseListener(socialViewModel.closeSearchListener)
-
-        val toolbar: Toolbar = binding.toolbarActivityMain
-        toolbar.setNavigationOnClickListener {
-            startActivity(Intent(activity, SettingsActivity::class.java))
-        }
 
         val textView: TextView = binding.textDashboard
         socialViewModel.text.observe(viewLifecycleOwner, Observer {
@@ -60,10 +59,4 @@ class SocialFragment : Fragment() {
 
         return binding.root
     }
-
-
-   /* override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        *//*menu?.add(Menu.NONE, R.id.my_toolbar, 10, R.string.app_name)
-        return super.onCreateOptionsMenu(menu)*//*
-    }*/
 }
