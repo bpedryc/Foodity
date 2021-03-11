@@ -32,22 +32,17 @@ class SocialViewModel @Inject constructor(
     private var cachedProfiles = ArrayList<Profile>()
 
     val searchListener = SearchListener()
-    /*val closeSearchListener = SearchView.OnCloseListener {
-        _profileLiveData.value = ArrayList()
-        true
-    }*/
 
     init {
         profileRepository.getAll().enqueue(object : Callback<List<Profile>> {
             override fun onResponse(call: Call<List<Profile>>, response: Response<List<Profile>>) {
-                var responseBody: List<Profile>? = response.body()
+                val responseBody: List<Profile>? = response.body()
                 if (responseBody != null) {
                     cachedProfiles.addAll(responseBody)
                 }
             }
-
             override fun onFailure(call: Call<List<Profile>>, t: Throwable) {
-                print("ERROR")
+                TODO("Not yet implemented")
             }
         })
     }

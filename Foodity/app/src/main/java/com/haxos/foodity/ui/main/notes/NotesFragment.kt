@@ -3,13 +3,18 @@ package com.haxos.foodity.ui.main.notes
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.haxos.foodity.R
+import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.databinding.FragmentNotesBinding
+import com.haxos.foodity.ui.main.SearchResultAdapter
 import com.haxos.foodity.ui.settings.SettingsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -32,36 +37,27 @@ class NotesFragment : Fragment() {
             startActivity(Intent(activity, SettingsActivity::class.java))
         }
 
+        val searchView = binding.notesSearchView
+        searchView.setOnQueryTextListener(notesViewModel.searchListener)
+
+        val searchRecyclerView : RecyclerView = binding.recyclerViewSearch
+        searchRecyclerView.layoutManager = LinearLayoutManager(context)
+
+        val searchAdapter = object : SearchResultAdapter() {
+            override fun getTextToDisplay(objectToDisplay: Any): String {
+                return (objectToDisplay as Note).name
+            }
+        }
+        searchRecyclerView.adapter = searchAdapter
+        notesViewModel.searchLiveData.observe(viewLifecycleOwner, {
+            searchAdapter.setItems(it)
+        })
+
         val textView: TextView = binding.textHome
-        notesViewModel.text.observe(viewLifecycleOwner, Observer {
+        notesViewModel.text.observe(viewLifecycleOwner, {
             textView.text = it
         })
 
         return binding.root
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.notes_menu, menu)
-
-
-        binding.mySearchView.setOnQueryTextListener(
-                object : SearchView.OnQueryTextListener {
-                    override fun onQueryTextChange (newText: String): Boolean {
-                        return false
-                    }
-                    override fun onQueryTextSubmit(query: String): Boolean {
-                        return false
-                    }
-                }
-        )
-
-        //val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        /*(menu.findItem(R.id.search).actionView as SearchView).apply {
-            //setSearchableInfo(searchManager.getSearchableInfo(componentName))
-            isIconifiedByDefault = false // Do not iconify the widget; expand it by default
-            setBackgroundColor(ContextCompat.getColor(context, R.color.grey))
-        }*/
-
-        super.onCreateOptionsMenu(menu, inflater)
     }
 }

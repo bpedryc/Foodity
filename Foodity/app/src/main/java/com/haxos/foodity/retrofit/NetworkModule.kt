@@ -34,4 +34,8 @@ class NetworkModule {
     @Provides
     fun provideProfileService(retrofit: Retrofit) : ProfileService =
             retrofit.create(ProfileService::class.java)
+
+    @Provides
+    fun provideNotesService(retrofit: Retrofit) : NotesService =
+            retrofit.create(NotesService::class.java)
 }

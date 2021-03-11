@@ -2,18 +2,15 @@ package com.haxos.foodity.ui.main.social
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.*
 import android.widget.TextView
-import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.haxos.foodity.data.model.User
+import com.haxos.foodity.R
+import com.haxos.foodity.data.model.Profile
 import com.haxos.foodity.databinding.FragmentSocialBinding
 import com.haxos.foodity.ui.main.SearchResultAdapter
 import com.haxos.foodity.ui.settings.SettingsActivity
@@ -44,11 +41,15 @@ class SocialFragment : Fragment() {
         val profilesRecyclerView: RecyclerView = binding.recyclerViewUsers
         profilesRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        val profilesAdapter = SearchResultAdapter()
-        profilesRecyclerView.adapter = profilesAdapter
+        val searchAdapter = object : SearchResultAdapter() {
+            override fun getTextToDisplay(objectToDisplay: Any): String {
+                return (objectToDisplay as Profile).username
+            }
+        }
+        profilesRecyclerView.adapter = searchAdapter
         socialViewModel.profileLiveData.observe(viewLifecycleOwner, Observer {
             it?.let {
-                profilesAdapter.setProfiles(it)
+                searchAdapter.setItems(it)
             }
         })
 
