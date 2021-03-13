@@ -2,6 +2,6 @@ FoodityKeycloak/*
 !FoodityKeycloak/run_keycloak.sh
 !FoodityKeycloak/standalone/data
 !FoodityKeycloak/standalone/data/keycloak.mv.db
-gradlew
-gradlew.bat
-.idea
+*/gradlew
+*/gradlew.bat
+*/.idea
