@@ -2,16 +2,14 @@ package com.haxos.foodity.ui.main.notes
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.appcompat.widget.SearchView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.haxos.foodity.R
 import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.databinding.FragmentNotesBinding
 import com.haxos.foodity.ui.main.SearchResultAdapter
@@ -43,6 +41,10 @@ class NotesFragment : Fragment() {
         val searchRecyclerView : RecyclerView = binding.recyclerViewSearch
         searchRecyclerView.layoutManager = LinearLayoutManager(context)
 
+        val categoriesRecyclerView : RecyclerView = binding.recyclerViewCategories
+        categoriesRecyclerView.layoutManager = GridLayoutManager(context, 2)
+
+
         val searchAdapter = object : SearchResultAdapter() {
             override fun getTextToDisplay(objectToDisplay: Any): String {
                 return (objectToDisplay as Note).name
@@ -53,10 +55,10 @@ class NotesFragment : Fragment() {
             searchAdapter.setItems(it)
         })
 
-        val textView: TextView = binding.textHome
-        notesViewModel.text.observe(viewLifecycleOwner, {
+//        val textView: TextView = binding.textHome
+        /*notesViewModel.text.observe(viewLifecycleOwner, {
             textView.text = it
-        })
+        })*/
 
         return binding.root
     }

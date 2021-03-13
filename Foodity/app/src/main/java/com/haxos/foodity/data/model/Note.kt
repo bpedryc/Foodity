@@ -7,4 +7,4 @@ data class Note (
         val name: String,
         val photos: List<Image>,
         val elements: List<NoteElement>
-        )
+)
