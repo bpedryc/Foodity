@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haxos.foodity.data.model.Note
+import com.haxos.foodity.data.model.NotesCategory
 import com.haxos.foodity.retrofit.NotesService
-import com.haxos.foodity.ui.main.social.SocialViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,19 +24,22 @@ class NotesViewModel @Inject constructor(
     private val _searchLiveData = MutableLiveData<List<Note>>()
     val searchLiveData: LiveData<List<Note>> = _searchLiveData
 
+    private val _categoriesLiveData = MutableLiveData<List<NotesCategory>>()
+    val categoriesLiveData = _categoriesLiveData
+
     private val cachedNotes = ArrayList<Note>()
 
     val searchListener = SearchListener()
 
     init {
-        notesService.getAll().enqueue(object : Callback<List<Note>> {
-            override fun onResponse(call: Call<List<Note>>, response: Response<List<Note>>) {
+        notesService.getAllCategories().enqueue(object : Callback<List<NotesCategory>> {
+            override fun onResponse(call: Call<List<NotesCategory>>, response: Response<List<NotesCategory>>) {
                 val responseBody = response.body()
                 if (responseBody != null) {
-                    cachedNotes.addAll(responseBody)
+                    _categoriesLiveData.value = responseBody
                 }
             }
-            override fun onFailure(call: Call<List<Note>>, t: Throwable) {
+            override fun onFailure(call: Call<List<NotesCategory>>, t: Throwable) {
                 TODO("Not yet implemented")
             }
         })

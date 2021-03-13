@@ -28,7 +28,7 @@ class UsersController (
         if (response.status != 201) {
             throw RuntimeException("Error creating user")
         }
-        return user
+        return user //TODO: create profile for created user and connect them
         //return ResponseEntity.created(response.location).build()
     }
 }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.databinding.FragmentNotesBinding
 import com.haxos.foodity.ui.main.SearchResultAdapter
+import com.haxos.foodity.ui.main.notes.categories.CategoriesAdapter
 import com.haxos.foodity.ui.settings.SettingsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -54,6 +55,13 @@ class NotesFragment : Fragment() {
         notesViewModel.searchLiveData.observe(viewLifecycleOwner, {
             searchAdapter.setItems(it)
         })
+
+        val categoriesAdapter = CategoriesAdapter()
+        categoriesRecyclerView.adapter = categoriesAdapter
+        notesViewModel.categoriesLiveData.observe(viewLifecycleOwner, {
+            categoriesAdapter.setCategories(it)
+        })
+
 
 //        val textView: TextView = binding.textHome
         /*notesViewModel.text.observe(viewLifecycleOwner, {

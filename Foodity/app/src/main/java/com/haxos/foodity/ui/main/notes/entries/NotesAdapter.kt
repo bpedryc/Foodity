@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.haxos.foodity.R
-import com.haxos.foodity.data.model.NoteCategory
+import com.haxos.foodity.data.model.NotesCategory
 
 class NotesAdapter (
-    private var notes: ArrayList<NoteCategory>
+    private var notes: ArrayList<NotesCategory>
 ) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
     inner class ViewHolder(categoryView: View) : RecyclerView.ViewHolder(categoryView) {
