@@ -7,42 +7,53 @@
     tools:context=".ui.main.notes.NotesFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_activity_main"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:elevation="4dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/ic_settings"
-        app:contentInsetStartWithNavigation="50dp"
-        app:contentInsetEnd="50dp"
-        android:background="@color/white" >
+            android:id="@+id/toolbar_activity_main"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="4dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_settings"
+            app:contentInsetStartWithNavigation="50dp"
+            app:contentInsetEnd="50dp"
+            android:background="@color/white">
 
         <androidx.appcompat.widget.SearchView
-            android:id="@+id/notesSearchView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/bg_grey_rounded"
-            android:paddingStart="-10dp"
-            app:iconifiedByDefault="false"
-            app:queryBackground="@android:color/transparent" />
+                android:id="@+id/notesSearchView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bg_grey_rounded"
+                android:paddingStart="-10dp"
+                app:iconifiedByDefault="false"
+                app:queryBackground="@android:color/transparent"/>
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_search"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/recycler_view_categories"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_activity_main"/>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="0dp"
+                  app:layout_constraintTop_toBottomOf="@+id/toolbar_activity_main"
+                  app:layout_constraintBottom_toBottomOf="parent"
+                  android:orientation="vertical" tools:layout_editor_absoluteX="6dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_categories"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/recycler_view_search"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/recycler_view_categories"
+                app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_categories"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="12dp"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_view_search"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+    </LinearLayout>
+
+
     <!--<TextView
         android:id="@+id/text_home"
         android:layout_width="match_parent"

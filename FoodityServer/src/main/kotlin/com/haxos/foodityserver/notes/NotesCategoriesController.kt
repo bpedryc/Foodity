@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/categories")
 class NotesCategoriesController (
-    val categoriesRepository: NotesCategoriesRepository
+    val notesService: NotesCategoriesService
 ) {
     @GetMapping
     fun all() : List<NotesCategory> =
-        categoriesRepository.findAll()
+        notesService.getAllCategories()
 
-    /*@GetMapping
-    fun findByUserId(@RequestParam("userId") userId: Long) : List<NotesCategory> =
-        categoriesRepository.findByUser(userId)*/
+    @GetMapping(params = ["username"])
+    fun findByUserId(@RequestParam username: String) : List<NotesCategory> =
+        notesService.getCategoriesOfUser(username)
 }

@@ -4,6 +4,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.haxos.foodity.data.LoginRepository
 import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.data.model.NotesCategory
 import com.haxos.foodity.retrofit.NotesService
@@ -13,13 +14,14 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class NotesViewModel @Inject constructor(
+        private val loginRepository: LoginRepository,
         private val notesService: NotesService
 ): ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
+   /* private val _text = MutableLiveData<String>().apply {
         value = "This is the Notes Fragment"
     }
-    val text: LiveData<String> = _text
+    val text: LiveData<String> = _text*/
 
     private val _searchLiveData = MutableLiveData<List<Note>>()
     val searchLiveData: LiveData<List<Note>> = _searchLiveData
@@ -27,12 +29,12 @@ class NotesViewModel @Inject constructor(
     private val _categoriesLiveData = MutableLiveData<List<NotesCategory>>()
     val categoriesLiveData = _categoriesLiveData
 
-    private val cachedNotes = ArrayList<Note>()
+//    private val cachedNotes = ArrayList<Note>()
 
     val searchListener = SearchListener()
 
     init {
-        notesService.getAllCategories().enqueue(object : Callback<List<NotesCategory>> {
+        notesService.getCategoriesByUsername(loginRepository.user!!.username).enqueue(object : Callback<List<NotesCategory>> {
             override fun onResponse(call: Call<List<NotesCategory>>, response: Response<List<NotesCategory>>) {
                 val responseBody = response.body()
                 if (responseBody != null) {
@@ -47,7 +49,16 @@ class NotesViewModel @Inject constructor(
 
     inner class SearchListener : SearchView.OnQueryTextListener{
         override fun onQueryTextChange(newText: String): Boolean {
-            _searchLiveData.value = cachedNotes.filter { it.name.contains(newText) }
+            if (newText.isEmpty()) {
+                _searchLiveData.value = ArrayList()
+                return true
+            }
+
+            val allNotes =  ArrayList<Note>()
+            _categoriesLiveData.value?.forEach {
+                allNotes.addAll(it.notes)
+            }
+            _searchLiveData.value = allNotes.filter { it.name.contains(newText, true) }
             return true
         }
         override fun onQueryTextSubmit(query: String): Boolean {
