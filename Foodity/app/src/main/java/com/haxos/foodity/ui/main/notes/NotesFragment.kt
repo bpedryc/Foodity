@@ -7,13 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.haxos.foodity.R
 import com.haxos.foodity.data.model.Note
+import com.haxos.foodity.data.model.NotesCategory
 import com.haxos.foodity.databinding.FragmentNotesBinding
 import com.haxos.foodity.ui.main.SearchResultAdapter
 import com.haxos.foodity.ui.main.notes.categories.CategoriesAdapter
+import com.haxos.foodity.ui.main.social.SocialFragment
 import com.haxos.foodity.ui.settings.SettingsActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -23,6 +28,7 @@ class NotesFragment : Fragment() {
 
     @Inject lateinit var notesViewModel: NotesViewModel
     private lateinit var binding: FragmentNotesBinding
+
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -56,7 +62,19 @@ class NotesFragment : Fragment() {
             searchAdapter.setItems(it)
         })
 
-        val categoriesAdapter = CategoriesAdapter()
+        val categoriesAdapter = CategoriesAdapter(
+            clickListener = object : CategoriesAdapter.ICategoryClickListener {
+                override fun onClick(category: NotesCategory) {
+                    val fragmentManager = parentFragmentManager
+                    fragmentManager.beginTransaction()
+                    fragmentManager.commit {
+                        val socialFragment = SocialFragment()
+                        replace(R.id.nav_host_fragment, socialFragment)
+                        setReorderingAllowed(true)
+                        addToBackStack(null)
+                    }
+                }
+        })
         categoriesRecyclerView.adapter = categoriesAdapter
         notesViewModel.categoriesLiveData.observe(viewLifecycleOwner, {
             categoriesAdapter.setCategories(it)

@@ -9,8 +9,13 @@ import com.haxos.foodity.R
 import com.haxos.foodity.data.model.NotesCategory
 
 class CategoriesAdapter (
-    private var categories: ArrayList<NotesCategory> = ArrayList()
+    private var categories: ArrayList<NotesCategory> = ArrayList(),
+    private var clickListener: ICategoryClickListener
 ) : RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
+
+    interface ICategoryClickListener {
+        fun onClick(category: NotesCategory)
+    }
 
     inner class ViewHolder(categoryView: View) : RecyclerView.ViewHolder(categoryView) {
         val categoryName: TextView = categoryView.findViewById(R.id.category_name)
@@ -24,7 +29,9 @@ class CategoriesAdapter (
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.categoryName.text = categories[position].name
+        val category = categories[position]
+        holder.categoryName.text = category.name
+        holder.itemView.setOnClickListener { clickListener.onClick(category) }
     }
 
     override fun getItemCount(): Int = categories.size
@@ -34,6 +41,4 @@ class CategoriesAdapter (
         this.categories.addAll(categories)
         notifyDataSetChanged()
     }
-
-
 }
