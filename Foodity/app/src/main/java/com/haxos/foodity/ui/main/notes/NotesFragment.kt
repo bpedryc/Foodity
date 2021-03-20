@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.recyclerview.widget.GridLayoutManager
@@ -48,10 +49,6 @@ class NotesFragment : Fragment() {
         val searchRecyclerView : RecyclerView = binding.recyclerViewSearch
         searchRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        val categoriesRecyclerView : RecyclerView = binding.recyclerViewCategories
-        categoriesRecyclerView.layoutManager = GridLayoutManager(context, 2)
-
-
         val searchAdapter = object : SearchResultAdapter() {
             override fun getTextToDisplay(objectToDisplay: Any): String {
                 return (objectToDisplay as Note).name
@@ -62,24 +59,10 @@ class NotesFragment : Fragment() {
             searchAdapter.setItems(it)
         })
 
-        val categoriesAdapter = CategoriesAdapter(
-            clickListener = object : CategoriesAdapter.ICategoryClickListener {
-                override fun onClick(category: NotesCategory) {
-                    val fragmentManager = parentFragmentManager
-                    fragmentManager.beginTransaction()
-                    fragmentManager.commit {
-                        val socialFragment = SocialFragment()
-                        replace(R.id.nav_host_fragment, socialFragment)
-                        setReorderingAllowed(true)
-                        addToBackStack(null)
-                    }
-                }
-        })
-        categoriesRecyclerView.adapter = categoriesAdapter
-        notesViewModel.categoriesLiveData.observe(viewLifecycleOwner, {
-            categoriesAdapter.setCategories(it)
-        })
-
+        parentFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace<CategoriesGridFragment>(binding.fragmentCategories.id)
+        }
 
 //        val textView: TextView = binding.textHome
         /*notesViewModel.text.observe(viewLifecycleOwner, {

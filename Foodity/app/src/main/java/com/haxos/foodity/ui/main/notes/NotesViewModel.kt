@@ -18,27 +18,20 @@ class NotesViewModel @Inject constructor(
         private val notesService: NotesService
 ): ViewModel() {
 
-   /* private val _text = MutableLiveData<String>().apply {
-        value = "This is the Notes Fragment"
-    }
-    val text: LiveData<String> = _text*/
-
     private val _searchLiveData = MutableLiveData<List<Note>>()
     val searchLiveData: LiveData<List<Note>> = _searchLiveData
 
-    private val _categoriesLiveData = MutableLiveData<List<NotesCategory>>()
-    val categoriesLiveData = _categoriesLiveData
-
-//    private val cachedNotes = ArrayList<Note>()
+    private lateinit var cachedCategories: List<NotesCategory>
 
     val searchListener = SearchListener()
 
     init {
-        notesService.getCategoriesByUsername(loginRepository.user!!.username).enqueue(object : Callback<List<NotesCategory>> {
+        notesService.getCategoriesByUsername(loginRepository.user!!.username).enqueue(object :
+            Callback<List<NotesCategory>> {
             override fun onResponse(call: Call<List<NotesCategory>>, response: Response<List<NotesCategory>>) {
                 val responseBody = response.body()
                 if (responseBody != null) {
-                    _categoriesLiveData.value = responseBody
+                    cachedCategories = ArrayList(responseBody)
                 }
             }
             override fun onFailure(call: Call<List<NotesCategory>>, t: Throwable) {
@@ -55,7 +48,7 @@ class NotesViewModel @Inject constructor(
             }
 
             val allNotes =  ArrayList<Note>()
-            _categoriesLiveData.value?.forEach {
+            cachedCategories.forEach {
                 allNotes.addAll(it.notes)
             }
             _searchLiveData.value = allNotes.filter { it.name.contains(newText, true) }

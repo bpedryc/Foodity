@@ -1,13 +1,21 @@
 package com.haxos.foodityserver.notes
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.haxos.foodityserver.JPAPersistable
-import javax.persistence.CascadeType
-import javax.persistence.Entity
-import javax.persistence.OneToMany
+import javax.persistence.*
 
 @Entity
 data class Note (
     val name: String,
     val thumbnail: Int,
-    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true) val elements: List<NoteElement>
+
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    val category: NotesCategory,
+
+    @OneToMany()
+    @JoinColumn(name = "note_id")
+    val elements: List<NoteElement>
+
 ) : JPAPersistable<Long>()

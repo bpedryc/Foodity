@@ -1,5 +1,6 @@
 package com.haxos.foodityserver.notes
 
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import com.haxos.foodityserver.JPAPersistable
 import javax.persistence.CascadeType
 import javax.persistence.Entity
@@ -11,8 +12,8 @@ data class NotesCategory (
     val name: String,
     val thumbnail: Int,
 
-    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "category", cascade = [CascadeType.ALL], orphanRemoval = true)
     val notes: List<Note>
 
 ) : JPAPersistable<Long>()
