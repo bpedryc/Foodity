@@ -1,12 +1,14 @@
 package com.haxos.foodityserver.notes
 
 import com.fasterxml.jackson.annotation.JsonBackReference
+import com.fasterxml.jackson.annotation.JsonClassDescription
 import com.haxos.foodityserver.JPAPersistable
 import javax.persistence.*
 
 @Entity
 data class Note (
     val name: String,
+    val description: String,
     val thumbnail: Int,
 
     @JsonBackReference

@@ -1,6 +1,7 @@
 package com.haxos.foodityserver.notes
 
 import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
 class NotesService (
@@ -8,4 +9,7 @@ class NotesService (
 ){
     fun getNotesFromCategory(categoryId: Long) : List<Note> =
         notesRepository.findByCategory(categoryId)
+
+    fun getNote(id: Long): Optional<Note> =
+        notesRepository.findById(id)
 }

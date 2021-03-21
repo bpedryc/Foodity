@@ -16,4 +16,7 @@ interface NotesService {
 
     @GET("/notes")
     fun getNotesByCategory(@Query("categoryId") notesCategoryId: Long): Call<List<Note>>
+
+    @GET("/notes")
+    fun getNoteById(@Query("id") id: Long): Call<Note>
 }

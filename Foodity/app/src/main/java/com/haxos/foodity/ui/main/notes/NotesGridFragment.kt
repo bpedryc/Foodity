@@ -54,7 +54,7 @@ class NotesGridFragment: Fragment() {
         override fun onClick(note: Note) {
             parentFragmentManager.beginTransaction()
             parentFragmentManager.commit {
-                val notesGridFragment = NoteContentFragment()
+                val notesGridFragment = NoteContentFragment.newInstance(note.id)
                 replace(id, notesGridFragment)
                 setReorderingAllowed(true)
                 addToBackStack(null)
