@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.haxos.foodity.data.LoginRepository
 import com.haxos.foodity.data.model.NotesCategory
-import com.haxos.foodity.retrofit.NotesService
+import com.haxos.foodity.retrofit.INotesService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class CategoriesGridViewModel @Inject constructor(
     private val loginRepository: LoginRepository,
-    private val notesService: NotesService
+    private val notesService: INotesService
 ) {
 
     private val _categoriesLiveData = MutableLiveData<List<NotesCategory>>()

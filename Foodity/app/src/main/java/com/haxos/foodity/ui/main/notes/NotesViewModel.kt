@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.haxos.foodity.data.LoginRepository
 import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.data.model.NotesCategory
-import com.haxos.foodity.retrofit.NotesService
+import com.haxos.foodity.retrofit.INotesService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class NotesViewModel @Inject constructor(
         private val loginRepository: LoginRepository,
-        private val notesService: NotesService
+        private val notesService: INotesService
 ): ViewModel() {
 
     private val _searchLiveData = MutableLiveData<List<Note>>()

@@ -6,9 +6,16 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.FragmentContainerView
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import com.haxos.foodity.R
 import com.haxos.foodity.data.LoginRepository
+import com.haxos.foodity.data.model.User
+import com.haxos.foodity.retrofit.IProfileService
 import com.haxos.foodity.ui.authentication.AuthenticationActivity
+import com.haxos.foodity.ui.main.notes.CategoriesGridFragment
+import com.haxos.foodity.ui.profile.ProfileFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -23,21 +30,10 @@ class SettingsActivity : AppCompatActivity() {
 
         setSupportActionBar(findViewById(R.id.settings_activity_toolbar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-    }
 
-    fun logOut(view: View) {
-        val loggedOutUser = loginRepository.logout()
-        val accountManager = AccountManager.get(this)
-
-        if (loggedOutUser != null) {
-            Account(loggedOutUser.username, "com.haxos.foodity").also { account ->
-                accountManager.removeAccount(account, this, null, null)
-            }
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace<SettingsMenuFragment>(R.id.fragment_settings)
         }
-
-        val intent = Intent(this, AuthenticationActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-        finish()
     }
 }

@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.haxos.foodity.R
-import com.haxos.foodity.retrofit.UserService
+import com.haxos.foodity.retrofit.IUserService
 import com.haxos.foodity.data.model.KeycloakUser
 import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
@@ -20,7 +20,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class AuthenticationActivity : AppCompatActivity() {
 
-    @Inject lateinit var userService: UserService
+    @Inject lateinit var userService: IUserService
     lateinit var viewPager : ViewPager2
 
     override fun onCreate(savedInstanceState: Bundle?) {

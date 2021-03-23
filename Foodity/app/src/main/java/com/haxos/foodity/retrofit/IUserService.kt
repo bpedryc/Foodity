@@ -8,7 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-interface UserService {
+interface IUserService {
     @GET("/users")
     fun getUsers() : Call<List<User>>
 

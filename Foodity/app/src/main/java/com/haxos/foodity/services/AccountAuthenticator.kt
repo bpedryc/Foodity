@@ -9,12 +9,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import com.haxos.foodity.retrofit.AuthService
+import com.haxos.foodity.retrofit.IAuthService
 import com.haxos.foodity.ui.authentication.AuthenticationActivity
 
 class AccountAuthenticator(
         val context: Context,
-        private val authService: AuthService
+        private val authService: IAuthService
 ) : AbstractAccountAuthenticator(context) {
 
     override fun addAccount(response: AccountAuthenticatorResponse?, accountType: String?, authTokenType: String?, requiredFeatures: Array<out String>?, options: Bundle?): Bundle {

@@ -7,18 +7,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haxos.foodity.data.model.Profile
-import com.haxos.foodity.retrofit.ProfileService
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
+import com.haxos.foodity.retrofit.IProfileService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.await
 import javax.inject.Inject
 
 class SocialViewModel @Inject constructor(
-         private val profileRepository: ProfileService
+         private val IProfileRepository: IProfileService
 ): ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
@@ -34,7 +30,7 @@ class SocialViewModel @Inject constructor(
     val searchListener = SearchListener()
 
     init {
-        profileRepository.getAll().enqueue(object : Callback<List<Profile>> {
+        IProfileRepository.getAll().enqueue(object : Callback<List<Profile>> {
             override fun onResponse(call: Call<List<Profile>>, response: Response<List<Profile>>) {
                 val responseBody: List<Profile>? = response.body()
                 if (responseBody != null) {

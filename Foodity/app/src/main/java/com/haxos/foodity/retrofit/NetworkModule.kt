@@ -24,18 +24,18 @@ class NetworkModule {
     }
 
     @Provides
-    fun provideUserService(retrofit: Retrofit) : UserService =
-            retrofit.create(UserService::class.java)
+    fun provideUserService(retrofit: Retrofit) : IUserService =
+            retrofit.create(IUserService::class.java)
 
     @Provides
-    fun provideAuthService(retrofit: Retrofit) : AuthService =
-            retrofit.create(AuthService::class.java)
+    fun provideAuthService(retrofit: Retrofit) : IAuthService =
+            retrofit.create(IAuthService::class.java)
 
     @Provides
-    fun provideProfileService(retrofit: Retrofit) : ProfileService =
-            retrofit.create(ProfileService::class.java)
+    fun provideProfileService(retrofit: Retrofit) : IProfileService =
+            retrofit.create(IProfileService::class.java)
 
     @Provides
-    fun provideNotesService(retrofit: Retrofit) : NotesService =
-            retrofit.create(NotesService::class.java)
+    fun provideNotesService(retrofit: Retrofit) : INotesService =
+            retrofit.create(INotesService::class.java)
 }

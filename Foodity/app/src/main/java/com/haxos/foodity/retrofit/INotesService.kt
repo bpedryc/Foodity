@@ -6,7 +6,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface NotesService {
+interface INotesService {
 
     @GET("/categories")
     fun getAllCategories(): Call<List<NotesCategory>>
