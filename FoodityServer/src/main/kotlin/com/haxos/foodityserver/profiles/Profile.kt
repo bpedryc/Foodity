@@ -2,10 +2,7 @@ package com.haxos.foodityserver.profiles
 
 import com.haxos.foodityserver.JPAPersistable
 import com.haxos.foodityserver.notes.NotesCategory
-import javax.persistence.CascadeType
-import javax.persistence.Entity
-import javax.persistence.JoinColumn
-import javax.persistence.OneToMany
+import javax.persistence.*
 
 @Entity
 data class Profile (
@@ -13,7 +10,7 @@ data class Profile (
     val firstName: String,
     val lastName: String,
 
-    @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     val notesCategories: List<NotesCategory> = ArrayList()
 ) : JPAPersistable<Long>()
