@@ -8,8 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.haxos.foodity.R
 
 abstract class SearchResultAdapter(
-        private var items: ArrayList<Any> = ArrayList()
+    private var items: ArrayList<Any> = ArrayList(),
+    protected var clickListener: IItemClickListener? = null
 ) : RecyclerView.Adapter<SearchResultAdapter.ViewHolder>() {
+
+    interface IItemClickListener {
+        fun onItemClick(item: Any)
+    }
 
     inner class ViewHolder(userView: View) : RecyclerView.ViewHolder(userView) {
         val itemText: TextView = userView.findViewById(R.id.text_search_item)
@@ -26,6 +31,7 @@ abstract class SearchResultAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val objectAtPosition = items[position]
         holder.itemText.text = getTextToDisplay(objectAtPosition)
+        holder.itemView.setOnClickListener { clickListener?.onItemClick(objectAtPosition) }
     }
 
     override fun getItemCount(): Int = items.size
