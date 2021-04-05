@@ -1,35 +1,27 @@
 package com.haxos.foodity.data
 
-import com.haxos.foodity.*
 import com.haxos.foodity.data.model.Profile
 import com.haxos.foodity.data.model.Token
 import com.haxos.foodity.data.model.User
 import com.haxos.foodity.retrofit.IAuthService
 import com.haxos.foodity.retrofit.IProfileService
-import kotlinx.coroutines.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * Class that requests authentication and user information from the remote data source and
- * maintains an in-memory cache of login status and user credentials information.
- */
+interface ICurrentUserInfo {
+    val user: User?
+    val isLoggedIn: Boolean
+}
 
 @Singleton
-class AuthManager @Inject constructor(
+class UserSession @Inject constructor(
         private val authService: IAuthService,
         private val profileService: IProfileService
-) {
-    var user: User? = null
+) : ICurrentUserInfo {
+    override var user: User? = null
         private set
 
-    var profileId: Long? = null
-        private set
-
-    val isLoggedIn: Boolean
+    override val isLoggedIn: Boolean
         get() = user != null
 
     fun logout(): User? {
@@ -38,15 +30,16 @@ class AuthManager @Inject constructor(
         return loggedOutUser
     }
 
-    suspend fun loginAsync(username: String, password: String) : Long? = coroutineScope {
-        val tokenResponse = authService.getToken(username, password)
-        if (tokenResponse.isSuccessful && tokenResponse.body() != null) {
-            val profileResponse = profileService.getByUsername(username)
-            profileId = profileResponse.body()?.id
-            return@coroutineScope profileId
-        }
-        return@coroutineScope null
+    suspend fun login(username: String, password: String) {
+        val tokenResponse: Token = authService.getToken(username, password).body() ?: return
+        val userProfile: Profile = profileService.getByUsername(username).body() ?: return
+
+        user = User(0, username, "", "", userProfile)
     }
+}
+
+/*var profileId: Long? = null
+    private set*/
 
         /*CoroutineScope(Dispatchers.IO).launch {
             val tokenResponse = authService.getToken(username, password)
@@ -83,4 +76,4 @@ class AuthManager @Inject constructor(
                     }
                 })
     }*/
-}
+

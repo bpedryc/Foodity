@@ -5,28 +5,27 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
 import androidx.lifecycle.viewModelScope
-import com.haxos.foodity.data.LoginCallback
 
 import com.haxos.foodity.R
-import com.haxos.foodity.data.AuthManager
-import com.haxos.foodity.data.model.User
+import com.haxos.foodity.data.UserSession
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor (
-    private val authManager: AuthManager
+    private val userSession: UserSession
 ) : ViewModel()
 {
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
 
-    private var _loginResult =
-        MutableLiveData<LoginResult>()
+    private var _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
 
     fun login(username: String, password: String) = viewModelScope.launch {
-        val profileId : Long? = authManager.loginAsync(username, password)
-        if (profileId == null) {
+        userSession.login(username, password)
+        if (userSession.isLoggedIn) {
+            _loginResult.value = LoginResult(success = LoggedInUserView(displayName = username))
+        } else {
             _loginResult.value = LoginResult(error = R.string.login_failed)
         }
     }

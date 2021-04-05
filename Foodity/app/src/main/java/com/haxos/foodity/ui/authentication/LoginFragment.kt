@@ -27,8 +27,7 @@ class LoginFragment : Fragment() {
     @Inject lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: FragmentLoginBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentLoginBinding.inflate(layoutInflater)
         val username = binding.username
         val password = binding.password
@@ -89,11 +88,11 @@ class LoginFragment : Fragment() {
                 }
                 false
             }
+        }
 
-            binding.loginButton.setOnClickListener {
-                binding.loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
-            }
+        binding.loginButton.setOnClickListener {
+            binding.loading.visibility = View.VISIBLE
+            loginViewModel.login(username.text.toString(), password.text.toString())
         }
         return binding.root
     }

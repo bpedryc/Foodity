@@ -2,7 +2,7 @@ package com.haxos.foodity.ui.main.notes
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.haxos.foodity.data.AuthManager
+import com.haxos.foodity.data.UserSession
 import com.haxos.foodity.data.model.NotesCategory
 import com.haxos.foodity.retrofit.INotesService
 import retrofit2.Call
@@ -11,7 +11,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class CategoriesGridViewModel @Inject constructor(
-    private val authManager: AuthManager,
+    private val userSession: UserSession,
     private val notesService: INotesService
 ) {
 
@@ -20,7 +20,7 @@ class CategoriesGridViewModel @Inject constructor(
 
 
     init {
-        notesService.getCategoriesByUsername(authManager.user!!.username).enqueue(object :
+        notesService.getCategoriesByUsername(userSession.user!!.username).enqueue(object :
             Callback<List<NotesCategory>> {
             override fun onResponse(call: Call<List<NotesCategory>>, response: Response<List<NotesCategory>>) {
                 val responseBody = response.body()

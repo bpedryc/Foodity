@@ -15,5 +15,5 @@ interface IProfileService {
     fun getById(@Query("id") id: Long): Call<Profile>
 
     @GET("/profiles")
-    fun getByUsername(@Query("username") username: String): Response<Profile>
+    suspend fun getByUsername(@Query("username") username: String): Response<Profile>
 }

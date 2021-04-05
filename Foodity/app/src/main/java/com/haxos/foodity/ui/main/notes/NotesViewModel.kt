@@ -4,7 +4,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.haxos.foodity.data.AuthManager
+import com.haxos.foodity.data.ICurrentUserInfo
+import com.haxos.foodity.data.UserSession
 import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.retrofit.INotesService
 import retrofit2.Call
@@ -13,7 +14,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class NotesViewModel @Inject constructor(
-    private val authManager: AuthManager,
+    private val currentUserInfo: ICurrentUserInfo,
     private val notesService: INotesService
 ): ViewModel() {
 
@@ -25,7 +26,7 @@ class NotesViewModel @Inject constructor(
     inner class SearchListener : SearchView.OnQueryTextListener{
         val cachedNotes = ArrayList<Note>()
         init {
-            val profileId = authManager.profileId
+            val profileId : Long? = currentUserInfo.user?.profile?.id
             if (profileId != null) {
                 loadNotes(profileId)
             }
