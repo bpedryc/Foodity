@@ -22,7 +22,7 @@ class AuthService (
     @Value("\${keycloak.credentials.secret}") private val clientSecret: String,
     @Qualifier("openidApi") private val client: WebClient
 ){
-    val REQUEST_TIMEOUT: Duration = Duration.ofSeconds(3)
+    val REQUEST_TIMEOUT: Duration = Duration.ofSeconds(60)
 
     fun getToken(username: String?, password: String?): Token? {
         if (username == null || password == null) {

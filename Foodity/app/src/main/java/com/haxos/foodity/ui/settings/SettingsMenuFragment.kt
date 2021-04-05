@@ -8,20 +8,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import com.haxos.foodity.R
-import com.haxos.foodity.data.LoginRepository
+import com.haxos.foodity.data.AuthManager
 import com.haxos.foodity.databinding.FragmentSettingsMenuBinding
 import com.haxos.foodity.ui.authentication.AuthenticationActivity
-import com.haxos.foodity.ui.main.notes.NotesGridFragment
 import com.haxos.foodity.ui.profile.ProfileFragment
+import com.haxos.foodity.ui.utils.replace
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class SettingsMenuFragment: Fragment() {
 
-    @Inject lateinit var loginRepository: LoginRepository
+    @Inject lateinit var authManager: AuthManager
     private lateinit var binding: FragmentSettingsMenuBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -35,22 +33,15 @@ class SettingsMenuFragment: Fragment() {
     }
 
     private fun viewProfile() {
-        val profileId = loginRepository.profileId
+        val profileId = authManager.profileId
         if (profileId != null) {
-            val fragmentManager = parentFragmentManager
-            fragmentManager.beginTransaction()
-            fragmentManager.commit {
-                val profileFragment = ProfileFragment.newInstance(profileId)
-                replace(R.id.fragment_settings, profileFragment)
-                setReorderingAllowed(true)
-                addToBackStack(null)
-            }
-            //TODO: logOut
+            val profileFragment = ProfileFragment.newInstance(profileId)
+            replace(profileFragment)
         }
     }
 
     private fun logOut() {
-        val loggedOutUser = loginRepository.logout()
+        val loggedOutUser = authManager.logout()
         val accountManager = AccountManager.get(activity)
 
         if (loggedOutUser != null) {

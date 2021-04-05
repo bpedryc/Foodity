@@ -18,4 +18,8 @@ class NotesController (
     @GetMapping(params = ["categoryId"])
     fun findByCategoryId(@RequestParam categoryId: Long) : List<Note> =
        notesService.getNotesFromCategory(categoryId)
+
+    @GetMapping(params = ["profileId"])
+    fun findByProfileId(@RequestParam profileId: Long) : List<Note> =
+        notesService.getNotesFromProfile(profileId)
 }

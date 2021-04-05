@@ -2,7 +2,7 @@ package com.haxos.foodity.ui.main.notes
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.haxos.foodity.data.LoginRepository
+import com.haxos.foodity.data.AuthManager
 import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.retrofit.INotesService
 import retrofit2.Call
@@ -11,7 +11,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class NotesGridViewModel @Inject constructor(
-    val loginRepository: LoginRepository,
+    val authManager: AuthManager,
     val notesService: INotesService
 ) {
     private val _notesLiveData = MutableLiveData<List<Note>>()

@@ -19,4 +19,7 @@ interface INotesService {
 
     @GET("/notes")
     fun getNoteById(@Query("id") id: Long): Call<Note>
+
+    @GET("/notes")
+    fun getNotesByProfile(@Query("profileId") profileId: Long): Call<List<Note>>
 }

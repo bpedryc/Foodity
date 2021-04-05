@@ -36,7 +36,7 @@ class AccountAuthenticator(
         if (TextUtils.isEmpty(authToken)) {
             val password = accountManager.getPassword(account)
             if (password != null) {
-                authToken = authService.getToken(account.name, password).execute().body()?.accessToken
+                authToken = authService.getTokenSync(account.name, password).execute().body()?.accessToken
             }
         }
 

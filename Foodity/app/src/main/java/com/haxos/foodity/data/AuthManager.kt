@@ -6,6 +6,7 @@ import com.haxos.foodity.data.model.Token
 import com.haxos.foodity.data.model.User
 import com.haxos.foodity.retrofit.IAuthService
 import com.haxos.foodity.retrofit.IProfileService
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,7 +19,7 @@ import javax.inject.Singleton
  */
 
 @Singleton
-class LoginRepository @Inject constructor(
+class AuthManager @Inject constructor(
         private val authService: IAuthService,
         private val profileService: IProfileService
 ) {
@@ -37,14 +38,32 @@ class LoginRepository @Inject constructor(
         return loggedOutUser
     }
 
-    fun login(username: String, password: String, loginCallback: LoginCallback?) {
-        authService.getToken(username, password)
+    suspend fun loginAsync(username: String, password: String) : Long? = coroutineScope {
+        val tokenResponse = authService.getToken(username, password)
+        if (tokenResponse.isSuccessful && tokenResponse.body() != null) {
+            val profileResponse = profileService.getByUsername(username)
+            profileId = profileResponse.body()?.id
+            return@coroutineScope profileId
+        }
+        return@coroutineScope null
+    }
+
+        /*CoroutineScope(Dispatchers.IO).launch {
+            val tokenResponse = authService.getToken(username, password)
+            if (tokenResponse.isSuccessful) {
+                tokenResponse.body()
+            }
+        }*/
+
+
+    /*fun login(username: String, password: String, loginCallback: LoginCallback?) {
+        authService.getTokenSync(username, password)
                 .enqueue(object : Callback<Token> {
                     override fun onResponse(call: Call<Token>, response: Response<Token>) {
                         if (response.body() != null){
                             val user = User(0, username, "TEST", "TEST")
-                            loginCallback?.onSuccess(user)
                             setLoggedInUser(user)
+                            loginCallback?.onSuccess(user)
                         } else {
                             loginCallback?.onError(R.string.login_failed)
                         }
@@ -52,22 +71,16 @@ class LoginRepository @Inject constructor(
                     override fun onFailure(call: Call<Token>, t: Throwable) {
                         loginCallback?.onError(R.string.login_failed)
                     }
+                    fun setLoggedInUser(user: User) {
+                        this@AuthManager.user = user
+
+                        val profileCall : Call<Profile> = profileService.getByUsername(user.username)
+                        val profileResponse : Response<Profile> = profileCall.execute()
+                        val profile : Profile? = profileResponse.body()
+                        if (profile != null) {
+                            profileId = profile.id
+                        }
+                    }
                 })
-    }
-
-    private fun setLoggedInUser(user: User) {
-        this.user = user
-
-        profileService.getByUsername(user.username).enqueue(object : Callback<Profile> {
-            override fun onResponse(call: Call<Profile>, response: Response<Profile>) {
-                val profileResponse = response.body()
-                if (profileResponse != null) {
-                    this@LoginRepository.profileId = profileResponse.id
-                }
-            }
-            override fun onFailure(call: Call<Profile>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-        })
-    }
+    }*/
 }

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +16,7 @@ import com.haxos.foodity.databinding.FragmentSocialBinding
 import com.haxos.foodity.ui.main.SearchResultAdapter
 import com.haxos.foodity.ui.profile.ProfileFragment
 import com.haxos.foodity.ui.settings.SettingsActivity
+import com.haxos.foodity.ui.utils.replace
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -67,14 +67,7 @@ class SocialFragment : Fragment() {
     inner class ProfileSearchClickListener : SearchResultAdapter.IItemClickListener {
         override fun onItemClick(item: Any) {
             val profile: Profile = item as Profile
-            val fragmentManager = parentFragmentManager
-            fragmentManager.beginTransaction()
-            fragmentManager.commit {
-                val profileFragment = ProfileFragment.newInstance(profile.id)
-                replace(id, profileFragment)
-                setReorderingAllowed(true)
-                addToBackStack(null)
-            }
+            replace(ProfileFragment.newInstance(profile.id))
         }
     }
 }

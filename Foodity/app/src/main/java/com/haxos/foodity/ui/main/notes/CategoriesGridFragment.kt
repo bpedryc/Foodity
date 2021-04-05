@@ -13,6 +13,7 @@ import com.haxos.foodity.data.model.NotesCategory
 import com.haxos.foodity.databinding.FragmentCategoriesGridBinding
 import com.haxos.foodity.ui.main.notes.categories.CategoriesAdapter
 import com.haxos.foodity.ui.main.social.SocialFragment
+import com.haxos.foodity.ui.utils.replace
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -43,14 +44,8 @@ class CategoriesGridFragment : Fragment() {
 
     inner class CategoryClickListener : CategoriesAdapter.ICategoryClickListener {
         override fun onClick(category: NotesCategory) {
-            val fragmentManager = parentFragmentManager
-            fragmentManager.beginTransaction()
-            fragmentManager.commit {
-                val notesGridFragment = NotesGridFragment.newInstance(category.id)
-                replace(id, notesGridFragment)
-                setReorderingAllowed(true)
-                addToBackStack(null)
-            }
+            val notesGridFragment = NotesGridFragment.newInstance(category.id)
+            this@CategoriesGridFragment.replace(notesGridFragment)
         }
     }
 }

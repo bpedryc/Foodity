@@ -8,18 +8,18 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import com.haxos.foodity.data.LoginCallback
-import com.haxos.foodity.data.LoginRepository
-import com.haxos.foodity.data.model.User
+import com.haxos.foodity.data.AuthManager
 import com.haxos.foodity.ui.authentication.AuthenticationActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import com.haxos.foodity.ui.main.MainActivity
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 
 @AndroidEntryPoint
 class BootActivity : ComponentActivity()
 {
-    @Inject lateinit var loginRepository: LoginRepository
+    @Inject lateinit var authManager: AuthManager
     private lateinit var accountManager: AccountManager
 
     private val userAccount : Account?
@@ -59,7 +59,27 @@ class BootActivity : ComponentActivity()
                 startActivity(Intent(this@BootActivity, AuthenticationActivity::class.java))
                 return
             }
-            loginRepository.login(userAccount!!.name, accountManager.getPassword(userAccount),
+
+            runBlocking {
+                val username : String = userAccount!!.name
+                val password : String = accountManager.getPassword(userAccount)
+                val loginAction = async { authManager.loginAsync(username, password) }
+                loginAction.await()
+
+                if (authManager.isLoggedIn) {
+                    startActivity(Intent(this@BootActivity, MainActivity::class.java))
+                } else {
+                    AlertDialog.Builder(this@BootActivity)
+                        .setTitle("Warning")
+                        .setMessage("This app requires an active internet connection")
+                        .setPositiveButton(android.R.string.yes) { _, _ ->
+                            finish()
+                        }
+                        .show()
+                }
+            }
+
+            /*loginRepository.login(userAccount!!.name, accountManager.getPassword(userAccount),
             object : LoginCallback {
                 override fun onSuccess(user: User) {
                     startActivity(Intent(this@BootActivity, MainActivity::class.java))
@@ -73,7 +93,7 @@ class BootActivity : ComponentActivity()
                             }
                             .show()
                 }
-            })
+            })*/
 
         }
     }

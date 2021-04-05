@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.haxos.foodity.data.LoginRepository
+import com.haxos.foodity.data.AuthManager
 import com.haxos.foodity.databinding.FragmentProfileBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -23,7 +23,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    @Inject lateinit var loginRepository: LoginRepository
+    @Inject lateinit var authManager: AuthManager
     @Inject lateinit var profileViewModel: ProfileViewModel
     private lateinit var binding: FragmentProfileBinding
 
@@ -41,7 +41,7 @@ class ProfileFragment : Fragment() {
         if (profileId != null) {
             profileViewModel.fetchProfile(profileId)
 
-            if (profileId == loginRepository.profileId) {
+            if (profileId == authManager.profileId) {
                 binding.root.removeView(binding.layoutActions)
             }
         }

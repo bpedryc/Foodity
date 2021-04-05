@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.databinding.FragmentNotesGridBinding
 import com.haxos.foodity.ui.main.notes.entries.NotesAdapter
+import com.haxos.foodity.ui.utils.replace
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -52,15 +53,9 @@ class NotesGridFragment: Fragment() {
 
     inner class NoteClickListener : NotesAdapter.INoteClickListener {
         override fun onClick(note: Note) {
-            parentFragmentManager.beginTransaction()
-            parentFragmentManager.commit {
-                val notesGridFragment = NoteContentFragment.newInstance(note.id)
-                replace(id, notesGridFragment)
-                setReorderingAllowed(true)
-                addToBackStack(null)
-            }
+            val notesGridFragment = NoteContentFragment.newInstance(note.id)
+            replace(notesGridFragment)
         }
-
     }
 
 }

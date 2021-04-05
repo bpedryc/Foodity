@@ -12,4 +12,7 @@ class NotesService (
 
     fun getNote(id: Long): Optional<Note> =
         notesRepository.findById(id)
+
+    fun getNotesFromProfile(profileId: Long) : List<Note> =
+        notesRepository.findByProfile(profileId)
 }
