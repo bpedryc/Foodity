@@ -15,6 +15,7 @@ import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.databinding.FragmentNotesBinding
 import com.haxos.foodity.ui.main.SearchResultAdapter
 import com.haxos.foodity.ui.settings.SettingsActivity
+import com.haxos.foodity.ui.utils.replace
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -43,7 +44,7 @@ class NotesFragment : Fragment() {
         val searchRecyclerView : RecyclerView = binding.recyclerViewSearch
         searchRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        val searchAdapter = object : SearchResultAdapter() {
+        val searchAdapter = object : SearchResultAdapter(clickListener = NoteSearchClickListener()) {
             override fun getTextToDisplay(objectToDisplay: Any): String {
                 return (objectToDisplay as Note).name
             }
@@ -64,5 +65,12 @@ class NotesFragment : Fragment() {
         })*/
 
         return binding.root
+    }
+
+    inner class NoteSearchClickListener : SearchResultAdapter.IItemClickListener {
+        override fun onItemClick(item: Any) {
+            val note = item as Note
+            replace(NoteContentFragment.newInstance(note.id))
+        }
     }
 }

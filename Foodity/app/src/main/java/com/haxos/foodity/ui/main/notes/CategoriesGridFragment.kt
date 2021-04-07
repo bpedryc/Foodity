@@ -5,14 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.haxos.foodity.R
 import com.haxos.foodity.data.model.NotesCategory
 import com.haxos.foodity.databinding.FragmentCategoriesGridBinding
 import com.haxos.foodity.ui.main.notes.categories.CategoriesAdapter
-import com.haxos.foodity.ui.main.social.SocialFragment
 import com.haxos.foodity.ui.utils.replace
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -45,7 +42,7 @@ class CategoriesGridFragment : Fragment() {
     inner class CategoryClickListener : CategoriesAdapter.ICategoryClickListener {
         override fun onClick(category: NotesCategory) {
             val notesGridFragment = NotesGridFragment.newInstance(category.id)
-            this@CategoriesGridFragment.replace(notesGridFragment)
+            replace(notesGridFragment)
         }
     }
 }

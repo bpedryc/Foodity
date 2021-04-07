@@ -53,8 +53,9 @@ class NotesGridFragment: Fragment() {
 
     inner class NoteClickListener : NotesAdapter.INoteClickListener {
         override fun onClick(note: Note) {
-            val notesGridFragment = NoteContentFragment.newInstance(note.id)
-            replace(notesGridFragment)
+            val noteContentFragment = NoteContentFragment.newInstance(note.id)
+            val notesFragment = this@NotesGridFragment.requireParentFragment()
+            notesFragment.replace(noteContentFragment)
         }
     }
 
