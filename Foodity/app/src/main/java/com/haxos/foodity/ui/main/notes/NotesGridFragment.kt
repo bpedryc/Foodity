@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haxos.foodity.data.model.Note
@@ -54,9 +53,8 @@ class NotesGridFragment: Fragment() {
     inner class NoteClickListener : NotesAdapter.INoteClickListener {
         override fun onClick(note: Note) {
             val noteContentFragment = NoteContentFragment.newInstance(note.id)
-            val notesFragment = this@NotesGridFragment.requireParentFragment()
+            val notesFragment = requireParentFragment()
             notesFragment.replace(noteContentFragment)
         }
     }
-
 }

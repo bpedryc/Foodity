@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,9 +55,11 @@ class NotesFragment : Fragment() {
             searchAdapter.setItems(it)
         })
 
-        parentFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace<CategoriesGridFragment>(binding.fragmentCategories.id)
+        if (childFragmentManager.fragments.size == 0) {
+            childFragmentManager.commit {
+                setReorderingAllowed(true)
+                add<CategoriesGridFragment>(binding.fragmentCategories.id)
+            }
         }
 
 //        val textView: TextView = binding.textHome
