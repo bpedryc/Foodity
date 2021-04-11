@@ -34,7 +34,7 @@ class NotesGridFragment: Fragment() {
         binding = FragmentNotesGridBinding.inflate(inflater)
 
         val notesRecyclerView: RecyclerView = binding.recyclerViewNotes
-        notesRecyclerView.layoutManager = GridLayoutManager(context, 3)
+        notesRecyclerView.layoutManager = GridLayoutManager(context, 2)
 
         val notesAdapter = NotesAdapter(clickListener = NoteClickListener())
         notesRecyclerView.adapter = notesAdapter
