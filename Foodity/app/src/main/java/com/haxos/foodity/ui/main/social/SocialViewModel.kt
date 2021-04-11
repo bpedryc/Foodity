@@ -6,16 +6,22 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.haxos.foodity.data.ICurrentUserInfo
 import com.haxos.foodity.data.model.Profile
 import com.haxos.foodity.retrofit.IProfileService
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
 class SocialViewModel @Inject constructor(
-         private val IProfileRepository: IProfileService
+    private val currentUserInfo: ICurrentUserInfo,
+    private val profileService: IProfileService,
+    private val userLogService: UserLogService
 ): ViewModel() {
+
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is the Social Fragment"
@@ -25,12 +31,15 @@ class SocialViewModel @Inject constructor(
     private var _profileLiveData = MutableLiveData<List<Profile>>()
     var profileLiveData: LiveData<List<Profile>> = _profileLiveData
 
+    private var _logsLiveData = MutableLiveData<List<ILogTemplate>>()
+    var logsLiveData: LiveData<List<ILogTemplate>> = _logsLiveData
+
     private var cachedProfiles = ArrayList<Profile>()
 
     val searchListener = SearchListener()
 
     init {
-        IProfileRepository.getAll().enqueue(object : Callback<List<Profile>> {
+        profileService.getAll().enqueue(object : Callback<List<Profile>> {
             override fun onResponse(call: Call<List<Profile>>, response: Response<List<Profile>>) {
                 val responseBody: List<Profile>? = response.body()
                 if (responseBody != null) {
@@ -41,6 +50,14 @@ class SocialViewModel @Inject constructor(
                 TODO("Not yet implemented")
             }
         })
+
+        viewModelScope.launch {
+            val currentUserProfileId: Long? = currentUserInfo.user?.profile?.id
+            if (currentUserProfileId != null) {
+                _logsLiveData.value = userLogService.getDisplayableLogs(currentUserProfileId)
+            }
+        }
+
     }
 
     inner class SearchListener : SearchView.OnQueryTextListener {

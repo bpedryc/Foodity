@@ -14,10 +14,18 @@
     <string name="login_failed">"Login failed"</string>
     <string name="action_sign_up">Sign Up</string>
     <string name="log_out">Log Out</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="action_back">Back</string>
     <string name="register_failed">Failed to register</string>
     <string name="register_success">Registration successful</string>
     <string name="notebook_search_title">Search for entries</string>
+    <string name="profilelog_followed"><b>%1$s</b> followed <b>%2$d</b>.</string>
+    <string name="profilelog_unfollowed"><b>%1$s</b> unfollowed <b>%2$d</b>.</string>
+    <string name="notelog_create"><![CDATA[<b>%1$s</b> created a new note: <b>%2$s</b>.]]></string>
+    <string name="notelog_edit"><![CDATA[<b>%1$s</b> modified a note: <b>%2$s</b>.]]></string>
+    <string name="notelog_delete"><![CDATA[<b>%1$s</b> deleted a note: <b>%2$s</b>.]]></string>
+    <string name="notelog_like"><![CDATA[<b>%1$s</b> liked a note: <b>%2$s</b> from user <b>%3$s</b>.]]></string>
+    <string name="notelog_comment">
+        <![CDATA[<b>%1$s</b> commented on a note: <b>%2$s</b> from user <b>%3$s</b>.]]></string>
+    <string name="notelog_commentself"><![CDATA[<b>%1$s</b> commented on a note: <b>%2$s</b>]]></string>
 </resources>

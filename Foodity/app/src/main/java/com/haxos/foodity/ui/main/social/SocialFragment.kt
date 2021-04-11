@@ -38,23 +38,9 @@ class SocialFragment : Fragment() {
             startActivity(Intent(activity, SettingsActivity::class.java))
         }
 
-        val searchView = binding.mySearchView
-        searchView.setOnQueryTextListener(socialViewModel.searchListener)
+        setUpProfileSearch()
 
-        val profilesRecyclerView: RecyclerView = binding.recyclerViewUsers
-        profilesRecyclerView.layoutManager = LinearLayoutManager(context)
-
-        val searchAdapter = object : SearchResultAdapter(clickListener = ProfileSearchClickListener()) {
-            override fun getTextToDisplay(objectToDisplay: Any): String {
-                return (objectToDisplay as Profile).username
-            }
-        }
-        profilesRecyclerView.adapter = searchAdapter
-        socialViewModel.profileLiveData.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                searchAdapter.setItems(it)
-            }
-        })
+        setUpActivityLog()
 
         val textView: TextView = binding.textDashboard
         socialViewModel.text.observe(viewLifecycleOwner, Observer {
@@ -62,6 +48,39 @@ class SocialFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    private fun setUpActivityLog() {
+        val userLogRecyclerView: RecyclerView = binding.recyclerViewActivityLog
+        userLogRecyclerView.layoutManager = LinearLayoutManager(context)
+
+        val userLogAdapter = UserLogAdapter()
+        userLogRecyclerView.adapter = userLogAdapter
+
+        socialViewModel.logsLiveData.observe(viewLifecycleOwner, {
+            val displayableLogs = it.map { template -> template.getInContext(requireContext()) }
+            userLogAdapter.setLogs(displayableLogs)
+        })
+    }
+
+    private fun setUpProfileSearch() {
+        val searchView = binding.mySearchView
+        searchView.setOnQueryTextListener(socialViewModel.searchListener)
+
+        val profileSearch: RecyclerView = binding.recyclerViewProfileSearch
+        profileSearch.layoutManager = LinearLayoutManager(context)
+
+        val searchAdapter = object : SearchResultAdapter(clickListener = ProfileSearchClickListener()) {
+            override fun getTextToDisplay(objectToDisplay: Any): String {
+                return (objectToDisplay as Profile).username
+            }
+        }
+        profileSearch.adapter = searchAdapter
+        socialViewModel.profileLiveData.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                searchAdapter.setItems(it)
+            }
+        })
     }
 
     inner class ProfileSearchClickListener : SearchResultAdapter.IItemClickListener {

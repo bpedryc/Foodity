@@ -4,5 +4,6 @@ data class Note (
         val id: Long,
         val name: String,
         val description: String,
-        val elements: List<NoteElement>
+        val elements: List<NoteElement>,
+        val profile: Profile
 )
