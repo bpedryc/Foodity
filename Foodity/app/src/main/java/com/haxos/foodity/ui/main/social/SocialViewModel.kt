@@ -52,7 +52,7 @@ class SocialViewModel @Inject constructor(
         })
 
         viewModelScope.launch {
-            val currentUserProfileId: Long? = currentUserInfo.user?.profile?.id
+            val currentUserProfileId: Long? = currentUserInfo.profileId
             if (currentUserProfileId != null) {
                 _logsLiveData.value = userLogService.getDisplayableLogs(currentUserProfileId)
             }

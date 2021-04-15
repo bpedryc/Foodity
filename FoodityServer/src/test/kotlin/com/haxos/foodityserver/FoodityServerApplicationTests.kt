@@ -58,50 +58,43 @@ class FoodityServerApplicationTests(
 			name = "Panna cotta",
 			category = desserts,
 			description = "Panna cotta is an Italian dessert of sweetened cream thickened with gelatin and molded. The cream may be aromatized with coffee, vanilla, or other flavorings.",
-			thumbnail = 0,
-			elements = ArrayList())
+			thumbnail = 0)
 
 		val note2 = Note(
 			name = "Tiramisu",
 			category = desserts,
 			description = "Tiramisu is a coffee-flavoured Italian dessert. It is made of ladyfingers dipped in coffee, layered with a whipped mixture of eggs, sugar, and mascarpone cheese, flavoured with cocoa.",
-			thumbnail = 0,
-			elements = ArrayList())
+			thumbnail = 0)
 
 		val note3 = Note(
 			name = "Chocolate cake",
 			category = desserts,
 			description = "Chocolate cake or chocolate gâteau is a cake flavored with melted chocolate, cocoa powder, or both.",
-			thumbnail = 0,
-			elements = ArrayList())
+			thumbnail = 0)
 
 		val note4 = Note(
 			name = "Steak",
 			category = meat,
 			description = "A steak is a meat generally sliced across the muscle fibers, potentially including a bone.",
-			thumbnail = 0,
-			elements = ArrayList())
+			thumbnail = 0)
 
 		val note5 = Note(
 			name = "Chicken tenders",
 			category = meat,
 			description = "Chicken fingers, also known as chicken tenders, chicken goujons, chicken strips or chicken fillets, are chicken meat prepared from the pectoralis minor muscles of the animal.",
-			thumbnail = 0,
-			elements = ArrayList())
+			thumbnail = 0)
 
 		val note6 = Note(
 			name = "Sencha Kagoshima",
 			category = tea,
 			description = "Japanese green tea.",
-			thumbnail = 0,
-			elements = ArrayList())
+			thumbnail = 0)
 
 		val note7 = Note(
 			name = "Eastern Beauty",
 			category = tea,
 			description = "Famous chinese oolong tea.",
-			thumbnail = 0,
-			elements = ArrayList())
+			thumbnail = 0)
 
 		profileRepo.saveAll(mutableListOf(jkaczynski, anowak, jkowalski))
 		notesCategoryRepo.saveAll(mutableListOf(desserts, meat, tea))

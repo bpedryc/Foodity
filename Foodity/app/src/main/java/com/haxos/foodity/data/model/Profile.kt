@@ -5,6 +5,6 @@ data class Profile (
         val username: String,
         val firstName: String,
         val lastName: String,
-        val following: List<Profile>,
-        val followers: List<Profile>
+        val following: MutableList<Profile>,
+        val followers: MutableList<Profile>
 )

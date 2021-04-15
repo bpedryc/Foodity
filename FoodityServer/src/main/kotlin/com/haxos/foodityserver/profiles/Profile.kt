@@ -12,5 +12,12 @@ data class Profile (
 
     @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
-    val notesCategories: List<NotesCategory> = ArrayList()
+    val notesCategories: List<NotesCategory> = ArrayList(),
+
+    @ManyToMany()
+    val followers: List<Profile> = ArrayList(),
+
+    @ManyToMany()
+    val following: List<Profile> = ArrayList(),
+
 ) : JPAPersistable<Long>()

@@ -18,6 +18,6 @@ data class Note (
 
     @OneToMany()
     @JoinColumn(name = "note_id")
-    val elements: List<NoteElement>
+    val elements: List<NoteElement> = ArrayList()
 
 ) : JPAPersistable<Long>()

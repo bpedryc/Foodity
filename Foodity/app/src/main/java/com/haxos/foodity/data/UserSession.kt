@@ -10,6 +10,7 @@ import javax.inject.Singleton
 
 interface ICurrentUserInfo {
     val user: User?
+    val profileId: Long?
     val isLoggedIn: Boolean
 }
 
@@ -23,6 +24,9 @@ class UserSession @Inject constructor(
 
     override val isLoggedIn: Boolean
         get() = user != null
+
+    override val profileId: Long?
+        get() = user?.profile?.id
 
     fun logout(): User? {
         val loggedOutUser = user?.copy()

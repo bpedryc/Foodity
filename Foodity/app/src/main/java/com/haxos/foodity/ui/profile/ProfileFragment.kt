@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.haxos.foodity.data.ICurrentUserInfo
 import com.haxos.foodity.data.UserSession
 import com.haxos.foodity.databinding.FragmentProfileBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -34,8 +36,17 @@ class ProfileFragment : Fragment() {
         profileViewModel.profileLiveData.observe(viewLifecycleOwner, {
             binding.fullName.text = it.firstName + " " + it.lastName
             binding.username.text = it.username
-//            binding.followersCount.text = it.followers.size.toString()
-//            binding.followingCount.text = it.following.size.toString()
+
+            val alreadyFollowed = it.followers.any { follower ->
+                follower.id == currentUserInfo.user?.profile?.id
+            }
+            if (alreadyFollowed) {
+                binding.buttonFollow.text = "Unfollow"
+                binding.buttonFollow.setOnClickListener(profileViewModel.unfollowClickListener)
+            } else {
+                binding.buttonFollow.text = "Follow"
+                binding.buttonFollow.setOnClickListener(profileViewModel.followClickListener)
+            }
         })
 
         val profileId = arguments?.getLong("profileId")
@@ -46,7 +57,6 @@ class ProfileFragment : Fragment() {
                 binding.root.removeView(binding.layoutActions)
             }
         }
-
         return binding.root
     }
 }
