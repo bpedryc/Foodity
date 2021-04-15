@@ -1,6 +1,7 @@
 package com.haxos.foodity.ui.main.notes
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.retrofit.INotesService
 import retrofit2.Call
@@ -10,7 +11,7 @@ import javax.inject.Inject
 
 class NoteContentViewModel @Inject constructor(
     private val notesService: INotesService
-) {
+) : ViewModel() {
 
     val noteLiveData = MutableLiveData<Note>()
     private val _noteLiveData = noteLiveData

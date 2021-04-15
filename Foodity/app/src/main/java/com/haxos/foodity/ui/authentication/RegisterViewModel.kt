@@ -2,6 +2,7 @@ package com.haxos.foodity.ui.authentication
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.haxos.foodity.R
 import com.haxos.foodity.retrofit.IUserService
 import com.haxos.foodity.data.model.KeycloakUser
@@ -12,7 +13,7 @@ import javax.inject.Inject
 
 class RegisterViewModel @Inject constructor(
         private val userService: IUserService
-) {
+) : ViewModel() {
     private var _registerResult = MutableLiveData<RegisterResult>()
     val registerResult: LiveData<RegisterResult> = _registerResult
 

@@ -38,4 +38,12 @@ class NetworkModule {
     @Provides
     fun provideNotesService(retrofit: Retrofit) : INotesService =
             retrofit.create(INotesService::class.java)
+
+    @Provides
+    fun provideNoteLogService(retrofit: Retrofit) : INoteLogService =
+        retrofit.create(INoteLogService::class.java)
+
+    @Provides
+    fun provideProfileLogService(retrofit: Retrofit) : IProfileLogService =
+        retrofit.create(IProfileLogService::class.java)
 }

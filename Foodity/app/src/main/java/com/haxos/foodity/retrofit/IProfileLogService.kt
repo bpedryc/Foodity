@@ -1,4 +1,4 @@
-package com.haxos.foodity.ui.main.social
+package com.haxos.foodity.retrofit
 
 import com.haxos.foodity.data.model.ProfileLog
 import retrofit2.Response

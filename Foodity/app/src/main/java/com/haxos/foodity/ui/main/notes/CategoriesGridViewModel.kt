@@ -2,6 +2,7 @@ package com.haxos.foodity.ui.main.notes
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.haxos.foodity.data.UserSession
 import com.haxos.foodity.data.model.NotesCategory
 import com.haxos.foodity.retrofit.INotesService
@@ -13,7 +14,7 @@ import javax.inject.Inject
 class CategoriesGridViewModel @Inject constructor(
     private val userSession: UserSession,
     private val notesService: INotesService
-) {
+) : ViewModel() {
 
     private val _categoriesLiveData = MutableLiveData<List<NotesCategory>>()
     val categoriesLiveData: LiveData<List<NotesCategory>> = _categoriesLiveData

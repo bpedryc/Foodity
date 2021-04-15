@@ -9,6 +9,7 @@ import com.haxos.foodity.data.ICurrentUserInfo
 import com.haxos.foodity.data.model.Profile
 import com.haxos.foodity.retrofit.IProfileService
 import kotlinx.coroutines.launch
+import okhttp3.internal.notify
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
@@ -33,6 +34,7 @@ class ProfileViewModel @Inject constructor(
             val profile : Profile = _profileLiveData.value ?: return
             val followerToDelete: Profile = profile.followers.find {it.id == currentUserInfo.profileId} ?: return
             profile.followers.remove(followerToDelete)
+            _profileLiveData.postValue(profile)
             viewModelScope.launch {
                 profileService.post(profile)
             }
@@ -44,6 +46,7 @@ class ProfileViewModel @Inject constructor(
             val profile : Profile = _profileLiveData.value ?: return
             val profileToAdd = currentUserInfo.user?.profile ?: return
             profile.followers.add(profileToAdd)
+            _profileLiveData.postValue(profile)
             viewModelScope.launch {
                 profileService.post(profile)
             }
