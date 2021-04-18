@@ -23,7 +23,7 @@ class NoteLogsService (
                 friendLogs.addAll(noteLogs)
             }
         }
-        return friendLogs
+        return friendLogs.sortedByDescending { it.timestamp }
     }
 
     private fun isFollowedBy(follower: Profile, profile: Profile) : Boolean =
