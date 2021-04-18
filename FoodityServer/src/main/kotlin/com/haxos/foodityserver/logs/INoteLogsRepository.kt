@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.Query
 
 interface INoteLogsRepository : JpaRepository<NoteLog, Long> {
 
-    @Query("SELECT p FROM ProfileLog p WHERE p.profile.id = ?1")
+    @Query("SELECT n FROM NoteLog n WHERE n.profile.id = ?1")
     fun getByProfileId(id: Long): List<NoteLog>
 }

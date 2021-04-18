@@ -22,7 +22,7 @@ class UserLogService @Inject constructor(
 
         val profileLogs = profileLogService.getFollowingLogs(profileId)
         val profileLogsBody = profileLogs.body()
-        if (noteLogs.isSuccessful && profileLogsBody != null) {
+        if (profileLogs.isSuccessful && profileLogsBody != null) {
             profileLogsBody.forEach {
                 val displayableLog = ILogTemplate.create(it)
                 displayableLogs.add(displayableLog)

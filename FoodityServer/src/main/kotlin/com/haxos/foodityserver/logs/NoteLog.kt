@@ -1,6 +1,6 @@
 package com.haxos.foodityserver.logs
 
-import com.fasterxml.jackson.annotation.JsonBackReference
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import com.haxos.foodityserver.JPAPersistable
 import com.haxos.foodityserver.notes.Note
 import com.haxos.foodityserver.profiles.Profile
@@ -13,11 +13,11 @@ import javax.persistence.ManyToOne
 data class NoteLog (
     val type: Type,
 
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER)
     val profile: Profile,
 
-    @JsonBackReference
+    @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER)
     val target: Note,
 

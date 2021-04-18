@@ -18,13 +18,14 @@ class ProfileLogsService (
         if (!profile.isEmpty) {
             return friendLogs
         }
-        profile.get().following.forEach { followingProfile ->
+        //TODO:
+        /*profile.get().following.forEach { followingProfile ->
             val followingProfileId: Long? = followingProfile.getId()
             if (followingProfileId != null) {
                 val profileLogs: List<ProfileLog> = profileLogsRepository.getByProfileId(followingProfileId)
                 friendLogs.addAll(profileLogs)
             }
-        }
+        }*/
         return friendLogs
     }
 }

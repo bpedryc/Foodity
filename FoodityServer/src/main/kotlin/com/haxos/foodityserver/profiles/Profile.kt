@@ -1,5 +1,6 @@
 package com.haxos.foodityserver.profiles
 
+import com.fasterxml.jackson.annotation.JsonManagedReference
 import com.haxos.foodityserver.JPAPersistable
 import com.haxos.foodityserver.notes.NotesCategory
 import javax.persistence.*
@@ -14,10 +15,8 @@ data class Profile (
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     val notesCategories: List<NotesCategory> = ArrayList(),
 
+    @JsonManagedReference
     @ManyToMany(fetch = FetchType.LAZY)
-    val followers: MutableList<Profile> = ArrayList(),
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    val following: List<Profile> = ArrayList(),
+    val followers: MutableList<Profile> = ArrayList()
 
 ) : JPAPersistable<Long>()
