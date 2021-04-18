@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 class NoteLog (
     val type: Type,
-    val user: Profile,
+    val profile: Profile,
     val target: Note,
     val timestamp: LocalDateTime
 ) {

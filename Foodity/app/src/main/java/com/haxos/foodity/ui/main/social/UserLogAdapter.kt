@@ -33,5 +33,6 @@ class UserLogAdapter(
 
     fun setLogs(logs: List<DisplayableLog>) {
         displayableLogs = logs
+        notifyDataSetChanged()
     }
 }

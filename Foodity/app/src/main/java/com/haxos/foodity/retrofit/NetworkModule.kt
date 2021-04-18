@@ -1,5 +1,7 @@
 package com.haxos.foodity.retrofit
 
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -7,6 +9,7 @@ import dagger.hilt.android.components.ApplicationComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDateTime
 import javax.inject.Singleton
 
 @Module
@@ -14,11 +17,18 @@ import javax.inject.Singleton
 class NetworkModule {
 
     @Provides
+    fun provideGson(): Gson {
+    return GsonBuilder()
+        .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeAdapter())
+        .create()
+    }
+
+    @Provides
     @Singleton
-    fun provideResourceRetrofit(): Retrofit {
+    fun provideResourceRetrofit(gsonConfig: Gson): Retrofit {
         return Retrofit.Builder()
                 .baseUrl("http://192.168.1.4:8080/")
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gsonConfig))
                 .client(OkHttpClient.Builder().build())
                 .build()
     }

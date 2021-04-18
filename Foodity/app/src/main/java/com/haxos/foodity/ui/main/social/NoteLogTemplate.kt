@@ -14,11 +14,11 @@ class NoteLogTemplate(private val noteLog: NoteLog) : ILogTemplate {
                 EDIT -> R.string.notelog_edit
                 DELETE -> R.string.notelog_delete
                 LIKE -> R.string.notelog_like
-                COMMENT -> if (targetingSelf()) R.string.notelog_commentself else R.string.notelog_comment
+                COMMENT -> R.string.notelog_commentself
             }
 
     private fun targetingSelf() : Boolean {
-        if (noteLog.target.id == noteLog.user.id) {
+        if (noteLog.target.id == noteLog.profile.id) {
             return true
         }
         return false
@@ -32,13 +32,10 @@ class NoteLogTemplate(private val noteLog: NoteLog) : ILogTemplate {
     }
 
     private fun getLogInfo(context: Context) : String {
-        val user: Profile = noteLog.user
+        val user: Profile = noteLog.profile
         val targetNote: Note = noteLog.target
-        val targetUser: Profile = targetNote.profile
 
-        if (targetingSelf()) {
-            return context.getString(infoTemplate, user.username, targetNote.name)
-        }
-        return context.getString(infoTemplate, user.username, targetNote.name, targetUser.username)
+        return context.getString(infoTemplate, user.username, targetNote.name)
+
     }
 }
