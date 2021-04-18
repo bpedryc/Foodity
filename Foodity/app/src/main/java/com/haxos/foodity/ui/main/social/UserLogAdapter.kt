@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.haxos.foodity.R
-import com.haxos.foodity.data.model.NoteLog
 
 class UserLogAdapter(
     private var displayableLogs: List<DisplayableLog> = ArrayList()
@@ -25,7 +25,7 @@ class UserLogAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val log = displayableLogs[position]
-        holder.info.text = log.info
+        holder.info.text = HtmlCompat.fromHtml(log.info, HtmlCompat.FROM_HTML_MODE_COMPACT)
         holder.timestamp.text = log.timestamp
     }
 
