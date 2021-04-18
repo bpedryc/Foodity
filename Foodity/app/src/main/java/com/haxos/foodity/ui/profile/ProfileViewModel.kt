@@ -8,8 +8,9 @@ import androidx.lifecycle.viewModelScope
 import com.haxos.foodity.data.ICurrentUserInfo
 import com.haxos.foodity.data.model.Profile
 import com.haxos.foodity.retrofit.IProfileService
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import okhttp3.internal.notify
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
@@ -34,9 +35,10 @@ class ProfileViewModel @Inject constructor(
             val profile : Profile = _profileLiveData.value ?: return
             val followerToDelete: Profile = profile.followers.find {it.id == currentUserInfo.profileId} ?: return
             profile.followers.remove(followerToDelete)
-            _profileLiveData.postValue(profile)
-            viewModelScope.launch {
-                profileService.post(profile)
+            runBlocking {
+                val followerRemoval = async { profileService.removeFollower(profile.id, followerToDelete.id) }
+                followerRemoval.await()
+                _profileLiveData.postValue(profile)
             }
         }
     }
@@ -44,11 +46,12 @@ class ProfileViewModel @Inject constructor(
     inner class FollowClickListener : View.OnClickListener {
         override fun onClick(view: View) {
             val profile : Profile = _profileLiveData.value ?: return
-            val profileToAdd = currentUserInfo.user?.profile ?: return
-            profile.followers.add(profileToAdd)
-            _profileLiveData.postValue(profile)
-            viewModelScope.launch {
-                profileService.post(profile)
+            val followerToAdd = currentUserInfo.user?.profile ?: return
+            profile.followers.add(followerToAdd)
+            runBlocking {
+                val followerSaving = async { profileService.addFollower(profile.id, followerToAdd.id) }
+                followerSaving.await()
+                _profileLiveData.postValue(profile)
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.haxos.foodityserver.profiles
 
 import org.springframework.web.bind.annotation.*
+import javax.ws.rs.PathParam
 
 @RestController
 @RequestMapping("/profiles")
@@ -33,30 +34,31 @@ class ProfilesController (
         return id
     }
 
-    class FollowerRequest (
-        val profileId: Long,
-        val followerId: Long
-    )
+    @PutMapping("/{id}/followers")
+    fun saveFollower(
+        @PathVariable("id") profileId: Long,
+        @RequestParam("followerId") followerId: Long
+    ) : Profile {
+        val profile : Profile = repository.findById(profileId)
+            .orElseThrow { ProfileNotFoundException(profileId) }
 
-    @PutMapping("/followers")
-    fun saveFollower(@RequestBody request: FollowerRequest) : Profile {
-        val profile : Profile = repository.findById(request.profileId)
-            .orElseThrow { ProfileNotFoundException(request.profileId) }
-
-        val follower = repository.findById(request.followerId)
-            .orElseThrow { ProfileNotFoundException(request.followerId) }
+        val follower = repository.findById(followerId)
+            .orElseThrow { ProfileNotFoundException(followerId) }
 
         profile.followers.add(follower)
         return repository.save(profile)
     }
 
-    @DeleteMapping("/followers")
-    fun removeFollower(@RequestBody request: FollowerRequest) : Profile {
-        val profile : Profile = repository.findById(request.profileId)
-            .orElseThrow { ProfileNotFoundException(request.profileId) }
+    @DeleteMapping("{id}/followers")
+    fun removeFollower(
+        @PathVariable("id") profileId: Long,
+        @RequestParam("followerId") followerId: Long
+    ) : Profile {
+        val profile : Profile = repository.findById(profileId)
+            .orElseThrow { ProfileNotFoundException(profileId) }
 
-        val follower = repository.findById(request.followerId)
-            .orElseThrow { ProfileNotFoundException(request.followerId) }
+        val follower = repository.findById(followerId)
+            .orElseThrow { ProfileNotFoundException(followerId) }
 
         profile.followers.remove(follower)
         return repository.save(profile)

@@ -25,9 +25,22 @@ interface IProfileService {
         @Query("followerId") followerId: Long
     ): Response<Profile>
 
+
     @GET("/profiles/{id}/followers")
     suspend fun getFollowers(@Path("id") profileId: Long): Response<List<Profile>>
 
     @GET("/profiles/{id}/following")
     suspend fun getFollowing(@Path("id") profileId: Long): Response<List<Profile>>
+
+    @PUT("/profiles/{id}/followers")
+    suspend fun addFollower(
+        @Path("id") profileId: Long,
+        @Query("followerId") followerId: Long
+    )
+
+    @DELETE("/profiles/{id}/followers")
+    suspend fun removeFollower(
+        @Path("id") profileId: Long,
+        @Query("followerId") followerId: Long
+    )
 }
