@@ -14,10 +14,10 @@ data class Profile (
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     val notesCategories: List<NotesCategory> = ArrayList(),
 
-    @ManyToMany()
-    val followers: List<Profile> = ArrayList(),
+    @ManyToMany(fetch = FetchType.LAZY)
+    val followers: MutableList<Profile> = ArrayList(),
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.LAZY)
     val following: List<Profile> = ArrayList(),
 
 ) : JPAPersistable<Long>()

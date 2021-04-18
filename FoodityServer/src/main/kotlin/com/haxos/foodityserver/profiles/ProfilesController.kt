@@ -1,8 +1,6 @@
 package com.haxos.foodityserver.profiles
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/profiles")
@@ -24,4 +22,43 @@ class ProfilesController (
         return repository.findByUsername(username)
     }
 
+    @PostMapping
+    fun saveOrUpdate(@RequestBody profile: Profile) : Profile {
+        return repository.save(profile)
+    }
+
+    @DeleteMapping(params = ["id"])
+    fun delete(id: Long) : Long {
+        repository.deleteById(id)
+        return id
+    }
+
+    class FollowerRequest (
+        val profileId: Long,
+        val followerId: Long
+    )
+
+    @PutMapping("/followers")
+    fun saveFollower(@RequestBody request: FollowerRequest) : Profile {
+        val profile : Profile = repository.findById(request.profileId)
+            .orElseThrow { ProfileNotFoundException(request.profileId) }
+
+        val follower = repository.findById(request.followerId)
+            .orElseThrow { ProfileNotFoundException(request.followerId) }
+
+        profile.followers.add(follower)
+        return repository.save(profile)
+    }
+
+    @DeleteMapping("/followers")
+    fun removeFollower(@RequestBody request: FollowerRequest) : Profile {
+        val profile : Profile = repository.findById(request.profileId)
+            .orElseThrow { ProfileNotFoundException(request.profileId) }
+
+        val follower = repository.findById(request.followerId)
+            .orElseThrow { ProfileNotFoundException(request.followerId) }
+
+        profile.followers.remove(follower)
+        return repository.save(profile)
+    }
 }
