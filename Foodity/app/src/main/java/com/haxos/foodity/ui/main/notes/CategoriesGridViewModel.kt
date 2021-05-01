@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haxos.foodity.data.UserSession
+import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.data.model.NotesCategory
 import com.haxos.foodity.retrofit.INotesService
 import retrofit2.Call
@@ -14,11 +15,10 @@ import javax.inject.Inject
 class CategoriesGridViewModel @Inject constructor(
     private val userSession: UserSession,
     private val notesService: INotesService
-) : ViewModel() {
+) : ViewModel(), ISearchingViewModel {
 
     private val _categoriesLiveData = MutableLiveData<List<NotesCategory>>()
     val categoriesLiveData: LiveData<List<NotesCategory>> = _categoriesLiveData
-
 
     init {
         notesService.getCategoriesByUsername(userSession.user!!.username).enqueue(object :
@@ -33,5 +33,25 @@ class CategoriesGridViewModel @Inject constructor(
                 TODO("Not yet implemented")
             }
         })
+    }
+
+    private val _searchLiveData = MutableLiveData<List<Note>>()
+    val searchLiveData: LiveData<List<Note>> = _searchLiveData
+
+    private var cachedNotes: List<Note>? = null
+    private suspend fun cacheNotes() {
+        val profileId: Long = userSession.profileId!!
+        notesService.getNotesByProfile(profileId)
+    }
+
+    override suspend fun resetNoteSearch() {
+        _searchLiveData.value = ArrayList()
+    }
+
+    override suspend fun searchNotes(searchText: String) {
+        if (cachedNotes == null) {
+            cacheNotes()
+        }
+        _searchLiveData.value = cachedNotes?.filter { it.name.contains(searchText, ignoreCase = true) }
     }
 }

@@ -3,6 +3,7 @@ package com.haxos.foodity.retrofit
 import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.data.model.NotesCategory
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -21,5 +22,5 @@ interface INotesService {
     fun getNoteById(@Query("id") id: Long): Call<Note>
 
     @GET("/notes")
-    fun getNotesByProfile(@Query("profileId") profileId: Long): Call<List<Note>>
+    suspend fun getNotesByProfile(@Query("profileId") profileId: Long): Response<List<Note>>
 }

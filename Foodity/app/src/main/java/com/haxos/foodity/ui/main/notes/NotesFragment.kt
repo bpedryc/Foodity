@@ -1,16 +1,17 @@
 package com.haxos.foodity.ui.main.notes
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.text.TextUtils.replace
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haxos.foodity.R
@@ -27,7 +28,6 @@ class NotesFragment : Fragment() {
 
     @Inject lateinit var notesViewModel: NotesViewModel
     private lateinit var binding: FragmentNotesBinding
-
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -53,12 +53,12 @@ class NotesFragment : Fragment() {
         }
 
         val searchView = binding.notesSearchView
-        searchView.setOnQueryTextListener(notesViewModel.searchListener)
+        searchView.setOnQueryTextListener(NotesSearchListener(lifecycle, notesViewModel))
 
         val searchRecyclerView : RecyclerView = binding.recyclerViewSearch
         searchRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        val searchAdapter = object : SearchResultAdapter(clickListener = NoteSearchClickListener()) {
+        val searchAdapter = object : SearchResultAdapter(clickListener = NoteSearchClickListener(this)) {
             override fun getTextToDisplay(objectToDisplay: Any): String {
                 return (objectToDisplay as Note).name
             }
@@ -83,10 +83,10 @@ class NotesFragment : Fragment() {
         return binding.root
     }
 
-    inner class NoteSearchClickListener : SearchResultAdapter.IItemClickListener {
+    class NoteSearchClickListener(val currentFragment: Fragment) : SearchResultAdapter.IItemClickListener {
         override fun onItemClick(item: Any) {
             val note = item as Note
-            replace(NoteContentFragment.newInstance(note.id))
+            currentFragment.replace(NoteContentFragment.newInstance(note.id))
         }
     }
 

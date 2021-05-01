@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.notes.NotesFragment">
 
+    <NoteSearchingToolbar
+            android:id="@+id/toolbar_activity_main"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="4dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_settings"
+            app:contentInsetStartWithNavigation="50dp"
+            app:contentInsetEnd="50dp"
+            android:background="@color/white">
+
+    </NoteSearchingToolbar>
+
     <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_activity_main"
             android:layout_width="match_parent"
