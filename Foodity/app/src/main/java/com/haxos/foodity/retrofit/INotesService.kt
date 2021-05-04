@@ -13,7 +13,7 @@ interface INotesService {
     fun getAllCategories(): Call<List<NotesCategory>>
 
     @GET("/categories")
-    fun getCategoriesByUsername(@Query("username") username: String): Response<List<NotesCategory>>
+    suspend fun getCategoriesByUsername(@Query("username") username: String): Response<List<NotesCategory>>
 
     @GET("/notes")
     fun getNotesByCategory(@Query("categoryId") notesCategoryId: Long): Call<List<Note>>
