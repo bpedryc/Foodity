@@ -18,7 +18,7 @@
             android:background="@color/white">
 
         <androidx.appcompat.widget.SearchView
-                android:id="@+id/notesSearchView"
+                android:id="@+id/searchview_notes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -36,7 +36,7 @@
                   android:orientation="vertical" tools:layout_editor_absoluteX="6dp">
 
         <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_search"
+                android:id="@+id/recyclerview_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
@@ -44,13 +44,20 @@
                 app:layout_constraintStart_toStartOf="parent"
         />
 
-        <androidx.fragment.app.FragmentContainerView
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview_categories"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="12dp"/>
+
+        <!--<androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_categories"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toBottomOf="@+id/recycler_view_search"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        />-->
 
     </LinearLayout>
 

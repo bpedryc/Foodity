@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.haxos.foodity.data.ICurrentUserInfo
 import com.haxos.foodity.data.UserSession
 import com.haxos.foodity.data.model.Note
+import com.haxos.foodity.data.model.NotesCategory
 import com.haxos.foodity.retrofit.INotesService
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,14 +17,22 @@ import javax.inject.Inject
 class NotesViewModel @Inject constructor(
     private val currentUserInfo: ICurrentUserInfo,
     private val notesService: INotesService
-): ViewModel() {
+): ViewModel(), INoteSearchingViewModel {
+
+    private val _categoriesLiveData = MutableLiveData<List<NotesCategory>>()
+    val categoriesLiveData: LiveData<List<NotesCategory>> = _categoriesLiveData
 
     private val _searchLiveData = MutableLiveData<List<Note>>()
-    val searchLiveData: LiveData<List<Note>> = _searchLiveData
+    override val searchLiveData: LiveData<List<Note>> = _searchLiveData
 
-    val searchListener = SearchListener()
+    override val searchListener = NoteSearchListener()
 
-    inner class SearchListener : SearchView.OnQueryTextListener{
+    init {
+        val response = notesService.getCategoriesByUsername(currentUserInfo.user?.username!!)
+        _categoriesLiveData.value = response.body()
+    }
+
+    inner class NoteSearchListener : SearchView.OnQueryTextListener {
         val cachedNotes = ArrayList<Note>()
         init {
             val profileId : Long? = currentUserInfo.user?.profile?.id

@@ -21,7 +21,7 @@ class CategoriesGridViewModel @Inject constructor(
 
 
     init {
-        notesService.getCategoriesByUsername(userSession.user!!.username).enqueue(object :
+       /* notesService.getCategoriesByUsername(userSession.user!!.username).enqueue(object :
             Callback<List<NotesCategory>> {
             override fun onResponse(call: Call<List<NotesCategory>>, response: Response<List<NotesCategory>>) {
                 val responseBody = response.body()
@@ -32,6 +32,6 @@ class CategoriesGridViewModel @Inject constructor(
             override fun onFailure(call: Call<List<NotesCategory>>, t: Throwable) {
                 TODO("Not yet implemented")
             }
-        })
+        })*/
     }
 }
