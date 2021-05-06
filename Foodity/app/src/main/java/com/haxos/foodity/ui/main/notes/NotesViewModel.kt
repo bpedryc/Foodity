@@ -29,48 +29,12 @@ class NotesViewModel @Inject constructor(
     private val _searchLiveData = MutableLiveData<List<Note>>()
     override val searchLiveData: LiveData<List<Note>> = _searchLiveData
 
-    override val searchListener = NoteSearchListener()
+    override val searchListener = NoteSearchListener(currentUserInfo, notesService, _searchLiveData)
 
     init {
         viewModelScope.launch {
             val response = notesService.getCategoriesByUsername(currentUserInfo.user?.username!!)
             _categoriesLiveData.value = response.body()
-        }
-    }
-
-    inner class NoteSearchListener : SearchView.OnQueryTextListener {
-        val cachedNotes = ArrayList<Note>()
-        init {
-            val profileId : Long? = currentUserInfo.user?.profile?.id
-            if (profileId != null) {
-                loadNotes(profileId)
-            }
-        }
-
-        private fun loadNotes(profileId: Long) {
-            notesService.getNotesByProfile(profileId).enqueue(object : Callback<List<Note>> {
-                override fun onResponse(call: Call<List<Note>>, response: Response<List<Note>>) {
-                    val responseBody = response.body()
-                    if (responseBody != null) {
-                        cachedNotes.addAll(responseBody)
-                    }
-                }
-                override fun onFailure(call: Call<List<Note>>, t: Throwable) {
-                    TODO("Not yet implemented")
-                }
-            })
-        }
-
-        override fun onQueryTextChange(newText: String): Boolean {
-            if (newText.isEmpty()) {
-                _searchLiveData.value = ArrayList()
-                return true
-            }
-            _searchLiveData.value = cachedNotes.filter { it.name.contains(newText, true) }
-            return true
-        }
-        override fun onQueryTextSubmit(query: String): Boolean {
-            TODO("Not yet implemented")
         }
     }
 

@@ -1,9 +1,9 @@
 package com.haxos.foodity.ui.main.notes
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haxos.foodity.R
@@ -14,24 +14,23 @@ import com.haxos.foodity.ui.utils.replace
 
 class NotesSearchingToolbar(
     val toolbar: Toolbar,
-    val fragment: NotesFragment
+    val searchingFragment: INoteSearchingFragment
 ) {
 
     init {
-//        val binding = fragment.binding
-        val context : Context = fragment.requireContext()
-        val notesViewModel : INoteSearchingViewModel = fragment.notesViewModel
+        val fragment = searchingFragment as Fragment
         val viewLifecycleOwner = fragment.viewLifecycleOwner
+        val noteSearchingViewModel : INoteSearchingViewModel = searchingFragment.noteSearchingViewModel
 
         toolbar.setNavigationOnClickListener {
-            context.startActivity(Intent(fragment.activity, SettingsActivity::class.java))
+            fragment.startActivity(Intent(fragment.context, SettingsActivity::class.java))
         }
 
-        val searchView = toolbar.findViewById<SearchView>(R.id.searchview_notes)//binding.notesSearchView
-        searchView.setOnQueryTextListener(notesViewModel.searchListener)
+        val searchView = toolbar.findViewById<SearchView>(R.id.searchview_notes)
+        searchView.setOnQueryTextListener(noteSearchingViewModel.searchListener)
 
-        val searchRecyclerView = fragment.notesRecyclerView
-        searchRecyclerView.layoutManager = LinearLayoutManager(context)
+        val searchRecyclerView : RecyclerView = searchingFragment.noteSearchRecyclerView
+        searchRecyclerView.layoutManager = LinearLayoutManager(fragment.context)
 
         val searchAdapter = object : SearchResultAdapter(clickListener = NoteSearchClickListener()) {
             override fun getTextToDisplay(objectToDisplay: Any): String {
@@ -39,7 +38,7 @@ class NotesSearchingToolbar(
             }
         }
         searchRecyclerView.adapter = searchAdapter
-        notesViewModel.searchLiveData.observe(viewLifecycleOwner, {
+        noteSearchingViewModel.searchLiveData.observe(viewLifecycleOwner, {
             searchAdapter.setItems(it)
         })
     }
@@ -47,7 +46,7 @@ class NotesSearchingToolbar(
     inner class NoteSearchClickListener : SearchResultAdapter.IItemClickListener {
         override fun onItemClick(item: Any) {
             val note = item as Note
-            fragment.replace(NoteContentFragment.newInstance(note.id))
+            (searchingFragment as Fragment).replace(NoteContentFragment.newInstance(note.id))
         }
     }
 }

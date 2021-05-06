@@ -18,11 +18,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class NotesFragment : Fragment() {
+class NotesFragment : Fragment(), INoteSearchingFragment {
 
     @Inject lateinit var notesViewModel: NotesViewModel
     lateinit var binding: FragmentNotesBinding
-    lateinit var notesRecyclerView: RecyclerView
+    override lateinit var noteSearchRecyclerView: RecyclerView
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -30,7 +30,7 @@ class NotesFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View {
         binding = FragmentNotesBinding.inflate(inflater)
-        notesRecyclerView = binding.recyclerviewSearch
+        noteSearchRecyclerView = binding.recyclerviewSearch
 
         val toolbar: Toolbar = binding.toolbarActivityMain
         toolbar.inflateMenu(R.menu.menu_notes_categories)
@@ -64,6 +64,10 @@ class NotesFragment : Fragment() {
             replace(notesGridFragment)
         }
     }
+
+    override val noteSearchingViewModel: INoteSearchingViewModel
+        get() = notesViewModel
+
 }
 
 

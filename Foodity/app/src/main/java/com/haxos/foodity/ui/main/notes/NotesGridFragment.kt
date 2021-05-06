@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.haxos.foodity.R
 import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.databinding.FragmentNotesGridBinding
 import com.haxos.foodity.ui.main.notes.entries.NotesAdapter
@@ -15,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class NotesGridFragment: Fragment() {
+class NotesGridFragment: Fragment(), INoteSearchingFragment {
 
     companion object {
         fun newInstance(categoryId: Long): NotesGridFragment {
@@ -33,7 +36,21 @@ class NotesGridFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentNotesGridBinding.inflate(inflater)
 
-        val notesRecyclerView: RecyclerView = binding.recyclerViewNotes
+        val toolbar: Toolbar = binding.toolbarFragmentNotes
+        toolbar.inflateMenu(R.menu.menu_notes_categories)
+        toolbar.setOnMenuItemClickListener {
+            val builder: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
+            builder.setView(R.layout.dialog_note_category)
+                .setTitle("New note")
+                .setMessage("Create a note")
+                .setPositiveButton(android.R.string.yes) {_, _ -> }
+                .setNegativeButton(android.R.string.no) {_, _ -> }
+                .show()
+            true
+        }
+        val notesSearchingToolbar = NotesSearchingToolbar(toolbar, this)
+
+        val notesRecyclerView: RecyclerView = binding.recyclerviewNotes
         notesRecyclerView.layoutManager = GridLayoutManager(context, 2)
 
         val notesAdapter = NotesAdapter(clickListener = NoteClickListener())
@@ -53,8 +70,12 @@ class NotesGridFragment: Fragment() {
     inner class NoteClickListener : NotesAdapter.INoteClickListener {
         override fun onClick(note: Note) {
             val noteContentFragment = NoteContentFragment.newInstance(note.id)
-            val notesFragment = requireParentFragment()
-            notesFragment.replace(noteContentFragment)
+            replace(noteContentFragment)
         }
     }
+
+    override val noteSearchingViewModel: INoteSearchingViewModel
+        get() = notesGridViewModel
+    override val noteSearchRecyclerView: RecyclerView
+        get() = binding.recyclerviewSearch
 }

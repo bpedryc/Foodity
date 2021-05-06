@@ -1,8 +1,10 @@
 package com.haxos.foodity.ui.main.notes
 
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.haxos.foodity.data.ICurrentUserInfo
 import com.haxos.foodity.data.UserSession
 import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.retrofit.INotesService
@@ -12,11 +14,15 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class NotesGridViewModel @Inject constructor(
-    val userSession: UserSession,
-    val notesService: INotesService
-) : ViewModel() {
+    private val currentUserInfo: ICurrentUserInfo,
+    private val notesService: INotesService
+) : ViewModel(), INoteSearchingViewModel {
+
     private val _notesLiveData = MutableLiveData<List<Note>>()
     val notesLiveData: LiveData<List<Note>> = _notesLiveData
+
+    private val _searchLiveData = MutableLiveData<List<Note>>()
+    override val searchLiveData: LiveData<List<Note>> = _searchLiveData
 
     fun fetchNotes(categoryId: Long) {
         notesService.getNotesByCategory(categoryId).enqueue(object : Callback<List<Note>> {
@@ -31,4 +37,7 @@ class NotesGridViewModel @Inject constructor(
             }
         })
     }
+
+    override val searchListener: SearchView.OnQueryTextListener
+        get() = NoteSearchListener(currentUserInfo, notesService, _searchLiveData)
 }
