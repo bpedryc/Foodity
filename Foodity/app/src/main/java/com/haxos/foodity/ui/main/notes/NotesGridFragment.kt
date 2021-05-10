@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haxos.foodity.R
 import com.haxos.foodity.data.model.Note
+import com.haxos.foodity.data.model.NotesCategory
 import com.haxos.foodity.databinding.FragmentNotesGridBinding
 import com.haxos.foodity.ui.main.notes.entries.NotesAdapter
 import com.haxos.foodity.ui.utils.replace
@@ -33,19 +35,21 @@ class NotesGridFragment: Fragment(), INoteSearchingFragment {
     lateinit var binding: FragmentNotesGridBinding
     @Inject lateinit var notesGridViewModel: NotesGridViewModel
 
+    var noteCreationDialog: AlertDialog? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentNotesGridBinding.inflate(inflater)
 
         val toolbar: Toolbar = binding.toolbarFragmentNotes
-        toolbar.inflateMenu(R.menu.menu_notes_categories)
+        toolbar.inflateMenu(R.menu.menu_notes)
         toolbar.setOnMenuItemClickListener {
             val builder: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
-            builder.setView(R.layout.dialog_note_category)
+                .setView(R.layout.dialog_note)
                 .setTitle("New note")
                 .setMessage("Create a note")
-                .setPositiveButton(android.R.string.yes) {_, _ -> }
+                .setPositiveButton(android.R.string.yes) {_, _ -> createNote()}
                 .setNegativeButton(android.R.string.no) {_, _ -> }
-                .show()
+            noteCreationDialog = builder.show()
             true
         }
         val notesSearchingToolbar = NotesSearchingToolbar(toolbar, this)
@@ -65,6 +69,12 @@ class NotesGridFragment: Fragment(), INoteSearchingFragment {
         }
 
         return binding.root
+    }
+
+    private fun createNote() {
+        val nameEditText = noteCreationDialog?.findViewById<EditText>(R.id.note_name) ?: return
+        val name = nameEditText.text.toString()
+        notesGridViewModel.addNote(name)
     }
 
     inner class NoteClickListener : NotesAdapter.INoteClickListener {

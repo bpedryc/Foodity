@@ -15,7 +15,7 @@ class NoteSearchListener(
     private val searchLiveData: MutableLiveData<List<Note>>
 ): SearchView.OnQueryTextListener {
 
-    val cachedNotes = ArrayList<Note>()
+    val cachedNotes = mutableListOf<Note>()
     init {
         val profileId : Long? = currentUserInfo.user?.profile?.id
         if (profileId != null) {
@@ -42,7 +42,9 @@ class NoteSearchListener(
             searchLiveData.value = ArrayList()
             return true
         }
-        searchLiveData.value = cachedNotes.filter { it.name.contains(newText, true) }
+        searchLiveData.value = cachedNotes.filter {
+            it.name?.contains(newText, true) ?: false
+        }
         return true
     }
     override fun onQueryTextSubmit(query: String): Boolean {

@@ -1,21 +1,16 @@
 package com.haxos.foodity.ui.main.notes
 
 import android.view.MenuItem
-import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.haxos.foodity.data.ICurrentUserInfo
-import com.haxos.foodity.data.UserSession
 import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.data.model.NotesCategory
 import com.haxos.foodity.retrofit.INotesService
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 class NotesViewModel @Inject constructor(

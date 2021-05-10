@@ -1,9 +1,6 @@
 package com.haxos.foodityserver.notes
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @RestController
@@ -22,4 +19,8 @@ class NotesController (
     @GetMapping(params = ["profileId"])
     fun findByProfileId(@RequestParam profileId: Long) : List<Note> =
         notesService.getNotesFromProfile(profileId)
+
+    @PostMapping()
+    fun createNote(@RequestBody request: NoteRequest) : Note =
+        notesService.createNote(request)
 }

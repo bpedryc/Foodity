@@ -34,7 +34,7 @@ class NotesSearchingToolbar(
 
         val searchAdapter = object : SearchResultAdapter(clickListener = NoteSearchClickListener()) {
             override fun getTextToDisplay(objectToDisplay: Any): String {
-                return (objectToDisplay as Note).name
+                return (objectToDisplay as Note).name!!
             }
         }
         searchRecyclerView.adapter = searchAdapter
@@ -46,7 +46,7 @@ class NotesSearchingToolbar(
     inner class NoteSearchClickListener : SearchResultAdapter.IItemClickListener {
         override fun onItemClick(item: Any) {
             val note = item as Note
-            (searchingFragment as Fragment).replace(NoteContentFragment.newInstance(note.id))
+            (searchingFragment as Fragment).replace(NoteContentFragment.newInstance(note.id!!))
         }
     }
 }
