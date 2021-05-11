@@ -2,13 +2,13 @@ package com.haxos.foodityserver.rest.logs.note
 
 import com.haxos.foodityserver.rest.profiles.Profile
 import com.haxos.foodityserver.rest.profiles.ProfileNotFoundException
-import com.haxos.foodityserver.rest.profiles.ProfilesRepository
+import com.haxos.foodityserver.rest.profiles.IProfilesRepository
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
 class NoteLogsService (
-    val profilesRepository: ProfilesRepository, //TODO: create profileService for getting followers/following
+    val profilesRepository: IProfilesRepository, //TODO: create profileService for getting followers/following
     val noteLogsRepository: INoteLogsRepository
 ){
     fun getFriendLogOf(profileId: Long): List<NoteLog> {

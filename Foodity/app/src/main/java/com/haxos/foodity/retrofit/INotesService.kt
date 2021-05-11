@@ -12,12 +12,6 @@ import retrofit2.http.Query
 
 interface INotesService {
 
-    @GET("/categories")
-    fun getAllCategories(): Call<List<NotesCategory>>
-
-    @GET("/categories")
-    suspend fun getCategoriesByUsername(@Query("username") username: String): Response<List<NotesCategory>>
-
     @GET("/notes")
     fun getNotesByCategory(@Query("categoryId") notesCategoryId: Long): Call<List<Note>>
 

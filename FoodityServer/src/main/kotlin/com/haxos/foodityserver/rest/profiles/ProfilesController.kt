@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/profiles")
 class ProfilesController (
-        val repository: ProfilesRepository
+        val repository: IProfilesRepository
 ) {
     @GetMapping
     fun all() : List<Profile> {

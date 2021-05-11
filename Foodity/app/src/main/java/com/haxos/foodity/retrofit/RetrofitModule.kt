@@ -56,4 +56,8 @@ class RetrofitModule {
     @Provides
     fun provideProfileLogService(retrofit: Retrofit) : IProfileLogService =
         retrofit.create(IProfileLogService::class.java)
+
+    @Provides
+    fun provideNotesCategoriesService(retrofit: Retrofit) : INotesCategoriesService =
+        retrofit.create(INotesCategoriesService::class.java)
 }

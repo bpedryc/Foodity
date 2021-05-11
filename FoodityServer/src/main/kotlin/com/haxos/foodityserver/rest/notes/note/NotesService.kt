@@ -1,13 +1,13 @@
 package com.haxos.foodityserver.rest.notes.note
 
-import com.haxos.foodityserver.rest.notes.category.NotesCategoriesRepository
+import com.haxos.foodityserver.rest.notes.category.INotesCategoriesRepository
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
 class NotesService (
     val notesRepository: INotesRepository,
-    val categoriesRepository: NotesCategoriesRepository
+    val categoriesRepository: INotesCategoriesRepository
 ){
     fun getNotesFromCategory(categoryId: Long) : List<Note> =
         notesRepository.findByCategory(categoryId)

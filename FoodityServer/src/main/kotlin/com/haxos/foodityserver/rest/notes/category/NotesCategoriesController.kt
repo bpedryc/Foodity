@@ -1,20 +1,22 @@
 package com.haxos.foodityserver.rest.notes.category
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/categories")
 class NotesCategoriesController (
-    val notesService: NotesCategoriesService
+    val categoriesService: NotesCategoriesService
 ) {
     @GetMapping
     fun all() : List<NotesCategory> =
-        notesService.getAllCategories()
+        categoriesService.getAllCategories()
 
     @GetMapping(params = ["username"])
     fun findByUserId(@RequestParam username: String) : List<NotesCategory> =
-        notesService.getCategoriesOfUser(username)
+        categoriesService.getCategoriesOfUser(username)
+
+    @PostMapping()
+    fun createCategory(@RequestBody category: NotesCategoryRequest) =
+        categoriesService.createCategory(category)
+
 }

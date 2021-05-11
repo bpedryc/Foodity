@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -27,6 +28,8 @@ class NotesFragment : Fragment(), INoteSearchingFragment {
     lateinit var binding: FragmentNotesBinding
     override lateinit var noteSearchRecyclerView: RecyclerView
 
+    private var categoryCreationDialog: AlertDialog? = null
+
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -39,12 +42,12 @@ class NotesFragment : Fragment(), INoteSearchingFragment {
         toolbar.inflateMenu(R.menu.menu_notes_categories)
         toolbar.setOnMenuItemClickListener {
             val builder: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
-            builder.setView(R.layout.dialog_note_category)
+                .setView(R.layout.dialog_note_category)
                 .setTitle("New category")
                 .setMessage("Create a category")
-                .setPositiveButton(android.R.string.yes) {_, _ -> }
+                .setPositiveButton(android.R.string.yes) {_, _ -> createCategory() }
                 .setNegativeButton(android.R.string.no) {_, _ -> }
-                .show()
+            categoryCreationDialog = builder.show()
             true
         }
         val notesSearchingToolbar = NotesSearchingToolbar(toolbar, this)
@@ -61,6 +64,12 @@ class NotesFragment : Fragment(), INoteSearchingFragment {
         return binding.root
     }
 
+    private fun createCategory() {
+        val editText = categoryCreationDialog?.findViewById<EditText>(R.id.category_name) ?: return
+        val name = editText.text.toString()
+        notesViewModel.createCategory(name)
+    }
+
     inner class CategoryClickListener : CategoriesAdapter.ICategoryClickListener {
         override fun onClick(category: NotesCategory) {
             val notesGridFragment = NotesGridFragment.newInstance(category.id)
@@ -72,16 +81,3 @@ class NotesFragment : Fragment(), INoteSearchingFragment {
         get() = notesViewModel
 
 }
-
-
-        /*if (childFragmentManager.fragments.size == 0) {
-            childFragmentManager.commit {
-                setReorderingAllowed(true)
-                add<CategoriesGridFragment>(binding.fragmentCategories.id)
-            }
-        }
-
-        val textView: TextView = binding.textHome
-        notesViewModel.text.observe(viewLifecycleOwner, {
-            textView.text = it
-        })*/

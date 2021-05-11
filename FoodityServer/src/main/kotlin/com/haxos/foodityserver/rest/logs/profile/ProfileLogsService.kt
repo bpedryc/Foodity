@@ -1,14 +1,14 @@
 package com.haxos.foodityserver.rest.logs.profile
 
 import com.haxos.foodityserver.rest.profiles.Profile
-import com.haxos.foodityserver.rest.profiles.ProfilesRepository
+import com.haxos.foodityserver.rest.profiles.IProfilesRepository
 import org.springframework.stereotype.Service
 import java.util.*
 import kotlin.collections.ArrayList
 
 @Service
 class ProfileLogsService (
-    val profilesRepository: ProfilesRepository,
+    val profilesRepository: IProfilesRepository,
     val profileLogsRepository: IProfileLogsRepository
 ){
     fun getFriendLogsOf(profileId: Long): List<ProfileLog> {

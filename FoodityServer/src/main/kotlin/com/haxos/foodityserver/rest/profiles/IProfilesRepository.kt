@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 
 @Repository
-interface ProfilesRepository : JpaRepository<Profile, Long> {
+interface IProfilesRepository : JpaRepository<Profile, Long> {
 
     @Query("SELECT p FROM Profile p WHERE p.username = ?1")
     fun findByUsername(username : String): Profile

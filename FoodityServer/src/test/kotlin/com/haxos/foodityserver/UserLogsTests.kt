@@ -5,7 +5,7 @@ import com.haxos.foodityserver.rest.logs.profile.IProfileLogsRepository
 import com.haxos.foodityserver.rest.logs.note.NoteLog
 import com.haxos.foodityserver.rest.logs.profile.ProfileLog
 import com.haxos.foodityserver.rest.notes.note.INotesRepository
-import com.haxos.foodityserver.rest.profiles.ProfilesRepository
+import com.haxos.foodityserver.rest.profiles.IProfilesRepository
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -13,7 +13,7 @@ import java.time.LocalDateTime
 
 @SpringBootTest
 class UserLogsTests (
-    @Autowired val profilesRepository: ProfilesRepository,
+    @Autowired val profilesRepository: IProfilesRepository,
     @Autowired val notesRepository: INotesRepository,
     @Autowired val noteLogsRepository: INoteLogsRepository,
     @Autowired val profileLogsRepository: IProfileLogsRepository
