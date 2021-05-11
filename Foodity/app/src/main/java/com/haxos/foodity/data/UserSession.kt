@@ -8,12 +8,6 @@ import com.haxos.foodity.retrofit.IProfileService
 import javax.inject.Inject
 import javax.inject.Singleton
 
-interface ICurrentUserInfo {
-    val user: User?
-    val profileId: Long?
-    val isLoggedIn: Boolean
-}
-
 @Singleton
 class UserSession @Inject constructor(
         private val authService: IAuthService,
@@ -41,43 +35,3 @@ class UserSession @Inject constructor(
         user = User(0, username, "", "", userProfile)
     }
 }
-
-/*var profileId: Long? = null
-    private set*/
-
-        /*CoroutineScope(Dispatchers.IO).launch {
-            val tokenResponse = authService.getToken(username, password)
-            if (tokenResponse.isSuccessful) {
-                tokenResponse.body()
-            }
-        }*/
-
-
-    /*fun login(username: String, password: String, loginCallback: LoginCallback?) {
-        authService.getTokenSync(username, password)
-                .enqueue(object : Callback<Token> {
-                    override fun onResponse(call: Call<Token>, response: Response<Token>) {
-                        if (response.body() != null){
-                            val user = User(0, username, "TEST", "TEST")
-                            setLoggedInUser(user)
-                            loginCallback?.onSuccess(user)
-                        } else {
-                            loginCallback?.onError(R.string.login_failed)
-                        }
-                    }
-                    override fun onFailure(call: Call<Token>, t: Throwable) {
-                        loginCallback?.onError(R.string.login_failed)
-                    }
-                    fun setLoggedInUser(user: User) {
-                        this@AuthManager.user = user
-
-                        val profileCall : Call<Profile> = profileService.getByUsername(user.username)
-                        val profileResponse : Response<Profile> = profileCall.execute()
-                        val profile : Profile? = profileResponse.body()
-                        if (profile != null) {
-                            profileId = profile.id
-                        }
-                    }
-                })
-    }*/
-

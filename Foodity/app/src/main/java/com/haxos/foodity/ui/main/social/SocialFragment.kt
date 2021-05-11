@@ -13,10 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haxos.foodity.data.model.Profile
 import com.haxos.foodity.databinding.FragmentSocialBinding
-import com.haxos.foodity.ui.main.SearchResultAdapter
+import com.haxos.foodity.ui.main.search.SearchResultAdapter
+import com.haxos.foodity.ui.main.social.logs.UserLogAdapter
 import com.haxos.foodity.ui.profile.ProfileFragment
 import com.haxos.foodity.ui.settings.SettingsActivity
-import com.haxos.foodity.ui.utils.replace
+import com.haxos.foodity.utils.replace
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

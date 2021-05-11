@@ -10,6 +10,8 @@ import androidx.lifecycle.viewModelScope
 import com.haxos.foodity.data.ICurrentUserInfo
 import com.haxos.foodity.data.model.Profile
 import com.haxos.foodity.retrofit.IProfileService
+import com.haxos.foodity.ui.main.social.logs.ILogTemplate
+import com.haxos.foodity.ui.main.social.logs.UserLogService
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback

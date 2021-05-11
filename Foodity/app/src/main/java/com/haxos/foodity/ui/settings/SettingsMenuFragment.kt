@@ -12,7 +12,7 @@ import com.haxos.foodity.data.UserSession
 import com.haxos.foodity.databinding.FragmentSettingsMenuBinding
 import com.haxos.foodity.ui.authentication.AuthenticationActivity
 import com.haxos.foodity.ui.profile.ProfileFragment
-import com.haxos.foodity.ui.utils.replace
+import com.haxos.foodity.utils.replace
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

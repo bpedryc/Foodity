@@ -1,20 +1,20 @@
 package com.haxos.foodityserver
 
-import com.haxos.foodityserver.notes.Note
-import com.haxos.foodityserver.notes.NotesCategoriesRepository
-import com.haxos.foodityserver.notes.NotesCategory
-import com.haxos.foodityserver.notes.NotesRepository
-import com.haxos.foodityserver.profiles.Profile
-import com.haxos.foodityserver.profiles.ProfilesRepository
+import com.haxos.foodityserver.rest.notes.note.Note
+import com.haxos.foodityserver.rest.notes.category.NotesCategoriesRepository
+import com.haxos.foodityserver.rest.notes.category.NotesCategory
+import com.haxos.foodityserver.rest.notes.note.INotesRepository
+import com.haxos.foodityserver.rest.profiles.Profile
+import com.haxos.foodityserver.rest.profiles.ProfilesRepository
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 class FoodityServerApplicationTests(
-	@Autowired val profileRepo: ProfilesRepository,
-	@Autowired val notesCategoryRepo: NotesCategoriesRepository,
-	@Autowired val notesRepo: NotesRepository
+    @Autowired val profileRepo: ProfilesRepository,
+    @Autowired val notesCategoryRepo: NotesCategoriesRepository,
+    @Autowired val notesRepo: INotesRepository
 ) {
 
 	@Test

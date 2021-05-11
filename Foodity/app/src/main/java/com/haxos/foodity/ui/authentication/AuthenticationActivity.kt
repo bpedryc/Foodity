@@ -9,8 +9,10 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.haxos.foodity.R
-import com.haxos.foodity.retrofit.IUserService
 import com.haxos.foodity.data.model.KeycloakUser
+import com.haxos.foodity.retrofit.IUserService
+import com.haxos.foodity.ui.authentication.login.LoginFragment
+import com.haxos.foodity.ui.authentication.register.RegisterFragment
 import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
