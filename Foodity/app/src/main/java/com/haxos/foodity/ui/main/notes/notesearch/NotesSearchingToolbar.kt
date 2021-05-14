@@ -23,10 +23,6 @@ class NotesSearchingToolbar(
         val viewLifecycleOwner = fragment.viewLifecycleOwner
         val noteSearchingViewModel : INoteSearchingViewModel = searchingFragment.noteSearchingViewModel
 
-        toolbar.setNavigationOnClickListener {
-            fragment.startActivity(Intent(fragment.context, SettingsActivity::class.java))
-        }
-
         val searchView = toolbar.findViewById<SearchView>(R.id.searchview_notes)
         searchView.setOnQueryTextListener(noteSearchingViewModel.searchListener)
 

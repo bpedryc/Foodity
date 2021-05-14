@@ -5,19 +5,18 @@
         android:id="@+id/navigation_notes"
         android:icon="@drawable/ic_notes"
         android:title="@string/title_notes"
-        android:menuCategory="secondary"/>
+        />
 
     <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_social"
         android:title="@string/title_social"
-        android:menuCategory="secondary"
     />
 
     <item
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/ic_tools"
         android:title="@string/title_tools"
-        android:menuCategory="secondary"/>
+        />
 
 </menu>

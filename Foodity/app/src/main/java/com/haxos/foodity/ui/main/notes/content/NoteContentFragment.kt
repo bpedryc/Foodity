@@ -2,6 +2,7 @@ package com.haxos.foodity.ui.main.notes.content
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -28,6 +29,11 @@ class NoteContentFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentNoteContentBinding.inflate(inflater)
 
+        val toolbar = binding.toolbarActivityMain
+        toolbar.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
+        }
+
         noteContentViewModel.noteLiveData.observe(viewLifecycleOwner, {
             binding.noteName.text = it.name
             binding.noteDescription.text = it.description
@@ -40,5 +46,4 @@ class NoteContentFragment: Fragment() {
 
         return binding.root
     }
-
 }

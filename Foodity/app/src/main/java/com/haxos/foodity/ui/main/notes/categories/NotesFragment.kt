@@ -1,5 +1,6 @@
 package com.haxos.foodity.ui.main.notes.categories
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,8 @@ import com.haxos.foodity.ui.main.notes.notes.NotesGridFragment
 import com.haxos.foodity.ui.main.notes.notesearch.INoteSearchingFragment
 import com.haxos.foodity.ui.main.notes.notesearch.INoteSearchingViewModel
 import com.haxos.foodity.ui.main.notes.notesearch.NotesSearchingToolbar
+import com.haxos.foodity.ui.settings.SettingsActivity
+import com.haxos.foodity.utils.add
 import com.haxos.foodity.utils.replace
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -39,6 +42,9 @@ class NotesFragment : Fragment(), INoteSearchingFragment {
         noteSearchRecyclerView = binding.recyclerviewSearch
 
         val toolbar: Toolbar = binding.toolbarActivityMain
+        toolbar.setNavigationOnClickListener {
+            startActivity(Intent(context, SettingsActivity::class.java))
+        }
         toolbar.inflateMenu(R.menu.menu_notes_categories)
         toolbar.setOnMenuItemClickListener {
             val builder: AlertDialog.Builder = AlertDialog.Builder(requireActivity())

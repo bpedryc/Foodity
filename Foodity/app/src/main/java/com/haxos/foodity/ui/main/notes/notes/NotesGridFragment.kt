@@ -43,6 +43,9 @@ class NotesGridFragment: Fragment(), INoteSearchingFragment {
         binding = FragmentNotesGridBinding.inflate(inflater)
 
         val toolbar: Toolbar = binding.toolbarFragmentNotes
+        toolbar.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
+        }
         toolbar.inflateMenu(R.menu.menu_notes)
         toolbar.setOnMenuItemClickListener {
             val builder: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
