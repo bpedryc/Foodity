@@ -2,9 +2,7 @@ package com.haxos.foodity.ui.main.notes.categories
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
@@ -19,7 +17,6 @@ import com.haxos.foodity.ui.main.notes.notesearch.INoteSearchingFragment
 import com.haxos.foodity.ui.main.notes.notesearch.INoteSearchingViewModel
 import com.haxos.foodity.ui.main.notes.notesearch.NotesSearchingToolbar
 import com.haxos.foodity.ui.settings.SettingsActivity
-import com.haxos.foodity.utils.add
 import com.haxos.foodity.utils.replace
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -58,8 +55,9 @@ class NotesFragment : Fragment(), INoteSearchingFragment {
         }
         val notesSearchingToolbar = NotesSearchingToolbar(toolbar, this)
 
-        val categoriesRecyclerView : RecyclerView = binding.recyclerviewCategories
+        val categoriesRecyclerView : CategoriesRecyclerView = binding.recyclerviewCategories
         categoriesRecyclerView.layoutManager = GridLayoutManager(context, 2)
+        registerForContextMenu(categoriesRecyclerView)
 
         val categoriesAdapter = CategoriesAdapter(clickListener = CategoryClickListener())
         categoriesRecyclerView.adapter = categoriesAdapter
@@ -85,5 +83,20 @@ class NotesFragment : Fragment(), INoteSearchingFragment {
 
     override val noteSearchingViewModel: INoteSearchingViewModel
         get() = notesViewModel
+
+
+    override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        val inflater: MenuInflater? = activity?.menuInflater
+        inflater?.inflate(R.menu.context_menu_category, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem) : Boolean {
+        val categoryInfo = item.menuInfo as CategoriesRecyclerView.CategoryContextMenuInfo
+        if (item.itemId == R.id.action_category_delete) {
+            notesViewModel.deleteCategory(categoryInfo.id)
+        }
+        return super.onContextItemSelected(item)
+    }
 
 }

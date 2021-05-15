@@ -17,14 +17,16 @@ class CategoriesAdapter (
         fun onClick(category: NotesCategory)
     }
 
-    inner class ViewHolder(categoryView: View) : RecyclerView.ViewHolder(categoryView) {
+    inner class ViewHolder(categoryView: View) : RecyclerView.ViewHolder(categoryView){
         val categoryName: TextView = categoryView.findViewById(R.id.category_name)
+        init {
+            categoryView.isLongClickable = true
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.grid_view_category, parent, false)
-
         return ViewHolder(view)
     }
 
@@ -32,6 +34,10 @@ class CategoriesAdapter (
         val category = categories[position]
         holder.categoryName.text = category.name
         holder.itemView.setOnClickListener { clickListener.onClick(category) }
+    }
+
+    override fun getItemId(position: Int): Long {
+        return categories[position].id
     }
 
     override fun getItemCount(): Int = categories.size

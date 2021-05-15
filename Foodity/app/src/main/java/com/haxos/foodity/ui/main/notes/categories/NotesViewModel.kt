@@ -44,4 +44,9 @@ class NotesViewModel @Inject constructor(
             _categoriesLiveData.value = _categoriesLiveData.value
         }
     }
+
+    fun deleteCategory(id: Long) {
+        _categoriesLiveData.value?.removeIf {id == it.id}
+        _categoriesLiveData.value = _categoriesLiveData.value
+    }
 }

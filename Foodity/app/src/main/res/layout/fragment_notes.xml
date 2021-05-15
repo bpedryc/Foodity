@@ -45,7 +45,7 @@
         />
 
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.haxos.foodity.ui.main.notes.categories.CategoriesRecyclerView
                 android:id="@+id/recyclerview_categories"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
