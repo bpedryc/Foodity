@@ -23,4 +23,7 @@ class NotesService (
         val note = Note(request.name, request.description, request.thumbnail, category, request.elements)
         return notesRepository.save(note)
     }
+
+    fun deleteNote(noteId: Long) =
+        notesRepository.deleteById(noteId)
 }

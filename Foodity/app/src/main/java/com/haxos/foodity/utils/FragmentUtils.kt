@@ -17,6 +17,7 @@ fun Fragment.replace(fromFragmentId: Int, targetFragment: Fragment) {
         replace(fromFragmentId, targetFragment)
         setReorderingAllowed(true)
         addToBackStack(null)
+
     }
 }
 

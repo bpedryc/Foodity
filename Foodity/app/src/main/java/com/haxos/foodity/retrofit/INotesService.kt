@@ -3,12 +3,10 @@ package com.haxos.foodity.retrofit
 import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.data.model.NoteRequest
 import com.haxos.foodity.data.model.NotesCategory
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface INotesService {
 
@@ -23,4 +21,7 @@ interface INotesService {
 
     @POST("/notes")
     suspend fun add(@Body request: NoteRequest): Response<Note>
+
+    @DELETE("/notes")
+    suspend fun delete(@Query("id") noteId: Long) : Response<ResponseBody>
 }

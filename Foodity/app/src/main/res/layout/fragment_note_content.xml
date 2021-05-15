@@ -7,24 +7,22 @@
         android:orientation="vertical"
 >
     <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_activity_main"
+            android:id="@+id/toolbar_notecontent"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:elevation="4dp"
-            android:background="@color/white"
             app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="?attr/homeAsUpIndicator"
             app:contentInsetStartWithNavigation="50dp"
-            app:contentInsetEnd="50dp" />
+            app:contentInsetEnd="50dp"
+            app:menu="@menu/menu_note_content"/>
 
     <TextView
             android:id="@+id/note_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:textSize="36sp"
             android:textAlignment="center"
-            app:layout_constraintTop_toBottomOf="@id/toolbar_activity_main"/>
+            app:layout_constraintTop_toBottomOf="@id/toolbar_notecontent"/>
 
     <TextView
             android:id="@+id/note_description"

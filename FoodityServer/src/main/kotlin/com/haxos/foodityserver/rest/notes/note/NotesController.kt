@@ -23,4 +23,8 @@ class NotesController (
     @PostMapping()
     fun createNote(@RequestBody request: NoteRequest) : Note =
         notesService.createNote(request)
+
+    @DeleteMapping()
+    fun deleteNote(@RequestParam id: Long) =
+        notesService.deleteNote(id)
 }
