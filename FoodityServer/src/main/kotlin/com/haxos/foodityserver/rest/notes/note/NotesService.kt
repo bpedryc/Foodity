@@ -26,4 +26,11 @@ class NotesService (
 
     fun deleteNote(noteId: Long) =
         notesRepository.deleteById(noteId)
+
+    fun editNote(request: NoteRequest): Note {
+        val note : Note = notesRepository.getOne(request.id!!)
+        note.name = request.name
+        note.description = request.description
+        return notesRepository.save(note)
+    }
 }

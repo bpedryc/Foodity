@@ -1,9 +1,9 @@
 package com.haxos.foodityserver.rest.notes.note
 
-import okhttp3.Response
-import okhttp3.ResponseBody
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.client.HttpClientErrorException
 import java.util.*
+import javax.ws.rs.BadRequestException
 
 @RestController
 @RequestMapping("/notes")
@@ -25,6 +25,14 @@ class NotesController (
     @PostMapping()
     fun createNote(@RequestBody request: NoteRequest) : Note =
         notesService.createNote(request)
+
+    @PutMapping()
+    fun editNote(@RequestBody request: NoteRequest) : Note {
+        if (request.id == null) {
+            throw BadRequestException()
+        }
+        return notesService.editNote(request)
+    }
 
     @DeleteMapping(params = ["id"])
     fun deleteNote(@RequestParam id: Long) : Boolean {

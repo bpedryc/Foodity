@@ -22,6 +22,9 @@ interface INotesService {
     @POST("/notes")
     suspend fun add(@Body request: NoteRequest): Response<Note>
 
+    @PUT("/notes")
+    suspend fun edit(@Body note: NoteRequest) : Response<Note>
+
     @DELETE("/notes")
     suspend fun delete(@Query("id") id: Long) : Response<Boolean>
 }

@@ -1,9 +1,11 @@
 package com.haxos.foodity.ui.main.notes.content
 
+import android.widget.EditText
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.haxos.foodity.data.model.Note
+import com.haxos.foodity.data.model.NoteRequest
 import com.haxos.foodity.retrofit.INotesService
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -43,6 +45,20 @@ class NoteContentViewModel @Inject constructor(
                 _noteLiveData.value = null
             }
         }
+    }
+
+    fun noteEdited(noteName: String, noteDescription: String) = viewModelScope.launch {
+        val oldNote : Note = _noteLiveData.value ?: return@launch
+        val note = NoteRequest(
+            id = oldNote.id,
+            name = noteName,
+            description = noteDescription,
+            categoryId = oldNote.categoryId,
+            thumbnail = oldNote.thumbnail,
+            elements = oldNote.elements
+        )
+        val editedNote = notesService.edit(note)
+        _noteLiveData.value = editedNote.body() ?: return@launch
     }
 
 
