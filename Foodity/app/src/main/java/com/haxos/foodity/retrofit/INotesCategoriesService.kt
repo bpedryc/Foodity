@@ -4,10 +4,7 @@ import com.haxos.foodity.data.model.NotesCategory
 import com.haxos.foodity.data.model.NotesCategoryRequest
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface INotesCategoriesService {
 
@@ -19,4 +16,7 @@ interface INotesCategoriesService {
 
     @POST("/categories")
     suspend fun createCategory(@Body categoryRequest: NotesCategoryRequest) : Response<NotesCategory>
+
+    @DELETE("/categories")
+    suspend fun delete(@Query("id") id: Long) : Response<Boolean>
 }

@@ -23,5 +23,5 @@ interface INotesService {
     suspend fun add(@Body request: NoteRequest): Response<Note>
 
     @DELETE("/notes")
-    suspend fun delete(@Query("id") noteId: Long) : Response<ResponseBody>
+    suspend fun delete(@Query("id") id: Long) : Response<Boolean>
 }

@@ -16,7 +16,7 @@
             app:contentInsetEnd="50dp"
             app:menu="@menu/menu_note_content"/>
 
-    <TextView
+    <EditText
             android:id="@+id/note_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
             android:textAlignment="center"
             app:layout_constraintTop_toBottomOf="@id/toolbar_notecontent"/>
 
-    <TextView
+    <EditText
             android:id="@+id/note_description"
             android:textAlignment="center"
             android:layout_width="match_parent"

@@ -39,7 +39,7 @@ class NoteContentViewModel @Inject constructor(
     fun deleteNote() = viewModelScope.launch {
         noteId?.let {
             val response = notesService.delete(it)
-            if (response.isSuccessful) {
+            if (response.isSuccessful && response.body() == true) {
                 _noteLiveData.value = null
             }
         }

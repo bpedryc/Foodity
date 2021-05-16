@@ -19,4 +19,10 @@ class NotesCategoriesController (
     fun createCategory(@RequestBody category: NotesCategoryRequest) =
         categoriesService.createCategory(category)
 
+    @DeleteMapping()
+    fun deleteCategory(@RequestParam id: Long) : Boolean {
+        categoriesService.deleteCategory(id)
+        return true
+    }
+
 }

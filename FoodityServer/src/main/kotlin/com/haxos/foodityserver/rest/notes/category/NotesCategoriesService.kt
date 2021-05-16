@@ -22,4 +22,8 @@ class NotesCategoriesService (
         return profilesRepository.findByUsername(username).notesCategories
     }
 
+    fun deleteCategory(id: Long) {
+        categoriesRepository.deleteById(id)
+    }
+
 }

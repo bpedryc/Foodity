@@ -11,7 +11,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.haxos.foodity.R
 import com.haxos.foodity.databinding.FragmentNoteContentBinding
-import com.haxos.foodity.utils.replace
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -31,6 +30,8 @@ class NoteContentFragment: Fragment(), Toolbar.OnMenuItemClickListener {
     lateinit var binding : FragmentNoteContentBinding
     @Inject lateinit var noteContentViewModel: NoteContentViewModel
 
+    val editMode : Boolean = false
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentNoteContentBinding.inflate(inflater)
 
@@ -48,8 +49,8 @@ class NoteContentFragment: Fragment(), Toolbar.OnMenuItemClickListener {
                 return@observe
             }
 
-            binding.noteName.text = it.name
-            binding.noteDescription.text = it.description
+            binding.noteName.setText(it.name)
+            binding.noteDescription.setText(it.description)
         })
 
         val noteId: Long? = arguments?.getLong("noteId")
@@ -66,6 +67,10 @@ class NoteContentFragment: Fragment(), Toolbar.OnMenuItemClickListener {
             R.id.action_note_delete -> onNoteDelete()
         }
         return true
+    }
+
+    private fun onNoteEdit() {
+
     }
 
     private fun onNoteDelete() {

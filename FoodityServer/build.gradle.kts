@@ -6,6 +6,7 @@ plugins {
 	id("org.jetbrains.kotlin.plugin.noarg") version "1.4.21"
 	kotlin("jvm") version "1.4.21-2"
 	kotlin("plugin.spring") version "1.4.21-2"
+	kotlin("kapt") version "1.5.0"
 
 }
 
@@ -20,9 +21,11 @@ java.sourceCompatibility = JavaVersion.VERSION_11
 repositories {
 	mavenCentral()
 	maven { url = uri("https://repo.spring.io/milestone") }
+	google()
 }
 
 dependencies {
+	implementation("org.springframework.boot:spring-boot-configuration-processor")
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web:2.4.0")
@@ -32,10 +35,10 @@ dependencies {
 	implementation("com.github.gwenn:sqlite-dialect:0.1.2")
 	implementation("org.hibernate:hibernate-core:5.4.27.Final")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	annotationProcessor("android.arch.persistence.room:compiler:1.1.1")
 	implementation("org.springframework.boot:spring-boot-starter-webflux:2.4.2")
 	implementation("org.keycloak:keycloak-spring-boot-starter:11.0.3")
 	implementation("org.keycloak:keycloak-admin-client:11.0.3")
+	implementation("com.squareup.okhttp3:okhttp:4.9.1")
 }
 
 tasks.withType<KotlinCompile> {

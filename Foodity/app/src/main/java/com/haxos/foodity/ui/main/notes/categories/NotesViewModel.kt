@@ -45,8 +45,11 @@ class NotesViewModel @Inject constructor(
         }
     }
 
-    fun deleteCategory(id: Long) {
-        _categoriesLiveData.value?.removeIf {id == it.id}
-        _categoriesLiveData.value = _categoriesLiveData.value
+    fun deleteCategory(id: Long) = viewModelScope.launch {
+        val response = categoriesService.delete(id)
+        if (response.body() == true) {
+            _categoriesLiveData.value?.removeIf { id == it.id }
+            _categoriesLiveData.value = _categoriesLiveData.value
+        }
     }
 }

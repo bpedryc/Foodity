@@ -1,5 +1,7 @@
 package com.haxos.foodityserver.rest.notes.note
 
+import okhttp3.Response
+import okhttp3.ResponseBody
 import org.springframework.web.bind.annotation.*
 import java.util.*
 
@@ -24,7 +26,9 @@ class NotesController (
     fun createNote(@RequestBody request: NoteRequest) : Note =
         notesService.createNote(request)
 
-    @DeleteMapping()
-    fun deleteNote(@RequestParam id: Long) =
+    @DeleteMapping(params = ["id"])
+    fun deleteNote(@RequestParam id: Long) : Boolean {
         notesService.deleteNote(id)
+        return true
+    }
 }
