@@ -7,13 +7,12 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.haxos.foodity.R
 import com.haxos.foodity.databinding.FragmentNoteContentBinding
-import com.haxos.foodity.ui.authentication.login.afterTextChanged
 import com.haxos.foodity.utils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -38,34 +37,9 @@ class NoteContentFragment: Fragment(), Toolbar.OnMenuItemClickListener {
 
     private var editMode : Boolean = false
         set(editMode) {
-            if (!editMode){
-                activity?.hideKeyboard()
-
-                toolbar.navigationIcon = ContextCompat.getDrawable(activity!!, R.drawable.ic_back)
-                toolbar.setNavigationOnClickListener {
-                    requireActivity().onBackPressed()
-                }
-                toolbar.menu.clear()
-                toolbar.inflateMenu(R.menu.menu_note_content)
-
-                binding.noteName.isFocusable = false
-                binding.noteName.setBackgroundColor(Color.TRANSPARENT)
-                binding.noteDescription.isFocusable = false
-                binding.noteDescription.setBackgroundColor(Color.TRANSPARENT)
-            } else {
-
-                toolbar.navigationIcon = ContextCompat.getDrawable(activity!!, R.drawable.ic_clear)
-                toolbar.setNavigationOnClickListener {
-                    noteContentViewModel.noteId = arguments?.getLong("noteId")
-                    this.editMode = false
-                }
-                toolbar.menu.clear()
-                toolbar.inflateMenu(R.menu.menu_note_content_editable)
-
-                binding.noteName.isFocusableInTouchMode = true
-                binding.noteName.setBackgroundColor(Color.LTGRAY)
-                binding.noteDescription.isFocusableInTouchMode = true
-                binding.noteDescription.setBackgroundColor(Color.LTGRAY)
+            when (editMode){
+                true -> setupEditMode()
+                false -> setupDisplayMode()
             }
             field = editMode
         }
@@ -102,6 +76,46 @@ class NoteContentFragment: Fragment(), Toolbar.OnMenuItemClickListener {
             R.id.action_note_confirm -> onNoteEditConfirm()
         }
         return true
+    }
+
+    private fun setupEditMode() {
+        toolbar.navigationIcon = ContextCompat.getDrawable(activity!!, R.drawable.ic_clear)
+        toolbar.setNavigationOnClickListener {
+            noteContentViewModel.noteId = arguments?.getLong("noteId")
+            this.editMode = false
+        }
+        toolbar.menu.clear()
+        toolbar.inflateMenu(R.menu.menu_note_content_editable)
+
+        binding.noteName.isFocusableInTouchMode = true
+        binding.noteName.setBackgroundColor(Color.LTGRAY)
+        binding.noteDescription.isFocusableInTouchMode = true
+        binding.noteDescription.setBackgroundColor(Color.LTGRAY)
+
+
+    }
+
+    private fun setupDisplayMode() {
+        activity?.hideKeyboard()
+
+        toolbar.navigationIcon = ContextCompat.getDrawable(activity!!, R.drawable.ic_back)
+        toolbar.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
+        }
+        toolbar.menu.clear()
+        toolbar.inflateMenu(R.menu.menu_note_content)
+
+        binding.noteName.isFocusable = false
+        binding.noteName.setBackgroundColor(Color.TRANSPARENT)
+        binding.noteDescription.isFocusable = false
+        binding.noteDescription.setBackgroundColor(Color.TRANSPARENT)
+
+        binding.recyclerviewNoteelements.layoutManager = LinearLayoutManager(context)
+        val elementsAdapter = NoteElementsAdapter()
+        binding.recyclerviewNoteelements.adapter = elementsAdapter
+        noteContentViewModel.noteLiveData.observe (viewLifecycleOwner, {
+            elementsAdapter.setElements(it.elements)
+        })
     }
 
     private fun onNoteEditConfirm() {
