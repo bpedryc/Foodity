@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.haxos.foodity.R
 import com.haxos.foodity.data.model.NotesCategory
 import com.haxos.foodity.databinding.FragmentCategoriesBinding
-import com.haxos.foodity.ui.main.notes.notes.NotesGridFragment
+import com.haxos.foodity.ui.main.notes.notes.NotesFragment
 import com.haxos.foodity.ui.main.notes.notesearch.INoteSearchingFragment
 import com.haxos.foodity.ui.main.notes.notesearch.INoteSearchingViewModel
 import com.haxos.foodity.ui.main.notes.notesearch.NotesSearchingToolbar
@@ -45,7 +45,7 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
         toolbar.inflateMenu(R.menu.menu_notes_categories)
         toolbar.setOnMenuItemClickListener {
             val builder: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
-                .setView(R.layout.dialog_note_category)
+                .setView(R.layout.dialog_category)
                 .setTitle("New category")
                 .setMessage("Create a category")
                 .setPositiveButton(android.R.string.yes) {_, _ -> createCategory() }
@@ -76,7 +76,7 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
 
     inner class CategoryClickListener : CategoriesAdapter.ICategoryClickListener {
         override fun onClick(category: NotesCategory) {
-            val notesGridFragment = NotesGridFragment.newInstance(category.id)
+            val notesGridFragment = NotesFragment.newInstance(category.id)
             replace(notesGridFragment)
         }
     }
@@ -88,7 +88,7 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
     override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
         val inflater: MenuInflater? = activity?.menuInflater
-        inflater?.inflate(R.menu.context_menu_category, menu)
+        inflater?.inflate(R.menu.contextmenu_category, menu)
     }
 
     override fun onContextItemSelected(item: MenuItem) : Boolean {

@@ -26,7 +26,7 @@ class CategoriesAdapter (
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.grid_view_category, parent, false)
+            .inflate(R.layout.gridview_category, parent, false)
         return ViewHolder(view)
     }
 

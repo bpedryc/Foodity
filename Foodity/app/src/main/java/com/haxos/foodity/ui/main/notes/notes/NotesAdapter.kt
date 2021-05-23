@@ -19,7 +19,7 @@ class NotesAdapter (
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.grid_view_note, parent, false)
+            .inflate(R.layout.gridview_note, parent, false)
 
         return ViewHolder(view)
     }

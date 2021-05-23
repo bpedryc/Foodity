@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haxos.foodity.R
 import com.haxos.foodity.data.model.Note
-import com.haxos.foodity.databinding.FragmentNotesGridBinding
+import com.haxos.foodity.databinding.FragmentNotesBinding
 import com.haxos.foodity.ui.main.notes.notesearch.NotesSearchingToolbar
 import com.haxos.foodity.ui.main.notes.content.NoteFragment
 import com.haxos.foodity.ui.main.notes.notesearch.INoteSearchingFragment
@@ -22,25 +22,25 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class NotesGridFragment: Fragment(), INoteSearchingFragment {
+class NotesFragment: Fragment(), INoteSearchingFragment {
 
     companion object {
-        fun newInstance(categoryId: Long): NotesGridFragment {
+        fun newInstance(categoryId: Long): NotesFragment {
             val args = Bundle()
             args.putLong("categoryId", categoryId)
-            val fragment = NotesGridFragment()
+            val fragment = NotesFragment()
             fragment.arguments = args
             return fragment
         }
     }
 
-    lateinit var binding: FragmentNotesGridBinding
+    lateinit var binding: FragmentNotesBinding
     @Inject lateinit var notesGridViewModel: NotesGridViewModel
 
     var noteCreationDialog: AlertDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentNotesGridBinding.inflate(inflater)
+        binding = FragmentNotesBinding.inflate(inflater)
 
         val toolbar: Toolbar = binding.toolbarFragmentNotes
         toolbar.setNavigationOnClickListener {

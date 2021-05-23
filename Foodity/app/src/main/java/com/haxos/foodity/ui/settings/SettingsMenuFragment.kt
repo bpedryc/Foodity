@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.haxos.foodity.data.UserSession
-import com.haxos.foodity.databinding.FragmentSettingsMenuBinding
+import com.haxos.foodity.databinding.FragmentSettingsBinding
 import com.haxos.foodity.ui.authentication.AuthenticationActivity
 import com.haxos.foodity.ui.profile.ProfileFragment
 import com.haxos.foodity.utils.replace
@@ -20,10 +20,10 @@ import javax.inject.Inject
 class SettingsMenuFragment: Fragment() {
 
     @Inject lateinit var userSession: UserSession
-    private lateinit var binding: FragmentSettingsMenuBinding
+    private lateinit var binding: FragmentSettingsBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentSettingsMenuBinding.inflate(inflater)
+        binding = FragmentSettingsBinding.inflate(inflater)
 
         binding.buttonLogout.setOnClickListener { logOut() }
 
