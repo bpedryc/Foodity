@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/navigation_notes"
-        android:name="com.haxos.foodity.ui.main.notes.categories.NotesFragment"
-        tools:layout="@layout/fragment_notes" />
+        android:name="com.haxos.foodity.ui.main.notes.categories.CategoriesFragment"
+        tools:layout="@layout/fragment_categories" />
 
     <fragment
         android:id="@+id/navigation_dashboard"

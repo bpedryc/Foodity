@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haxos.foodity.R
 import com.haxos.foodity.data.model.NotesCategory
-import com.haxos.foodity.databinding.FragmentNotesBinding
+import com.haxos.foodity.databinding.FragmentCategoriesBinding
 import com.haxos.foodity.ui.main.notes.notes.NotesGridFragment
 import com.haxos.foodity.ui.main.notes.notesearch.INoteSearchingFragment
 import com.haxos.foodity.ui.main.notes.notesearch.INoteSearchingViewModel
@@ -22,10 +22,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class NotesFragment : Fragment(), INoteSearchingFragment {
+class CategoriesFragment : Fragment(), INoteSearchingFragment {
 
     @Inject lateinit var notesViewModel: NotesViewModel
-    lateinit var binding: FragmentNotesBinding
+    lateinit var binding: FragmentCategoriesBinding
     override lateinit var noteSearchRecyclerView: RecyclerView
 
     private var categoryCreationDialog: AlertDialog? = null
@@ -35,7 +35,7 @@ class NotesFragment : Fragment(), INoteSearchingFragment {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNotesBinding.inflate(inflater)
+        binding = FragmentCategoriesBinding.inflate(inflater)
         noteSearchRecyclerView = binding.recyclerviewSearch
 
         val toolbar: Toolbar = binding.toolbarActivityMain
