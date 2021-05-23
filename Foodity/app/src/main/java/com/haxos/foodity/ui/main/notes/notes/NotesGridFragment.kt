@@ -14,7 +14,7 @@ import com.haxos.foodity.R
 import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.databinding.FragmentNotesGridBinding
 import com.haxos.foodity.ui.main.notes.notesearch.NotesSearchingToolbar
-import com.haxos.foodity.ui.main.notes.content.NoteContentFragment
+import com.haxos.foodity.ui.main.notes.content.NoteFragment
 import com.haxos.foodity.ui.main.notes.notesearch.INoteSearchingFragment
 import com.haxos.foodity.ui.main.notes.notesearch.INoteSearchingViewModel
 import com.haxos.foodity.utils.replace
@@ -84,7 +84,7 @@ class NotesGridFragment: Fragment(), INoteSearchingFragment {
 
     inner class NoteClickListener : NotesAdapter.INoteClickListener {
         override fun onClick(note: Note) {
-            val noteContentFragment = NoteContentFragment.newInstance(note.id)
+            val noteContentFragment = NoteFragment.newInstance(note.id)
             replace(noteContentFragment)
         }
     }

@@ -1,17 +1,48 @@
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
-        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
+        <item name="editTextStyle">@style/EditTextStyle</item>
     </style>
 
     <style name="GenericButton" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:background">@color/white</item>
     </style>
+
+    <style name="EditTextStyle" parent="@style/Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/bg_grey_rounded</item>
+
+    </style>
+
+    <style name="NoteViewTheme">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="NoteTitle">
+        <item name="android:textSize">36sp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:paddingHorizontal">12dp</item>
+        <item name="android:paddingVertical">9dp</item>
+    </style>
+
+    <style name="NoteDescription">
+        <item name="android:paddingHorizontal">12dp</item>
+        <item name="android:paddingVertical">9dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginHorizontal">36dp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="NoteElementsTheme">
+        <item name="android:paddingHorizontal">9dp</item>
+        <item name="android:paddingVertical">6dp</item>
+    </style>
+
+    <style name="NoteElements">
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+
 
 </resources>

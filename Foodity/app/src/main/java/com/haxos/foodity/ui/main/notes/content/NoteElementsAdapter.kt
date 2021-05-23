@@ -9,7 +9,8 @@ import com.haxos.foodity.R
 import com.haxos.foodity.data.model.NoteElement
 
 class NoteElementsAdapter(
-    private var noteElements: List<NoteElement> = ArrayList()
+    private var noteElements: List<NoteElement> = ArrayList(),
+    private var editable: Boolean = false
 ) : RecyclerView.Adapter<NoteElementsAdapter.ViewHolder>() {
 
     inner class ViewHolder(elementView: View) : RecyclerView.ViewHolder(elementView) {
@@ -18,8 +19,13 @@ class NoteElementsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        var layout = R.layout.listview_noteelements
+        if (editable) {
+            layout = R.layout.listview_noteelements_editable
+        }
+
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.listview_noteelements, parent, false)
+            .inflate(layout, parent, false)
         return ViewHolder(view)
     }
 

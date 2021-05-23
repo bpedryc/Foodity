@@ -14,7 +14,7 @@ interface INotesService {
     fun getNotesByCategory(@Query("categoryId") notesCategoryId: Long): Call<List<Note>>
 
     @GET("/notes")
-    fun getNoteById(@Query("id") id: Long): Call<Note>
+    suspend fun getNoteById(@Query("id") id: Long): Response<Note>
 
     @GET("/notes")
     fun getNotesByProfile(@Query("profileId") profileId: Long): Call<List<Note>>
