@@ -2,6 +2,12 @@ package com.haxos.foodity.retrofit
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.google.gson.TypeAdapterFactory
+import com.google.gson.typeadapters.RuntimeTypeAdapterFactory
+import com.haxos.foodity.data.model.ImageNoteElement
+import com.haxos.foodity.data.model.ListNoteElement
+import com.haxos.foodity.data.model.NoteElement
+import com.haxos.foodity.data.model.TextNoteElement
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,9 +24,15 @@ class RetrofitModule {
 
     @Provides
     fun provideGson(): Gson {
-    return GsonBuilder()
-        .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeAdapter())
-        .create()
+        val adapterFactory = RuntimeTypeAdapterFactory.of(NoteElement::class.java)
+            .registerSubtype(TextNoteElement::class.java)
+            .registerSubtype(ListNoteElement::class.java)
+            .registerSubtype(ImageNoteElement::class.java)
+
+        return GsonBuilder()
+            .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeAdapter())
+            .registerTypeAdapterFactory(adapterFactory)
+            .create()
     }
 
     @Provides
@@ -60,4 +72,8 @@ class RetrofitModule {
     @Provides
     fun provideNotesCategoriesService(retrofit: Retrofit) : INotesCategoriesService =
         retrofit.create(INotesCategoriesService::class.java)
+
+    @Provides
+    fun provideNoteElementsService(retrofit: Retrofit) : INoteElementService =
+        retrofit.create(INoteElementService::class.java)
 }

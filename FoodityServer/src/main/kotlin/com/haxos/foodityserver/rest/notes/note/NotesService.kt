@@ -20,7 +20,7 @@ class NotesService (
 
     fun createNote(request: NoteRequest) : Note {
         val category = categoriesRepository.getOne(request.categoryId)
-        val note = Note(request.name, request.description, request.thumbnail, category, request.elements)
+        val note = Note(request.name, request.description, request.thumbnail, category)
         return notesRepository.save(note)
     }
 

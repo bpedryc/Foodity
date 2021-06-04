@@ -1,6 +1,5 @@
 package com.haxos.foodity.ui.main.notes.content
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -10,29 +9,19 @@ import com.haxos.foodity.data.model.NoteElement
 
 class NoteElementsAdapter(
     private var noteElements: List<NoteElement> = ArrayList(),
-    private var editable: Boolean = false
-) : RecyclerView.Adapter<NoteElementsAdapter.ViewHolder>() {
+    private var editable: Boolean = false,
+) : RecyclerView.Adapter<NoteElementViewHolder>() {
 
-    inner class ViewHolder(elementView: View) : RecyclerView.ViewHolder(elementView) {
-        val title: TextView = elementView.findViewById(R.id.noteelement_title)
-        val contents: TextView = elementView.findViewById(R.id.noteelement_contents)
+    override fun getItemViewType(position: Int): Int = position
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteElementViewHolder {
+        val binder = noteElements[viewType].getAdapter()
+        return binder.createViewHolder(parent)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var layout = R.layout.listview_noteelements
-        if (editable) {
-            layout = R.layout.listview_noteelements_editable
-        }
-
-        val view = LayoutInflater.from(parent.context)
-            .inflate(layout, parent, false)
-        return ViewHolder(view)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NoteElementViewHolder, position: Int) {
         val noteElement = noteElements[position]
-        holder.title.text = noteElement.title
-        holder.contents.text = noteElement.contents
+        holder.bind()
     }
 
     override fun getItemCount(): Int = noteElements.size
@@ -40,5 +29,28 @@ class NoteElementsAdapter(
         noteElements = elements
         notifyDataSetChanged()
     }
-
 }
+
+
+abstract class NoteElementViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    protected val title: TextView = view.findViewById(R.id.noteelement_title)
+    abstract fun bind()
+}
+
+/*
+class ListViewHolder(view: View) : NoteElementViewHolder(view) {
+    val listView : ListView = view.findViewById(R.id.noteelement_list_listview)
+
+    override fun fill(element: NoteElement) {
+        super.fill(element)
+        listView.
+    }
+}
+
+class ImageViewHolder(view: View) : NoteElementViewHolder(view) {
+    val imageView : ImageView = view.findViewById(R.id.noteelement_image_imageview)
+
+    override fun fill(element: NoteElement) {
+        super.fill(element)
+    }
+}*/

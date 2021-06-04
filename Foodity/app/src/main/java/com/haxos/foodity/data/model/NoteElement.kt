@@ -1,7 +1,7 @@
 package com.haxos.foodity.data.model
 
-data class NoteElement (
-        val id: Long,
-        val title: String,
-        val contents: String
-)
+abstract class NoteElement (
+        var id: Long,
+        var order: Long,
+        var title: String
+) : IBindableNoteElement

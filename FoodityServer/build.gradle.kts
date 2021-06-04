@@ -39,6 +39,8 @@ dependencies {
 	implementation("org.keycloak:keycloak-spring-boot-starter:11.0.3")
 	implementation("org.keycloak:keycloak-admin-client:11.0.3")
 	implementation("com.squareup.okhttp3:okhttp:4.9.1")
+	implementation("com.google.code.gson:gson:2.8.5")
+	implementation("org.danilopianini:gson-extras:0.2.1")
 }
 
 tasks.withType<KotlinCompile> {

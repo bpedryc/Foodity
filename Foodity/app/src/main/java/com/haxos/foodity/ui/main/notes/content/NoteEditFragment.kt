@@ -1,10 +1,8 @@
 package com.haxos.foodity.ui.main.notes.content
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,6 +47,14 @@ class NoteEditFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             binding.noteDescription.setText(it.description)
             elementsAdapter.setElements(it.elements)
         })
+
+        val popupMenu = PopupMenu(requireContext(), binding.actionNoteelementAdd)
+        popupMenu.menu.add("Text")
+        popupMenu.menu.add("List")
+        popupMenu.menu.add("Image")
+        binding.actionNoteelementAdd.setOnClickListener {
+            popupMenu.show()
+        }
 
         noteViewModel.noteId = arguments?.getLong("noteId")
 

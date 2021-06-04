@@ -1,6 +1,6 @@
 package com.haxos.foodityserver.rest.notes.note
 
-import com.haxos.foodityserver.rest.notes.NoteElement
+import com.haxos.foodityserver.rest.notes.noteelement.NoteElement
 
 data class NoteRequest (
     val id: Long? = null,
