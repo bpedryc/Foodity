@@ -24,7 +24,7 @@ class RetrofitModule {
 
     @Provides
     fun provideGson(): Gson {
-        val adapterFactory = RuntimeTypeAdapterFactory.of(NoteElement::class.java)
+        val adapterFactory = RuntimeTypeAdapterFactory.of(NoteElement::class.java, "@type")
             .registerSubtype(TextNoteElement::class.java)
             .registerSubtype(ListNoteElement::class.java)
             .registerSubtype(ImageNoteElement::class.java)

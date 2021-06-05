@@ -1,9 +1,5 @@
 spring:
 
-  http:
-    converters:
-      preferred-json-mapper: gson
-
   jpa:
     database-platform: org.sqlite.hibernate.dialect.SQLiteDialect
     hibernate:

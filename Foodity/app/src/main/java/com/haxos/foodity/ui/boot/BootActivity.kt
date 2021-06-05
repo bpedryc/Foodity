@@ -65,8 +65,7 @@ class BootActivity : ComponentActivity()
             lifecycleScope.launch {
                 val username : String = userAccount!!.name
                 val password : String = accountManager.getPassword(userAccount)
-                val loginAction = async { userSession.login(username, password) }
-                loginAction.await()
+                userSession.login(username, password)
 
                 if (userSession.isLoggedIn) {
                     startActivity(Intent(this@BootActivity, MainActivity::class.java))

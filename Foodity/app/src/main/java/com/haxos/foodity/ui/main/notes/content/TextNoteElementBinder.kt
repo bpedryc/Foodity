@@ -13,7 +13,7 @@ class TextNoteElementBinder(
 
     override fun createViewHolder(parent: ViewGroup): NoteElementViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.listview_noteelements, parent, false)
+            .inflate(R.layout.listview_noteelement_text, parent, false)
         return TextViewHolder(view)
     }
 

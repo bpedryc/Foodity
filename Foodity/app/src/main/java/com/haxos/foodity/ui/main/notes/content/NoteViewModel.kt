@@ -7,12 +7,15 @@ import androidx.lifecycle.viewModelScope
 import com.haxos.foodity.data.model.GenericResult
 import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.data.model.NoteRequest
+import com.haxos.foodity.retrofit.INoteElementService
 import com.haxos.foodity.retrofit.INotesService
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class NoteViewModel @Inject constructor(
-    private val notesService: INotesService
+    private val notesService: INotesService,
+    private val elementsService: INoteElementService
 ) : ViewModel() {
 
     private val _noteLiveData = MutableLiveData<Note>()
@@ -28,8 +31,14 @@ class NoteViewModel @Inject constructor(
     }
 
     private fun fetchNote(noteId: Long) = viewModelScope.launch {
-        val response = notesService.getNoteById(noteId)
-        _noteLiveData.value = response.body() ?: return@launch
+        val noteResponse = async {notesService.getNoteById(noteId) }
+        val elementsResponse = async { elementsService.getByNoteId(noteId) }
+
+        val note : Note = noteResponse.await().body() ?: return@launch
+        val elements = elementsResponse.await().body() ?: return@launch
+
+        note.elements = elements
+        _noteLiveData.value = note
     }
 
     fun editNote(noteName: String, noteDescription: String) = viewModelScope.launch {
