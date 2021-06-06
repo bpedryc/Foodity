@@ -4,30 +4,33 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.haxos.foodity.R
-import com.haxos.foodity.data.model.ImageNoteElement
-import com.haxos.foodity.data.model.ListNoteElement
-import com.haxos.foodity.data.model.NoteElement
-import com.haxos.foodity.data.model.TextNoteElement
+import com.haxos.foodity.data.model.*
 import com.koushikdutta.ion.Ion
 
 class NoteElementsAdapter(
-    private var noteElements: List<NoteElement> = ArrayList(),
+    private var note: Note? = null,
     private var editable: Boolean = false,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    override fun getItemViewType(position: Int): Int =
-        when (noteElements[position]) {
+    override fun getItemViewType(position: Int): Int {
+        if (position == 0) {
+            return R.layout.recyclerview_note_header
+        }
+
+        return when (note?.elements?.get(position - 1)) {
             is TextNoteElement -> R.layout.recyclerview_element_text
             is ListNoteElement -> R.layout.recyclerview_element_list
             is ImageNoteElement -> R.layout.recyclerview_element_image
             else -> TODO()
         }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(viewType, parent, false)
 
         return when (viewType) {
+            R.layout.recyclerview_note_header -> NoteHeaderViewHolder(view)
             R.layout.recyclerview_element_text -> TextElementViewHolder(view)
             R.layout.recyclerview_element_list -> ListElementViewHolder(view)
             R.layout.recyclerview_element_image -> ImageElementViewHolder(view)
@@ -36,7 +39,14 @@ class NoteElementsAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (val element = noteElements[position]) {
+        if (position == 0) {
+            val headerHolder = holder as NoteHeaderViewHolder
+            headerHolder.name.text = note?.name
+            headerHolder.description.text = note?.description
+            return
+        }
+
+        when (val element = note?.elements?.get(position - 1)) {
             is TextNoteElement -> {
                 val textHolder = holder as TextElementViewHolder
                 textHolder.title.text = element.title
@@ -59,9 +69,13 @@ class NoteElementsAdapter(
         }
     }
 
-    override fun getItemCount(): Int = noteElements.size
-    fun setElements(elements: List<NoteElement>) {
-        noteElements = elements
+    override fun getItemCount(): Int {
+        val note : Note = note ?: return 0
+        return note.elements.size + 1
+    }
+
+    fun setNote(note: Note) {
+        this.note = note
         notifyDataSetChanged()
     }
 }

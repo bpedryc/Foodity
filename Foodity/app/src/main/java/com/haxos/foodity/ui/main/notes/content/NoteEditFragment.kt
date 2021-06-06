@@ -43,9 +43,10 @@ class NoteEditFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         binding.recyclerviewNoteelements.layoutManager = LinearLayoutManager(context)
 
         noteViewModel.noteLiveData.observe(viewLifecycleOwner, {
-            binding.noteName.setText(it.name)
-            binding.noteDescription.setText(it.description)
-            elementsAdapter.setElements(it.elements)
+            elementsAdapter.setNote(it)
+//            binding.noteName.setText(it.name)
+//            binding.noteDescription.setText(it.description)
+
         })
 
         val popupMenu = PopupMenu(requireContext(), binding.actionNoteelementAdd)
