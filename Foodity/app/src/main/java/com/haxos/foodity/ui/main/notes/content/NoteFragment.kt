@@ -45,13 +45,11 @@ class NoteFragment: Fragment(), Toolbar.OnMenuItemClickListener {
         setHasOptionsMenu(true)
         toolbar.setOnMenuItemClickListener(this)
 
-        val elementsAdapter = NoteElementsAdapter(editable = false)
-        binding.recyclerviewNoteelements.adapter = elementsAdapter
-        binding.recyclerviewNoteelements.layoutManager = object : LinearLayoutManager(context) {
-            override fun isAutoMeasureEnabled(): Boolean = true
-        }
+//        val elementsAdapter = NoteElementsAdapter(editable = false)
+//        binding.recyclerviewNoteelements.adapter = elementsAdapter
+//        binding.recyclerviewNoteelements.layoutManager = LinearLayoutManager(context)
 
-        noteViewModel.noteLiveData.observe(viewLifecycleOwner, {
+        /*noteViewModel.noteLiveData.observe(viewLifecycleOwner, {
             if (it == null) {
                 activity?.onBackPressed()
                 return@observe
@@ -60,12 +58,15 @@ class NoteFragment: Fragment(), Toolbar.OnMenuItemClickListener {
 //            binding.noteName.text = it.name
 //            binding.noteDescription.text = it.description
             elementsAdapter.setNote(it)
-        })
+        })*/
 
         val noteId: Long? = arguments?.getLong("noteId")
         noteViewModel.noteId = noteId
 
-        return binding.root
+        return binding.also {
+            it.viewModel = noteViewModel
+            it.lifecycleOwner = viewLifecycleOwner
+        }.root
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {

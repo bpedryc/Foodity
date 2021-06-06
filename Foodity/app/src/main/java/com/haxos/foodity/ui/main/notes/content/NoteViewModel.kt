@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.haxos.foodity.data.model.GenericResult
-import com.haxos.foodity.data.model.Note
-import com.haxos.foodity.data.model.NoteRequest
+import com.haxos.foodity.BR
+import com.haxos.foodity.R
+import com.haxos.foodity.data.model.*
 import com.haxos.foodity.retrofit.INoteElementService
 import com.haxos.foodity.retrofit.INotesService
 import kotlinx.coroutines.async
@@ -18,8 +18,11 @@ class NoteViewModel @Inject constructor(
     private val elementsService: INoteElementService
 ) : ViewModel() {
 
-    private val _noteLiveData = MutableLiveData<Note>()
-    val noteLiveData : LiveData<Note> = _noteLiveData
+    private val _noteLiveData = MutableLiveData<List<RecyclerItem>>()
+    val noteLiveData : LiveData<List<RecyclerItem>> = _noteLiveData
+
+    /*private val _noteLiveData = MutableLiveData<Note>()
+    val noteLiveData : LiveData<Note> = _noteLiveData*/
 
     private val _noteEditResult = MutableLiveData<GenericResult>()
     val noteEditResult : LiveData<GenericResult> = _noteEditResult
@@ -36,13 +39,51 @@ class NoteViewModel @Inject constructor(
 
         val note : Note = noteResponse.await().body() ?: return@launch
         val elements = elementsResponse.await().body() ?: return@launch
-
         note.elements = elements
-        _noteLiveData.value = note
+
+        val recyclerItems = ArrayList<RecyclerItem>()
+        recyclerItems.add(note.toRecyclerItem())
+        recyclerItems.addAll(note.elements.map {
+            it.toRecyclerItem()
+        })
+
+        _noteLiveData.value = recyclerItems
+    }
+
+    private fun Note.toRecyclerItem() : RecyclerItem =
+        RecyclerItem(
+            data = this,
+            variableId = BR.note,
+            layoutId = R.layout.recyclerview_note_header
+        )
+
+    private fun NoteElement.toRecyclerItem() : RecyclerItem {
+        return when (this) {
+
+            is TextNoteElement -> RecyclerItem(
+                data = this,
+                variableId = BR.textElement,
+                layoutId = R.layout.recyclerview_element_text
+            )
+
+            is ImageNoteElement -> RecyclerItem(
+                data = this,
+                variableId = BR.imageElement,
+                layoutId = R.layout.recyclerview_element_image
+            )
+
+            is ListNoteElement -> RecyclerItem(
+                data = this,
+                variableId = BR.listElement,
+                layoutId = R.layout.recyclerview_element_list
+            )
+
+            else -> TODO()
+        }
     }
 
     fun editNote(noteName: String, noteDescription: String) = viewModelScope.launch {
-        val oldNote : Note = _noteLiveData.value ?: return@launch
+        val oldNote : Note = (_noteLiveData.value?.get(0)?.data as Note) ?: return@launch
         val note = NoteRequest(
             id = oldNote.id,
             name = noteName,
