@@ -5,7 +5,4 @@ class ImageNoteElement (
     order: Long,
     title: String,
     val sourcePath: String
-) : NoteElement(id, order, title) {
-
-    override fun getAdapter() = TODO()
-}
+) : NoteElement(id, order, title)
