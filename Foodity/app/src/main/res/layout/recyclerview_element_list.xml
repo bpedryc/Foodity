@@ -3,7 +3,7 @@
     <data>
         <variable
                 name="listElement"
-                type="com.haxos.foodity.data.model.ListNoteElement"
+                type="com.haxos.foodity.data.model.ListNoteElementBindable"
         />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +16,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="@{listElement.title}"
+                android:text="@{listElement.listNoteElement.title}"
 
         />
 
@@ -25,7 +25,8 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 app:layout_constraintTop_toBottomOf="@id/element_list_title"
-
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:items="@{listElement.bindableEntries}"
         />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

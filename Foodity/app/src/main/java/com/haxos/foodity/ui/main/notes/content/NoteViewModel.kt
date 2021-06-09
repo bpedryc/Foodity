@@ -73,7 +73,7 @@ class NoteViewModel @Inject constructor(
             )
 
             is ListNoteElement -> RecyclerItem(
-                data = this,
+                data = ListNoteElementBindable(this),
                 variableId = BR.listElement,
                 layoutId = R.layout.recyclerview_element_list
             )
@@ -83,7 +83,7 @@ class NoteViewModel @Inject constructor(
     }
 
     fun editNote(noteName: String, noteDescription: String) = viewModelScope.launch {
-        val oldNote : Note = (_noteLiveData.value?.get(0)?.data as Note) ?: return@launch
+        val oldNote : Note = (_noteLiveData.value?.get(0)?.data as Note?) ?: return@launch
         val note = NoteRequest(
             id = oldNote.id,
             name = noteName,

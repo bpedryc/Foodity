@@ -23,10 +23,10 @@ fun setRecyclerViewItems(
 @BindingAdapter("sourcePath")
 fun setImageViewResource(
     imageView: ImageView,
-    sourcePath: String
+    url: String
 ) {
     Ion.with(imageView)
-        .placeholder(R.drawable.bg_grey_rounded)
+        .placeholder(R.drawable.foodity_logo)
         .error(R.drawable.foodity_logo)
-        .load(sourcePath)
+        .load(url)
 }
