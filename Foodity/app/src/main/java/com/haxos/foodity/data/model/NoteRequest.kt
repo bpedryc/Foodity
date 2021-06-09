@@ -6,5 +6,4 @@ data class NoteRequest (
     val categoryId: Long,
     val thumbnail: Int,
     val description: String,
-    val elements: List<NoteElement>
 )

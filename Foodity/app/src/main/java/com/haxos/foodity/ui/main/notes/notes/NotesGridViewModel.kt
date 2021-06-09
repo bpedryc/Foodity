@@ -48,7 +48,7 @@ class NotesGridViewModel @Inject constructor(
     fun addNote(name: String) {
         val categoryId : Long = categoryId ?: return
         val noteRequest = NoteRequest(
-            name = name, thumbnail = 0, description = "", elements = listOf(), categoryId = categoryId)
+            name = name, thumbnail = 0, description = "", categoryId = categoryId)
         viewModelScope.launch {
             val addedNote = notesService.add(noteRequest).body()
             if (addedNote != null) {

@@ -111,8 +111,7 @@ class NoteViewModel @Inject constructor(
             name = note.name,
             description = note.description,
             categoryId = note.categoryId,
-            thumbnail = note.thumbnail,
-            elements = note.elements)
+            thumbnail = note.thumbnail)
         val editedNote = notesService.edit(request)
         if (editedNote.body() != null) {
             _noteEditResult.value = GenericResult(success = 1)
