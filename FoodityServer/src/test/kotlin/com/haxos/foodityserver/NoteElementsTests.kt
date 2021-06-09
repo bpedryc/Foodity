@@ -28,10 +28,10 @@ class NoteElementsTests (
             ListNoteElementEntry(2, "Maliny")
         )*/
 
-        val textElement = TextNoteElement("Przygotowanie", 0, "Przygotuj w następujący sposób:....", note)
-        val listElement = ListNoteElement("Składniki", 1, arrayListOf(), note)
-        val imageElement = ImageNoteElement("Gotowe danie", 3, "/testimage.jpg", note)
-        val textElement2 = TextNoteElement("Dodatkowe informacje", 4, "Warto wiedzieć również, że:....", note)
+        val textElement = TextNoteElement("Przygotowanie", 0, note, "Przygotuj w następujący sposób:....")
+        val listElement = ListNoteElement("Składniki", 1, note, arrayListOf())
+        val imageElement = ImageNoteElement("Gotowe danie", 3, note, "/testimage.jpg")
+        val textElement2 = TextNoteElement("Dodatkowe informacje", 4, note, "Warto wiedzieć również, że:....")
 
         textElementRepository.saveAll(arrayListOf(textElement, textElement2))
         listElementRepository.save(listElement)

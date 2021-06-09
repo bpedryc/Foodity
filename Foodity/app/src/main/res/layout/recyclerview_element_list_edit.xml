@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+                name="listElement"
+                type="com.haxos.foodity.data.model.ListNoteElementBindable"
+        />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    >
+
+        <EditText
+                android:id="@+id/element_list_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@{listElement.listNoteElement.title}"
+
+        />
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/element_list_entries"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                app:layout_constraintTop_toBottomOf="@id/element_list_title"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:items="@{listElement.bindableEntries}"
+        />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

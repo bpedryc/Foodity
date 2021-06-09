@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="imageElement"
+            type="com.haxos.foodity.data.model.ImageNoteElement"
+        />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    >
+
+        <EditText
+                android:id="@+id/element_image_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@{imageElement.title}"
+        />
+
+        <ImageView
+                android:id="@+id/element_image_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/element_image_title"
+                app:sourcePath="@{imageElement.sourcePath}"
+        />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -24,6 +24,8 @@ class NoteViewModel @Inject constructor(
     private val _noteEditResult = MutableLiveData<GenericResult>()
     val noteEditResult : LiveData<GenericResult> = _noteEditResult
 
+    var editable: Boolean = false
+
     var noteId: Long? = null
     set(id) {
         field = id
@@ -47,39 +49,80 @@ class NoteViewModel @Inject constructor(
         _noteLiveData.value = recyclerItems
     }
 
-    private fun Note.toRecyclerItem() : RecyclerItem =
-        RecyclerItem(
+    private fun Note.toRecyclerItem() : RecyclerItem {
+        var layout = R.layout.recyclerview_note_header
+        if (editable) {
+            layout = R.layout.recyclerview_note_header_edit
+        }
+        return RecyclerItem(
             data = this,
             variableId = BR.note,
-            layoutId = R.layout.recyclerview_note_header
+            layoutId = layout
         )
+    }
 
     private fun NoteElement.toRecyclerItem() : RecyclerItem {
         return when (this) {
 
-            is TextNoteElement -> RecyclerItem(
-                data = this,
-                variableId = BR.textElement,
-                layoutId = R.layout.recyclerview_element_text
-            )
+            is TextNoteElement -> {
+                var layout = R.layout.recyclerview_element_text
+                if (editable) {
+                    layout = R.layout.recyclerview_element_text_edit
+                }
+                RecyclerItem(
+                    data = this,
+                    variableId = BR.textElement,
+                    layoutId = layout
+                )
+            }
 
-            is ImageNoteElement -> RecyclerItem(
-                data = this,
-                variableId = BR.imageElement,
-                layoutId = R.layout.recyclerview_element_image
-            )
+            is ImageNoteElement -> {
+                var layout = R.layout.recyclerview_element_image
+                if (editable) {
+                    layout = R.layout.recyclerview_element_image_edit
+                }
+                RecyclerItem(
+                    data = this,
+                    variableId = BR.imageElement,
+                    layoutId = layout
+                )
+            }
 
-            is ListNoteElement -> RecyclerItem(
-                data = ListNoteElementBindable(this),
-                variableId = BR.listElement,
-                layoutId = R.layout.recyclerview_element_list
-            )
+            is ListNoteElement -> {
+                var layout = R.layout.recyclerview_element_list
+                if (editable) {
+                    layout = R.layout.recyclerview_element_list_edit
+                }
+                RecyclerItem(
+                    data = ListNoteElementBindable(this, editable),
+                    variableId = BR.listElement,
+                    layoutId = layout
+                )
+            }
 
             else -> TODO()
         }
     }
 
-    fun editNote(noteName: String, noteDescription: String) = viewModelScope.launch {
+    fun editNote() = viewModelScope.launch {
+        val note : Note = (_noteLiveData.value?.get(0)?.data as Note?) ?: return@launch
+        val request = NoteRequest(
+            id = note.id,
+            name = note.name,
+            description = note.description,
+            categoryId = note.categoryId,
+            thumbnail = note.thumbnail,
+            elements = note.elements)
+        val editedNote = notesService.edit(request)
+        if (editedNote.body() != null) {
+            _noteEditResult.value = GenericResult(success = 1)
+        } else {
+            _noteEditResult.value = GenericResult(error = 1)
+        }
+    }
+
+
+    /*fun editNote(noteName: String, noteDescription: String) = viewModelScope.launch {
         val oldNote : Note = (_noteLiveData.value?.get(0)?.data as Note?) ?: return@launch
         val note = NoteRequest(
             id = oldNote.id,
@@ -95,7 +138,7 @@ class NoteViewModel @Inject constructor(
         } else {
             _noteEditResult.value = GenericResult(error = 1)
         }
-    }
+    }*/
 
     fun deleteNote() = viewModelScope.launch {
         noteId?.let {

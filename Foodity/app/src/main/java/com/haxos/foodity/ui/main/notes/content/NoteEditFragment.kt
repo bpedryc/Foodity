@@ -38,17 +38,6 @@ class NoteEditFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         setHasOptionsMenu(true)
         toolbar.setOnMenuItemClickListener(this)
 
-        val elementsAdapter = NoteElementsAdapter(editable = true)
-        binding.recyclerviewNoteelements.adapter = elementsAdapter
-        binding.recyclerviewNoteelements.layoutManager = LinearLayoutManager(context)
-
-        /*noteViewModel.noteLiveData.observe(viewLifecycleOwner, {
-            elementsAdapter.setNote(it)
-//            binding.noteName.setText(it.name)
-//            binding.noteDescription.setText(it.description)
-
-        })*/
-
         val popupMenu = PopupMenu(requireContext(), binding.actionNoteelementAdd)
         popupMenu.menu.add("Text")
         popupMenu.menu.add("List")
@@ -57,9 +46,13 @@ class NoteEditFragment : Fragment(), Toolbar.OnMenuItemClickListener {
             popupMenu.show()
         }
 
+        noteViewModel.editable = true
         noteViewModel.noteId = arguments?.getLong("noteId")
 
-        return binding.root
+        return binding.also {
+            it.viewModel = noteViewModel
+            it.lifecycleOwner = viewLifecycleOwner
+        }.root
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
@@ -73,9 +66,12 @@ class NoteEditFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         noteViewModel.noteEditResult.observe(viewLifecycleOwner, {
             requireActivity().onBackPressed()
         })
-        noteViewModel.editNote(
+
+        noteViewModel.editNote()
+
+        /*noteViewModel.editNote(
             binding.noteName.text.toString(),
             binding.noteDescription.text.toString()
-        )
+        )*/
     }
 }
