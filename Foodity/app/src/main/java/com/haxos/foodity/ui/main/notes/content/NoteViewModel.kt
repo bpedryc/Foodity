@@ -21,9 +21,6 @@ class NoteViewModel @Inject constructor(
     private val _noteLiveData = MutableLiveData<List<RecyclerItem>>()
     val noteLiveData : LiveData<List<RecyclerItem>> = _noteLiveData
 
-    /*private val _noteLiveData = MutableLiveData<Note>()
-    val noteLiveData : LiveData<Note> = _noteLiveData*/
-
     private val _noteEditResult = MutableLiveData<GenericResult>()
     val noteEditResult : LiveData<GenericResult> = _noteEditResult
 

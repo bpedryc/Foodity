@@ -45,21 +45,6 @@ class NoteFragment: Fragment(), Toolbar.OnMenuItemClickListener {
         setHasOptionsMenu(true)
         toolbar.setOnMenuItemClickListener(this)
 
-//        val elementsAdapter = NoteElementsAdapter(editable = false)
-//        binding.recyclerviewNoteelements.adapter = elementsAdapter
-//        binding.recyclerviewNoteelements.layoutManager = LinearLayoutManager(context)
-
-        /*noteViewModel.noteLiveData.observe(viewLifecycleOwner, {
-            if (it == null) {
-                activity?.onBackPressed()
-                return@observe
-            }
-
-//            binding.noteName.text = it.name
-//            binding.noteDescription.text = it.description
-            elementsAdapter.setNote(it)
-        })*/
-
         val noteId: Long? = arguments?.getLong("noteId")
         noteViewModel.noteId = noteId
 
