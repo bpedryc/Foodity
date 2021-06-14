@@ -18,8 +18,8 @@ class NoteViewModel @Inject constructor(
     private val elementsService: INoteElementService
 ) : ViewModel() {
 
-    private val _noteLiveData = MutableLiveData<List<RecyclerItem>>()
-    val noteLiveData : LiveData<List<RecyclerItem>> = _noteLiveData
+    private val _noteLiveData = MutableLiveData<MutableList<RecyclerItem>>()
+    val noteLiveData : LiveData<MutableList<RecyclerItem>> = _noteLiveData
 
     private val _noteEditResult = MutableLiveData<GenericResult>()
     val noteEditResult : LiveData<GenericResult> = _noteEditResult
@@ -42,11 +42,24 @@ class NoteViewModel @Inject constructor(
 
         val recyclerItems = ArrayList<RecyclerItem>()
         recyclerItems.add(note.toRecyclerItem())
-        recyclerItems.addAll(note.elements.map {
-            it.toRecyclerItem()
-        })
+
+        recyclerItems.addAll(note.elements
+                .sortedBy { it.order }
+                .map { toViewModel(it) }
+                .map { it.toRecyclerItem(editable) })
 
         _noteLiveData.value = recyclerItems
+    }
+
+    private fun toViewModel(noteElement: NoteElement) : NoteElementViewModel {
+        val elementActionListener = ElementActionListener(_noteLiveData)
+
+        return when (noteElement) {
+            is TextNoteElement -> TextNoteElementViewModel(noteElement, elementActionListener)
+            is ListNoteElement -> ListNoteElementViewModel(noteElement, elementActionListener)
+            is ImageNoteElement ->  ImageNoteElementViewModel(noteElement, elementActionListener)
+            else -> TODO()
+        }
     }
 
     private fun Note.toRecyclerItem() : RecyclerItem {
@@ -61,17 +74,18 @@ class NoteViewModel @Inject constructor(
         )
     }
 
-    private fun NoteElement.toRecyclerItem() : RecyclerItem {
+    /*private fun NoteElementViewModel.toRecyclerItem() : RecyclerItem {
         return when (this) {
 
-            is TextNoteElement -> {
+            is TextNoteElementViewModel -> {
                 var layout = R.layout.recyclerview_element_text
                 if (editable) {
                     layout = R.layout.recyclerview_element_text_edit
                 }
+
                 RecyclerItem(
                     data = this,
-                    variableId = BR.textElement,
+                    variableId = BR.viewModel,
                     layoutId = layout
                 )
             }
@@ -102,7 +116,7 @@ class NoteViewModel @Inject constructor(
 
             else -> TODO()
         }
-    }
+    }*/
 
     fun editNote() = viewModelScope.launch {
         val note : Note = (_noteLiveData.value?.get(0)?.data as Note?) ?: return@launch

@@ -2,8 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="imageElement"
-            type="com.haxos.foodity.data.model.ImageNoteElement"
+            name="viewModel"
+            type="com.haxos.foodity.data.model.ImageNoteElementViewModel"
         />
     </data>
 
@@ -17,7 +17,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="@{imageElement.title}"
+                android:text="@{viewModel.imageElement.title}"
         />
 
         <ImageView
@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/element_image_title"
-                app:sourcePath="@{imageElement.sourcePath}"
+                app:sourcePath="@{viewModel.imageElement.sourcePath}"
         />
 
 

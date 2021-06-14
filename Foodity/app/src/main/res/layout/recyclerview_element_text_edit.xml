@@ -2,8 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="textElement"
-            type="com.haxos.foodity.data.model.TextNoteElement"
+            name="viewModel"
+            type="com.haxos.foodity.data.model.TextNoteElementViewModel"
         />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,21 +11,90 @@
             android:layout_height="wrap_content"
     >
 
-        <EditText
+        <LinearLayout
+            android:id="@+id/element_move"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <ImageButton
+                android:id="@+id/element_up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_up"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="@{() -> viewModel.onMoveUp()}"/>
+
+            <ImageButton
+                android:id="@+id/element_down"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_down"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/element_up"
+                android:onClick="@{() -> viewModel.onMoveDown()}"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/element_main"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/element_operations"
+            app:layout_constraintStart_toEndOf="@+id/element_move"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <EditText
                 android:id="@+id/element_text_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="@{textElement.title}"
-        />
+                android:text="@{viewModel.textElement.title}"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
+            <EditText
                 android:id="@+id/element_text_contents"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/element_text_title"
-                android:text="@{textElement.contents}"
-        />
+                android:text="@{viewModel.textElement.contents}"
+                app:layout_constraintTop_toBottomOf="@id/element_text_title" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/element_operations"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/element_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_delete"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/element_down"
+                android:onClick="@{() -> viewModel.onDelete()}"/>
+
+        </LinearLayout>
+
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
