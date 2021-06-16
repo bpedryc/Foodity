@@ -1,13 +1,11 @@
 package com.haxos.foodity.data.model
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.haxos.foodity.ui.main.notes.content.RecyclerItem
-
-class ElementActionListener (
-        private val elementsLiveData: MutableLiveData<MutableList<RecyclerItem>>
+class ElementActionListener(
+        val onMoveUp: (NoteElementViewModel) -> Unit,
+        val onMoveDown: (NoteElementViewModel) -> Unit,
+        val onDelete: (NoteElementViewModel) -> Unit
 ){
-    private fun getElements() : MutableList<RecyclerItem> {
+   /* private fun getElements() : MutableList<RecyclerItem> {
         return elementsLiveData.value!!
     }
     private fun getIndex(elementViewModel: NoteElementViewModel) : Int {
@@ -45,5 +43,5 @@ class ElementActionListener (
         val elements = getElements()
         elements.removeAt(index)
         elementsLiveData.value = elementsLiveData.value
-    }
+    }*/
 }

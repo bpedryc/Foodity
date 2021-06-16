@@ -6,15 +6,15 @@ abstract class NoteElementViewModel (
         private val elementActionListener: ElementActionListener
 ) {
     fun onMoveUp() {
-        elementActionListener.moveUp(this)
+        elementActionListener.onMoveUp(this)
     }
 
     fun onMoveDown() {
-        elementActionListener.moveDown(this)
+        elementActionListener.onMoveDown(this)
     }
 
     fun onDelete() {
-        elementActionListener.delete(this)
+        elementActionListener.onDelete(this)
     }
 
     abstract fun toRecyclerItem(editable: Boolean): RecyclerItem
