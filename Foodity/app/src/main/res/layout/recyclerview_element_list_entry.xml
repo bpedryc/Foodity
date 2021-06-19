@@ -2,8 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="listEntry"
-            type="com.haxos.foodity.data.model.ListNoteElementEntry"
+            name="viewModel"
+            type="com.haxos.foodity.data.model.ListNoteElementEntryViewModel"
         />
     </data>
 
@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="@{String.valueOf(listEntry.orderNumber)}"
+                android:text="@{String.valueOf(viewModel.orderNumber)}"
         />
 
         <TextView
@@ -30,7 +30,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/element_list_entry_index"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="@{listEntry.contents}"
+                android:text="@{viewModel.contents}"
         />
 
 

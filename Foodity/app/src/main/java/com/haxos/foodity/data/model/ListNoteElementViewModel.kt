@@ -6,7 +6,9 @@ import com.haxos.foodity.ui.main.notes.content.RecyclerItem
 
 class ListNoteElementViewModel (
         val listElement: ListNoteElement,
-        elementActionListener: ElementActionListener
+        private val editable: Boolean,
+        elementActionListener: ElementActionListener,
+        entryActionListener: EntryActionListener,
 ) : NoteElementViewModel(elementActionListener) {
 
     override fun toRecyclerItem(editable: Boolean) : RecyclerItem {
@@ -15,9 +17,14 @@ class ListNoteElementViewModel (
             layout = R.layout.recyclerview_element_list_edit
         }
         return RecyclerItem(
-                data = this,//ListNoteElementBindable(listElement, editable),
+                data = this,
                 variableId = BR.viewModel,
                 layoutId = layout
         )
     }
+
+    val bindableEntries : MutableList<RecyclerItem> = listElement.entries
+            .map { ListNoteElementEntryViewModel(it, entryActionListener)}
+            .map { it.toRecyclerItem(editable) }
+            .toMutableList()
 }

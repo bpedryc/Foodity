@@ -4,5 +4,5 @@ class ListNoteElement (
     id: Long,
     order: Long,
     title: String,
-    val entries: List<ListNoteElementEntry>
+    val entries: MutableList<ListNoteElementEntry>
 ) : NoteElement(id, order, title)

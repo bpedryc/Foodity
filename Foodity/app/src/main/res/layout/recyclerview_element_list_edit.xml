@@ -11,23 +11,85 @@
             android:layout_height="wrap_content"
     >
 
-        <EditText
-                android:id="@+id/element_list_title"
+        <LinearLayout
+            android:id="@+id/element_move"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/element_up"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_up"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="@{viewModel.listElement.title}"
+                android:onClick="@{() -> viewModel.onMoveUp()}"/>
 
-        />
-
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/element_list_entries"
-                android:layout_height="wrap_content"
+            <ImageButton
+                android:id="@+id/element_down"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_down"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/element_up"
+                android:onClick="@{() -> viewModel.onMoveDown()}"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/element_main"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/element_operations"
+            app:layout_constraintStart_toEndOf="@+id/element_move"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                    android:id="@+id/element_list_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="@{viewModel.listElement.title}" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/element_list_entries"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:items="@{viewModel.bindableEntries}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/element_list_title"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-<!--                app:items="@{listElement.bindableEntries}"-->
-<!--        />-->
+                android:paddingHorizontal="0dp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/element_operations"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/element_delete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_delete"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/element_down"
+                android:onClick="@{() -> viewModel.onDelete()}"/>
+
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

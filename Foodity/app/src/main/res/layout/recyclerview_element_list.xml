@@ -25,9 +25,9 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 app:layout_constraintTop_toBottomOf="@id/element_list_title"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-<!--                app:items="@{listElement.bindableEntries}"-->
-<!--        />-->
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:items="@{viewModel.bindableEntries}"
+        />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
