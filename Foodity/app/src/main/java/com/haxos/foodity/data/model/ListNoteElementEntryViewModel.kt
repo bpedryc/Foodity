@@ -23,7 +23,7 @@ class ListNoteElementEntryViewModel(
 
     val contents = entry.contents
     val orderNumber = entry.orderNumber
-    fun onMoveUp() = entryActionListener.onMoveUp
-    fun onMoveDown() = entryActionListener.onMoveDown
-    fun onDelete() = entryActionListener.onDelete
+    fun onMoveUp() = entryActionListener.onMoveUp(this)
+    fun onMoveDown() = entryActionListener.onMoveDown(this)
+    fun onDelete() = entryActionListener.onDelete(this)
 }

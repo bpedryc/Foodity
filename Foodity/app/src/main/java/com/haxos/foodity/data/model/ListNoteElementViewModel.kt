@@ -1,15 +1,25 @@
 package com.haxos.foodity.data.model
 
+import androidx.lifecycle.MutableLiveData
 import com.haxos.foodity.BR
 import com.haxos.foodity.R
 import com.haxos.foodity.ui.main.notes.content.RecyclerItem
 
 class ListNoteElementViewModel (
         val listElement: ListNoteElement,
+        private val _noteLiveData: MutableLiveData<MutableList<RecyclerItem>>,
         private val editable: Boolean,
-        elementActionListener: ElementActionListener,
-        entryActionListener: EntryActionListener,
+        elementActionListener: ElementActionListener
 ) : NoteElementViewModel(elementActionListener) {
+
+    val bindableEntries : MutableList<RecyclerItem> = listElement.entries
+        .map { ListNoteElementEntryViewModel(it, EntryActionListener(
+                onMoveUp = ::moveUpEntry,
+                onMoveDown = ::moveDownEntry,
+                onDelete = ::deleteEntry)
+        )}
+        .map { it.toRecyclerItem(editable) }
+        .toMutableList()
 
     override fun toRecyclerItem(editable: Boolean) : RecyclerItem {
         var layout = R.layout.recyclerview_element_list
@@ -23,8 +33,38 @@ class ListNoteElementViewModel (
         )
     }
 
-    val bindableEntries : MutableList<RecyclerItem> = listElement.entries
-            .map { ListNoteElementEntryViewModel(it, entryActionListener)}
-            .map { it.toRecyclerItem(editable) }
-            .toMutableList()
+    private fun moveUpEntry(entryViewModel: ListNoteElementEntryViewModel) {
+        val index : Int = bindableEntries.indexOfFirst {
+            it.data == entryViewModel
+        }
+        if (index <= 1) {
+            return
+        }
+
+        val prevEntry = bindableEntries[index - 1]
+        bindableEntries[index - 1] = bindableEntries[index]
+        bindableEntries[index] = prevEntry
+        _noteLiveData.value = _noteLiveData.value
+    }
+
+    private fun moveDownEntry(entryViewModel: ListNoteElementEntryViewModel) {
+        val index : Int = bindableEntries.indexOfFirst {
+            it.data == entryViewModel
+        }
+        if (index >= bindableEntries.size - 1 || index == -1) {
+            return
+        }
+
+        val nextEntry = bindableEntries[index + 1]
+        bindableEntries[index + 1] = bindableEntries[index]
+        bindableEntries[index] = nextEntry
+        _noteLiveData.value = _noteLiveData.value
+    }
+
+    private fun deleteEntry(entryViewModel: ListNoteElementEntryViewModel) {
+        bindableEntries.removeIf {
+            it.data == entryViewModel
+        }
+        _noteLiveData.value = _noteLiveData.value
+    }
 }

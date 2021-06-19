@@ -68,74 +68,8 @@ class NoteViewModel @Inject constructor(
         _noteLiveData.value = _noteLiveData.value
     }
 
-    private fun deleteElement(elementViewModel: NoteElementViewModel) =
-            _noteLiveData.value?.removeIf { it.data == elementViewModel }
-
-    private fun moveDownEntry(
-            elementViewModel: ListNoteElementViewModel,
-            entryViewModel: ListNoteElementEntryViewModel
-    ) {
-        val elementRecyclerItems : MutableList<RecyclerItem> = _noteLiveData.value ?: return
-        val elementRecyclerItem : RecyclerItem = elementRecyclerItems.find {
-            it.data == elementViewModel
-        } ?: return
-
-        val element = elementRecyclerItem.data as ListNoteElementViewModel
-
-        val entryRecyclerItems : MutableList<RecyclerItem> = element.bindableEntries
-        val index : Int = entryRecyclerItems.indexOfFirst {
-            it.data == entryViewModel
-        }
-        if (index == -1 || index >= entryRecyclerItems.size - 1) {
-            return
-        }
-
-        val nextEntry = entryRecyclerItems[index + 1]
-        entryRecyclerItems[index + 1] = entryRecyclerItems[index]
-        entryRecyclerItems[index] = nextEntry
-        _noteLiveData.value = _noteLiveData.value
-    }
-
-    private fun moveUpEntry(
-            elementViewModel: ListNoteElementViewModel,
-            entryViewModel: ListNoteElementEntryViewModel
-    ) {
-        val elementRecyclerItems : MutableList<RecyclerItem> = _noteLiveData.value ?: return
-        val elementRecyclerItem : RecyclerItem = elementRecyclerItems.find {
-            it.data == elementViewModel
-        } ?: return
-
-        val element = elementRecyclerItem.data as ListNoteElementViewModel
-
-        val entryRecyclerItems : MutableList<RecyclerItem> = element.bindableEntries
-        val index : Int = entryRecyclerItems.indexOfFirst {
-            it.data == entryViewModel
-        }
-        if (index <= 1) {
-            return
-        }
-
-        val prevEntry = entryRecyclerItems[index - 1]
-        entryRecyclerItems[index - 1] = entryRecyclerItems[index]
-        entryRecyclerItems[index] = prevEntry
-        _noteLiveData.value = _noteLiveData.value
-    }
-
-    private fun deleteEntry(
-            elementViewModel: ListNoteElementViewModel,
-            entryViewModel: ListNoteElementEntryViewModel
-    ) {
-        val elementRecyclerItems : MutableList<RecyclerItem> = _noteLiveData.value ?: return
-        val elementRecyclerItem : RecyclerItem = elementRecyclerItems.find {
-            it.data == elementViewModel
-        } ?: return
-
-        val element = elementRecyclerItem.data as ListNoteElementViewModel
-
-        val entryRecyclerItems : MutableList<RecyclerItem> = element.bindableEntries
-        entryRecyclerItems.removeIf {
-            it.data == entryViewModel
-        }
+    private fun deleteElement(elementViewModel: NoteElementViewModel) {
+        _noteLiveData.value?.removeIf { it.data == elementViewModel }
         _noteLiveData.value = _noteLiveData.value
     }
 
@@ -164,15 +98,10 @@ class NoteViewModel @Inject constructor(
                 onMoveDown = ::moveDownElement,
                 onDelete = ::deleteElement
         )
-        val entryActionListener = EntryActionListener(
-                onMoveUp = ::moveUpEntry,
-                onMoveDown = ::moveDownEntry,
-                onDelete = ::deleteEntry
-        )
 
         return when (noteElement) {
             is TextNoteElement -> TextNoteElementViewModel(noteElement, elementActionListener)
-            is ListNoteElement -> ListNoteElementViewModel(noteElement, editable, elementActionListener, entryActionListener)
+            is ListNoteElement -> ListNoteElementViewModel(noteElement, _noteLiveData, editable, elementActionListener)
             is ImageNoteElement ->  ImageNoteElementViewModel(noteElement, elementActionListener)
             else -> TODO()
         }
