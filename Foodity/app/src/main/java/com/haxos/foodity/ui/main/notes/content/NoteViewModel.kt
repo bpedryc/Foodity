@@ -1,7 +1,5 @@
 package com.haxos.foodity.ui.main.notes.content
 
-import android.content.Intent
-import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,6 +23,12 @@ class NoteViewModel @Inject constructor(
 
     private val _noteEditResult = MutableLiveData<GenericResult>()
     val noteEditResult : LiveData<GenericResult> = _noteEditResult
+
+    private val _imageElementRequest = MutableLiveData<GenericResult>()
+    val imageElementRequest : LiveData<GenericResult> = _imageElementRequest
+
+    private val _imageElementResponse = MutableLiveData<GenericResult>()
+    val imageElementResponse : LiveData<GenericResult> = _imageElementResponse
 
     var editable: Boolean = false
 
@@ -98,7 +102,8 @@ class NoteViewModel @Inject constructor(
         return when (noteElement) {
             is TextNoteElement -> TextNoteElementViewModel(noteElement, elementActionListener)
             is ListNoteElement -> ListNoteElementViewModel(noteElement, _noteLiveData, editable, elementActionListener)
-            is ImageNoteElement ->  ImageNoteElementViewModel(noteElement, elementActionListener)
+            is ImageNoteElement ->  ImageNoteElementViewModel(noteElement, elementActionListener,
+                    onEditImage = { _imageElementRequest.value = GenericResult(1) })
             else -> TODO()
         }
     }

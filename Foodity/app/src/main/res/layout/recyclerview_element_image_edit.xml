@@ -70,7 +70,7 @@
                 <ImageButton
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
-                    android:onClick="@{(v) -> viewModel.editImage(v)}"
+                    android:onClick="@{() -> viewModel.editImage()}"
                     android:alpha="0.5"
                     />
             </FrameLayout>

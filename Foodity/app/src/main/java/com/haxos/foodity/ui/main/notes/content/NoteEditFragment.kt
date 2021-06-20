@@ -1,7 +1,10 @@
 package com.haxos.foodity.ui.main.notes.content
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
@@ -27,6 +30,11 @@ class NoteEditFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     lateinit var binding : FragmentNoteEditBinding
     @Inject lateinit var noteViewModel : NoteViewModel
 
+    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        Toast.makeText(context, uri.toString(), Toast.LENGTH_LONG).show()
+//        noteViewModel.uploadImage(image)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentNoteEditBinding.inflate(inflater)
 
@@ -37,6 +45,13 @@ class NoteEditFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
         setHasOptionsMenu(true)
         toolbar.setOnMenuItemClickListener(this)
+
+        noteViewModel.imageElementRequest.observe(viewLifecycleOwner, {
+            getContent.launch("image/*")
+        })
+        noteViewModel.imageElementResponse.observe(viewLifecycleOwner, {
+            //        noteViewModel.editImage(index, newImageUri)
+        })
 
         val popupMenu = PopupMenu(requireContext(), binding.actionNoteelementAdd)
         popupMenu.menu.add("Text")

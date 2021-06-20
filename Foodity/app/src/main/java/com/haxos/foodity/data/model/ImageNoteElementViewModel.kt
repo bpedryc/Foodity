@@ -1,20 +1,13 @@
 package com.haxos.foodity.data.model
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.os.Bundle
-import android.view.View
-import androidx.core.app.ActivityCompat.startActivityForResult
 import com.haxos.foodity.BR
 import com.haxos.foodity.R
 import com.haxos.foodity.ui.main.notes.content.RecyclerItem
-import com.haxos.foodity.utils.scanForActivity
-import com.haxos.foodity.utils.unwrap
 
 class ImageNoteElementViewModel (
         val imageElement: ImageNoteElement,
-        elementActionListener: ElementActionListener
+        elementActionListener: ElementActionListener,
+        val onEditImage: (ImageNoteElement) -> Unit
 ) : NoteElementViewModel(elementActionListener) {
 
     override fun toRecyclerItem(editable: Boolean): RecyclerItem {
@@ -29,10 +22,15 @@ class ImageNoteElementViewModel (
         )
     }
 
-    fun editImage(imageView: View) {
+    fun editImage() {
+        onEditImage(imageElement)
+    }
+}
+   /* fun editImage(imageView: View) {
         val activity = imageView.context.scanForActivity()
+        val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment)
+        val currentFragment = navHostFragment?.childFragmentManager?.fragments?.last()
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         activity?.startActivityForResult(intent, 1)
-    }
-}
+    }*/
