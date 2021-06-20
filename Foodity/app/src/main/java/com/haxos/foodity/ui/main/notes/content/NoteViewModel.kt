@@ -21,12 +21,6 @@ class NoteViewModel @Inject constructor(
     private val _noteLiveData = MutableLiveData<MutableList<RecyclerItem>>()
     val noteLiveData : LiveData<MutableList<RecyclerItem>> = _noteLiveData
 
-    private fun getNoteElements() : MutableList<NoteElementViewModel> =
-        _noteLiveData.value.orEmpty()
-                .map { it.data }
-                .filterIsInstance<NoteElementViewModel>()
-                .toMutableList()
-
     private val _noteEditResult = MutableLiveData<GenericResult>()
     val noteEditResult : LiveData<GenericResult> = _noteEditResult
 

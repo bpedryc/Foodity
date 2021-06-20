@@ -37,7 +37,7 @@ class ListNoteElementViewModel (
         val index : Int = bindableEntries.indexOfFirst {
             it.data == entryViewModel
         }
-        if (index <= 1) {
+        if (index <= 0) {
             return
         }
 
