@@ -43,23 +43,12 @@
                 android:onClick="@{() -> viewModel.onMoveDown()}"/>
         </LinearLayout>
 
-
-        <EditText
-            android:id="@+id/element_list_entry_index"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:text="@{String.valueOf(viewModel.orderNumber)}"
-            app:layout_constraintStart_toEndOf="@+id/entry_move"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
-
         <EditText
             android:id="@+id/element_list_entry_contents"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:text="@{viewModel.contents}"
-            app:layout_constraintStart_toEndOf="@+id/element_list_entry_index"
+            android:text="@={viewModel.contents}"
+            app:layout_constraintStart_toEndOf="@id/entry_move"
             app:layout_constraintEnd_toStartOf="@+id/entry_operations"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

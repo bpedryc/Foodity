@@ -1,6 +1,6 @@
 package com.haxos.foodity.data.model
 
 class ListNoteElementEntry (
-    val id: Long,
+    val id: Long? = null,
     val orderNumber: Long,
-    val contents: String)
+    var contents: String)

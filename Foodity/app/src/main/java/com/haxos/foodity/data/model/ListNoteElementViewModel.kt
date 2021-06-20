@@ -12,12 +12,13 @@ class ListNoteElementViewModel (
         elementActionListener: ElementActionListener
 ) : NoteElementViewModel(elementActionListener) {
 
+    private val entryActionListener = EntryActionListener(
+            onMoveUp = ::moveUpEntry,
+            onMoveDown = ::moveDownEntry,
+            onDelete = ::deleteEntry)
+
     val bindableEntries : MutableList<RecyclerItem> = listElement.entries
-        .map { ListNoteElementEntryViewModel(it, EntryActionListener(
-                onMoveUp = ::moveUpEntry,
-                onMoveDown = ::moveDownEntry,
-                onDelete = ::deleteEntry)
-        )}
+        .map { ListNoteElementEntryViewModel(it, entryActionListener) }
         .map { it.toRecyclerItem(editable) }
         .toMutableList()
 
@@ -31,6 +32,18 @@ class ListNoteElementViewModel (
                 variableId = BR.viewModel,
                 layoutId = layout
         )
+    }
+
+    fun addEntry() {
+        val newEntry = ListNoteElementEntry(
+                orderNumber = listElement.entries.size.toLong(),
+                contents = "")
+        listElement.entries.add(newEntry)
+
+        val newEntryViewModel = ListNoteElementEntryViewModel(newEntry, entryActionListener)
+        val newEntryRecyclerItem = newEntryViewModel.toRecyclerItem(editable)
+        bindableEntries.add(newEntryRecyclerItem)
+        _noteLiveData.value = _noteLiveData.value
     }
 
     private fun moveUpEntry(entryViewModel: ListNoteElementEntryViewModel) {
