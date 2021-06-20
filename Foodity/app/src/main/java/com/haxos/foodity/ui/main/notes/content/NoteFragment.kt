@@ -1,11 +1,14 @@
 package com.haxos.foodity.ui.main.notes.content
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -77,4 +80,6 @@ class NoteFragment: Fragment(), Toolbar.OnMenuItemClickListener {
             .setNegativeButton(android.R.string.no) {_, _ -> }
             .show()
     }
+
+
 }

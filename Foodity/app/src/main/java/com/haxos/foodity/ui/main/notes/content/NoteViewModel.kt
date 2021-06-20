@@ -1,5 +1,7 @@
 package com.haxos.foodity.ui.main.notes.content
 
+import android.content.Intent
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
