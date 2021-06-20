@@ -18,9 +18,19 @@ spring:
           issuer-uri: http://localhost:8083
           jwk-set-uri: http://localhost:8083/protocol/openid-connect/certs
 
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
+
 keycloak:
   auth-server-url: http://localhost:8180/auth
   realm: FoodityKeycloak
   resource: login-app
   credentials:
     secret: 82ccfbb6-26d2-45a4-a202-24c8d09f90af
+
+file:
+  upload-dir: /uploads

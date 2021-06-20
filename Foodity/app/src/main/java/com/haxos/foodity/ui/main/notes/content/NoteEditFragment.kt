@@ -30,9 +30,10 @@ class NoteEditFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     lateinit var binding : FragmentNoteEditBinding
     @Inject lateinit var noteViewModel : NoteViewModel
 
-    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri ->
         Toast.makeText(context, uri.toString(), Toast.LENGTH_LONG).show()
-//        noteViewModel.uploadImage(image)
+        val inputStream = activity?.contentResolver?.openInputStream(uri)
+        noteViewModel.uploadImage(image)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
