@@ -8,6 +8,7 @@ import com.haxos.foodity.data.model.ImageNoteElement
 import com.haxos.foodity.data.model.ListNoteElement
 import com.haxos.foodity.data.model.NoteElement
 import com.haxos.foodity.data.model.TextNoteElement
+import com.haxos.foodity.ui.main.notes.content.IFileService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -76,4 +77,8 @@ class RetrofitModule {
     @Provides
     fun provideNoteElementsService(retrofit: Retrofit) : INoteElementService =
         retrofit.create(INoteElementService::class.java)
+
+    @Provides
+    fun provideFileService(retrofit: Retrofit) : IFileService =
+        retrofit.create(IFileService::class.java)
 }

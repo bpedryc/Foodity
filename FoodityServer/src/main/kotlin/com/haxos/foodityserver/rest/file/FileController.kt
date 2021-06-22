@@ -3,6 +3,7 @@ package com.haxos.foodityserver.rest.file
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.Resource
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -23,7 +24,7 @@ class FileController(
         val fileName: String = fileStorageService.storeFile(file)
 
         val fileDownloadUri: String = ServletUriComponentsBuilder.fromCurrentContextPath()
-            .path("/fileDownload/")
+            .path("/file/")
             .path(fileName)
             .toUriString()
 
@@ -39,18 +40,17 @@ class FileController(
     fun downloadFile(@PathVariable fileName: String, request: HttpServletRequest): ResponseEntity<Resource> {
         val resource: Resource = fileStorageService.loadFileAsResource(fileName)
 
-        var contentType = "application/octet-stream"
-        try {
-            contentType = request.servletContext
-                .getMimeType(resource.file.absolutePath)
+        return try {
+            val contentType : String = request.servletContext.getMimeType(resource.file.absolutePath)
+                ?: "application/octet-stream"
+
+            ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.filename + "\"")
+                .body(resource)
         } catch (exception: IOException) {
             logger.info("Could not determine file type.")
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
         }
-
-        return ResponseEntity.ok()
-            .contentType(MediaType.parseMediaType(contentType))
-            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.filename + "\"")
-            .body(resource)
     }
-
 }

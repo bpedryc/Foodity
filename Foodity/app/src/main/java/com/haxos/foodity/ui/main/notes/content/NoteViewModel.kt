@@ -11,11 +11,13 @@ import com.haxos.foodity.retrofit.INoteElementService
 import com.haxos.foodity.retrofit.INotesService
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class NoteViewModel @Inject constructor(
     private val notesService: INotesService,
-    private val elementsService: INoteElementService
+    private val elementsService: INoteElementService,
+    private val fileService: IFileService
 ) : ViewModel() {
 
     private val _noteLiveData = MutableLiveData<MutableList<RecyclerItem>>()
@@ -24,11 +26,11 @@ class NoteViewModel @Inject constructor(
     private val _noteEditResult = MutableLiveData<GenericResult>()
     val noteEditResult : LiveData<GenericResult> = _noteEditResult
 
-    private val _imageElementRequest = MutableLiveData<GenericResult>()
-    val imageElementRequest : LiveData<GenericResult> = _imageElementRequest
+    private val _imageElementRequest = MutableLiveData<ImageElementRequest>()
+    val imageElementRequest : LiveData<ImageElementRequest> = _imageElementRequest
 
-    private val _imageElementResponse = MutableLiveData<GenericResult>()
-    val imageElementResponse : LiveData<GenericResult> = _imageElementResponse
+    private val _imageElementResponse = MutableLiveData<ImageElementResponse>()
+    val imageElementResponse : LiveData<ImageElementResponse> = _imageElementResponse
 
     var editable: Boolean = false
 
@@ -102,9 +104,17 @@ class NoteViewModel @Inject constructor(
         return when (noteElement) {
             is TextNoteElement -> TextNoteElementViewModel(noteElement, elementActionListener)
             is ListNoteElement -> ListNoteElementViewModel(noteElement, _noteLiveData, editable, elementActionListener)
-            is ImageNoteElement ->  ImageNoteElementViewModel(noteElement, elementActionListener,
-                    onEditImage = { _imageElementRequest.value = GenericResult(1) })
+            is ImageNoteElement ->  ImageNoteElementViewModel(noteElement, elementActionListener, onEditImage = ::requestImageEdit)
             else -> TODO()
+        }
+    }
+
+    private fun requestImageEdit(imageViewModel: ImageNoteElementViewModel) {
+        val index = _noteLiveData.value?.indexOfFirst { recylerItem ->
+            recylerItem.data == imageViewModel
+        }
+        index?.let {
+            _imageElementRequest.value = ImageElementRequest(index)
         }
     }
 
@@ -143,6 +153,29 @@ class NoteViewModel @Inject constructor(
             if (response.isSuccessful && response.body() == true) {
                 _noteLiveData.value = null
             }
+        }
+    }
+
+    fun uploadImage(contentRequest: ContentUriRequestBody) = viewModelScope.launch {
+        val multipart = MultipartBody.Part
+                .createFormData("file", contentRequest.filename, contentRequest)
+        val response = fileService.postFile(multipart)
+        val fileUrl = response.body()?.fileDownloadUri
+        fileUrl?.let {
+            _imageElementRequest.value = ImageElementRequest(
+                    _imageElementRequest.value!!.recyclerItemIndex, it)
+        }
+    }
+
+    fun editImage(index: Int, contentUrl: String) {
+        val recyclerItems: MutableList<RecyclerItem> = _noteLiveData.value ?: return
+        viewModelScope.launch {
+            val recyclerItem: RecyclerItem = recyclerItems[index]
+            val imageViewModel = recyclerItem.data as ImageNoteElementViewModel
+            val imageElement = imageViewModel.imageElement
+            val updatedImageElement = ImageNoteElement(imageElement.id, imageElement.order, imageElement.title, contentUrl)
+            imageViewModel.imageElement = updatedImageElement
+            _noteLiveData.value = _noteLiveData.value
         }
     }
 }

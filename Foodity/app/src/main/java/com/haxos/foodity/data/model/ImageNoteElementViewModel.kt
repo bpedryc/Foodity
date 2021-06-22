@@ -5,9 +5,9 @@ import com.haxos.foodity.R
 import com.haxos.foodity.ui.main.notes.content.RecyclerItem
 
 class ImageNoteElementViewModel (
-        val imageElement: ImageNoteElement,
+        var imageElement: ImageNoteElement,
         elementActionListener: ElementActionListener,
-        val onEditImage: (ImageNoteElement) -> Unit
+        val onEditImage: (ImageNoteElementViewModel) -> Unit
 ) : NoteElementViewModel(elementActionListener) {
 
     override fun toRecyclerItem(editable: Boolean): RecyclerItem {
@@ -23,7 +23,7 @@ class ImageNoteElementViewModel (
     }
 
     fun editImage() {
-        onEditImage(imageElement)
+        onEditImage(this)
     }
 }
    /* fun editImage(imageView: View) {

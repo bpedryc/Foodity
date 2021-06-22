@@ -1,24 +1,32 @@
 package com.haxos.foodity.ui.main.notes.content
 
+import android.content.ContentResolver
+import android.content.Context
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
-import android.view.*
+import android.provider.MediaStore
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.haxos.foodity.R
 import com.haxos.foodity.databinding.FragmentNoteEditBinding
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class NoteEditFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     companion object {
-        fun newInstance (noteId: Long): NoteEditFragment {
+        fun newInstance(noteId: Long): NoteEditFragment {
             val args = Bundle()
             args.putLong("noteId", noteId)
             val fragment = NoteEditFragment()
@@ -30,10 +38,21 @@ class NoteEditFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     lateinit var binding : FragmentNoteEditBinding
     @Inject lateinit var noteViewModel : NoteViewModel
 
-    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri ->
-        Toast.makeText(context, uri.toString(), Toast.LENGTH_LONG).show()
-        val inputStream = activity?.contentResolver?.openInputStream(uri)
-        noteViewModel.uploadImage(image)
+    private val getContent = registerForActivityResult(ActivityResultContracts.GetContent())
+    { uri: Uri ->
+        prepareRequestBody(uri)?.let {
+            noteViewModel.uploadImage(it)
+        }
+    }
+
+    private fun prepareRequestBody(uri: Uri) : ContentUriRequestBody? {
+        val contentResolver : ContentResolver = activity?.contentResolver ?: return null
+        val mimeType : String? = contentResolver.getType(uri)
+        val fileExtension : String = mimeType?.split("/")?.last() ?: ""
+        val fileName = UUID.randomUUID().toString()
+        val fullFileName = "$fileName.$fileExtension"
+
+        return ContentUriRequestBody(fullFileName, contentResolver, uri)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -48,10 +67,12 @@ class NoteEditFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         toolbar.setOnMenuItemClickListener(this)
 
         noteViewModel.imageElementRequest.observe(viewLifecycleOwner, {
-            getContent.launch("image/*")
-        })
-        noteViewModel.imageElementResponse.observe(viewLifecycleOwner, {
-            //        noteViewModel.editImage(index, newImageUri)
+            if (it.contentUrl != null) {
+//                Toast.makeText(context, "Index: $index; URL: $url", Toast.LENGTH_LONG).show()
+                noteViewModel.editImage(it.recyclerItemIndex, it.contentUrl)
+            } else {
+                getContent.launch("image/*")
+            }
         })
 
         val popupMenu = PopupMenu(requireContext(), binding.actionNoteelementAdd)
