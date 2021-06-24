@@ -3,6 +3,7 @@ package com.haxos.foodity.data.model
 import com.haxos.foodity.ui.main.notes.content.RecyclerItem
 
 abstract class NoteElementViewModel (
+        val model: NoteElement,
         private val elementActionListener: ElementActionListener
 ) {
     fun onMoveUp() {

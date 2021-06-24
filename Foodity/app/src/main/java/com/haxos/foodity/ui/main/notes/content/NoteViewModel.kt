@@ -130,19 +130,31 @@ class NoteViewModel @Inject constructor(
         )
     }
 
-    fun editNote() = viewModelScope.launch {
-        val note : Note = (_noteLiveData.value?.get(0)?.data as Note?) ?: return@launch
-        val request = NoteRequest(
+    fun editNote() {
+        val recyclerItems: List<RecyclerItem> = _noteLiveData.value ?: return
+        val note : Note = (recyclerItems[0].data as Note)
+        val noteRequest = NoteRequest(
                 id = note.id,
                 name = note.name,
                 description = note.description,
                 categoryId = note.categoryId,
                 thumbnail = note.thumbnail)
-        val editedNote = notesService.edit(request)
-        if (editedNote.body() != null) {
-            _noteEditResult.value = GenericResult(success = 1)
-        } else {
-            _noteEditResult.value = GenericResult(error = 1)
+
+        val noteElements : List<NoteElement> = recyclerItems
+                .subList(1, recyclerItems.size)
+                .map { it.data }
+                .filterIsInstance<NoteElementViewModel>()
+                .map { it.model }
+
+        viewModelScope.launch {
+            val editedNote = notesService.edit(noteRequest)
+            val editedNotes = elementsService.edit(noteElements)
+
+            if (editedNote.body() != null && editedNotes.body() != null) {
+                _noteEditResult.value = GenericResult(success = 1)
+            } else {
+                _noteEditResult.value = GenericResult(error = 1)
+            }
         }
     }
 

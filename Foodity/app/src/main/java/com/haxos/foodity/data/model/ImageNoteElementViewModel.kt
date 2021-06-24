@@ -8,7 +8,7 @@ class ImageNoteElementViewModel (
         var imageElement: ImageNoteElement,
         elementActionListener: ElementActionListener,
         val onEditImage: (ImageNoteElementViewModel) -> Unit
-) : NoteElementViewModel(elementActionListener) {
+) : NoteElementViewModel(imageElement, elementActionListener) {
 
     override fun toRecyclerItem(editable: Boolean): RecyclerItem {
         var layout = R.layout.recyclerview_element_image

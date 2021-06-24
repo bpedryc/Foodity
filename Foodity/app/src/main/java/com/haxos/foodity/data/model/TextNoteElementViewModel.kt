@@ -7,7 +7,7 @@ import com.haxos.foodity.ui.main.notes.content.RecyclerItem
 class TextNoteElementViewModel (
         val textElement: TextNoteElement,
         elementActionListener: ElementActionListener
-) : NoteElementViewModel(elementActionListener) {
+) : NoteElementViewModel(textElement, elementActionListener) {
 
     override fun toRecyclerItem(editable: Boolean) : RecyclerItem {
         var layout = R.layout.recyclerview_element_text

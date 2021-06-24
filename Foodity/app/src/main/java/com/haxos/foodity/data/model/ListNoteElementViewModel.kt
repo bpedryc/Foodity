@@ -10,7 +10,7 @@ class ListNoteElementViewModel (
         private val _noteLiveData: MutableLiveData<MutableList<RecyclerItem>>,
         private val editable: Boolean,
         elementActionListener: ElementActionListener
-) : NoteElementViewModel(elementActionListener) {
+) : NoteElementViewModel(listElement, elementActionListener) {
 
     private val entryActionListener = EntryActionListener(
             onMoveUp = ::moveUpEntry,
