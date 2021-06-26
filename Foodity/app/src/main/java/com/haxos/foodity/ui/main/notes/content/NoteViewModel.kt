@@ -48,6 +48,11 @@ class NoteViewModel @Inject constructor(
         val prevElement = elements[index - 1]
         elements[index - 1] = elements[index]
         elements[index] = prevElement
+
+        val prevElementViewModel = prevElement.data as NoteElementViewModel
+        prevElementViewModel.model.orderNumber += 1
+        elementViewModel.model.orderNumber -= 1
+
         _noteLiveData.value = _noteLiveData.value
     }
 
@@ -63,6 +68,11 @@ class NoteViewModel @Inject constructor(
         val nextElement = elements[index + 1]
         elements[index + 1] = elements[index]
         elements[index] = nextElement
+
+        val nextElementViewModel = nextElement.data as NoteElementViewModel
+        nextElementViewModel.model.orderNumber -= 1
+        elementViewModel.model.orderNumber += 1
+
         _noteLiveData.value = _noteLiveData.value
     }
 
@@ -135,8 +145,6 @@ class NoteViewModel @Inject constructor(
                 description = note.description,
                 categoryId = note.categoryId,
                 thumbnail = note.thumbnail)
-
-
 
         val noteElements : List<NoteElement> = recyclerItems
                 .subList(1, recyclerItems.size)

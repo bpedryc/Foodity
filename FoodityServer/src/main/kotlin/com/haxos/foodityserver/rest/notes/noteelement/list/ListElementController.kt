@@ -20,7 +20,7 @@ class ListElementController (
             .orElseThrow { NotFoundException("ListNoteElement with id $requestId not found") }
 
         element.title = request.title
-        element.orderNumber = request.order
+        element.orderNumber = request.orderNumber
 
         element.entries.clear()
         element.entries.addAll(request.entries)

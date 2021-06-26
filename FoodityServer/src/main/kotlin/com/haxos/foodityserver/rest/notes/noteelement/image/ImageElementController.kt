@@ -19,7 +19,7 @@ class ImageElementController (
             .orElseThrow { NotFoundException("ImageNoteElement with id $requestId not found") }
 
         element.title = request.title
-        element.orderNumber = request.order
+        element.orderNumber = request.orderNumber
         element.sourcePath = request.sourcePath
 
         return repository.save(element)
