@@ -36,10 +36,10 @@ class NoteViewModel @Inject constructor(
         field?.let { fetchNote(it) }
     }
 
-    private fun moveUpElement(elementViewModel: NoteElementViewModel) {
+    private fun moveUpElement(movedElementViewModel: NoteElementViewModel) {
         val elements : MutableList<RecyclerItem> = _noteLiveData.value ?: return
         val index : Int = elements.indexOfFirst {
-            it.data == elementViewModel
+            it.data == movedElementViewModel
         }
         if (index <= 1) {
             return
@@ -49,9 +49,11 @@ class NoteViewModel @Inject constructor(
         elements[index - 1] = elements[index]
         elements[index] = prevElement
 
+        val movedElementPosition = index + 1
+
         val prevElementViewModel = prevElement.data as NoteElementViewModel
-        prevElementViewModel.model.orderNumber += 1
-        elementViewModel.model.orderNumber -= 1
+        prevElementViewModel.model.orderNumber = movedElementPosition
+        movedElementViewModel.model.orderNumber = movedElementPosition - 1
 
         _noteLiveData.value = _noteLiveData.value
     }
@@ -69,9 +71,11 @@ class NoteViewModel @Inject constructor(
         elements[index + 1] = elements[index]
         elements[index] = nextElement
 
+        val movedElementPosition = index + 1
+
         val nextElementViewModel = nextElement.data as NoteElementViewModel
-        nextElementViewModel.model.orderNumber -= 1
-        elementViewModel.model.orderNumber += 1
+        nextElementViewModel.model.orderNumber = movedElementPosition
+        elementViewModel.model.orderNumber = movedElementPosition + 1
 
         _noteLiveData.value = _noteLiveData.value
     }
