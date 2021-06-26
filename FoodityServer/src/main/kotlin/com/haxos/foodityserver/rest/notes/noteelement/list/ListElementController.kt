@@ -1,6 +1,7 @@
 package com.haxos.foodityserver.rest.notes.noteelement.list
 
 import com.haxos.foodityserver.rest.notes.noteelement.ListNoteElement
+import com.haxos.foodityserver.rest.notes.noteelement.ListNoteElementEntry
 import javassist.NotFoundException
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -21,13 +22,8 @@ class ListElementController (
         element.title = request.title
         element.orderNumber = request.order
 
-        request.entries.forEach { entryRequest ->
-            val entry = element.entries?.find {
-                it.getId()!! == entryRequest.getId()
-            } ?: return@forEach
-            entry.contents = entryRequest.contents
-            entry.orderNumber = entryRequest.orderNumber
-        }
+        element.entries.clear()
+        element.entries.addAll(request.entries)
 
         return repository.save(element)
     }

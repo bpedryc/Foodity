@@ -2,9 +2,7 @@ package com.haxos.foodityserver.rest.notes.noteelement
 
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import com.haxos.foodityserver.rest.notes.note.Note
-import javax.persistence.Entity
-import javax.persistence.JoinColumn
-import javax.persistence.OneToMany
+import javax.persistence.*
 
 @Entity
 class ListNoteElement (
@@ -14,8 +12,8 @@ class ListNoteElement (
     note: Note?,
 
     @JsonManagedReference
-    @OneToMany
+    @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "list_element_id")
-    var entries: List<ListNoteElementEntry>?
+    var entries: MutableList<ListNoteElementEntry>
 
 ) : NoteElement(title, orderNumber, note)
