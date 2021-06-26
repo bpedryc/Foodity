@@ -36,7 +36,7 @@ class ListNoteElementViewModel (
 
     fun addEntry() {
         val newEntry = ListNoteElementEntry(
-                orderNumber = listElement.entries.size.toLong(),
+                orderNumber = listElement.entries.size.toLong() + 1,
                 contents = "")
         listElement.entries.add(newEntry)
 
@@ -75,6 +75,7 @@ class ListNoteElementViewModel (
     }
 
     private fun deleteEntry(entryViewModel: ListNoteElementEntryViewModel) {
+        listElement.entries.remove(entryViewModel.entry)
         bindableEntries.removeIf {
             it.data == entryViewModel
         }
