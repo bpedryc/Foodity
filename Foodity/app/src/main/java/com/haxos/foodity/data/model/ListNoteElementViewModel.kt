@@ -57,6 +57,11 @@ class ListNoteElementViewModel (
         val prevEntry = bindableEntries[index - 1]
         bindableEntries[index - 1] = bindableEntries[index]
         bindableEntries[index] = prevEntry
+
+        val prevEntryViewModel = prevEntry.data as ListNoteElementEntryViewModel
+        prevEntryViewModel.entry.orderNumber += 1
+        entryViewModel.entry.orderNumber -= 1
+
         _noteLiveData.value = _noteLiveData.value
     }
 
@@ -71,6 +76,11 @@ class ListNoteElementViewModel (
         val nextEntry = bindableEntries[index + 1]
         bindableEntries[index + 1] = bindableEntries[index]
         bindableEntries[index] = nextEntry
+
+        val nextEntryViewModel = nextEntry.data as ListNoteElementEntryViewModel
+        nextEntryViewModel.entry.orderNumber -= 1
+        entryViewModel.entry.orderNumber += 1
+
         _noteLiveData.value = _noteLiveData.value
     }
 

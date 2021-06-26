@@ -14,6 +14,7 @@ class ListNoteElement (
     @JsonManagedReference
     @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "list_element_id")
+    @OrderBy("orderNumber")
     var entries: MutableList<ListNoteElementEntry>
 
 ) : NoteElement(title, orderNumber, note)
