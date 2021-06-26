@@ -5,7 +5,7 @@ import javax.persistence.Entity
 
 @Entity
 data class ListNoteElementEntry (
-    val orderNumber: Int,
-    val contents: String
+    var orderNumber: Int,
+    var contents: String
 
 ) : JPAPersistable<Long>()

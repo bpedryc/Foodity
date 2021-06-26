@@ -54,7 +54,7 @@
                     android:id="@+id/element_image_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.imageElement.title}"
+                    android:text="@={viewModel.imageElement.title}"
             />
 
             <FrameLayout
@@ -65,7 +65,6 @@
                     android:id="@+id/element_image_image"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     app:sourcePath="@{viewModel.imageElement.sourcePath}" />
                 <ImageButton
                     android:layout_height="match_parent"

@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.haxos.foodity.BR
 import com.haxos.foodity.R
 import com.haxos.foodity.data.model.*
-import com.haxos.foodity.retrofit.INoteElementService
 import com.haxos.foodity.retrofit.INotesService
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -15,9 +14,9 @@ import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class NoteViewModel @Inject constructor(
-    private val notesService: INotesService,
-    private val elementsService: INoteElementService,
-    private val fileService: IFileService
+        private val notesService: INotesService,
+        private val elementsRepository: NoteElementsRepository,
+        private val fileService: IFileService
 ) : ViewModel() {
 
     private val _noteLiveData = MutableLiveData<MutableList<RecyclerItem>>()
@@ -28,9 +27,6 @@ class NoteViewModel @Inject constructor(
 
     private val _imageElementRequest = MutableLiveData<ImageElementRequest>()
     val imageElementRequest : LiveData<ImageElementRequest> = _imageElementRequest
-
-    private val _imageElementResponse = MutableLiveData<ImageElementResponse>()
-    val imageElementResponse : LiveData<ImageElementResponse> = _imageElementResponse
 
     var editable: Boolean = false
 
@@ -77,7 +73,7 @@ class NoteViewModel @Inject constructor(
 
     private fun fetchNote(noteId: Long) = viewModelScope.launch {
         val noteResponse = async {notesService.getNoteById(noteId) }
-        val elementsResponse = async { elementsService.getByNoteId(noteId) }
+        val elementsResponse = async { elementsRepository.getByNoteId(noteId) }
 
         val note : Note = noteResponse.await().body() ?: return@launch
         val elements = elementsResponse.await().body() ?: return@launch
@@ -86,7 +82,7 @@ class NoteViewModel @Inject constructor(
         val recyclerItems = ArrayList<RecyclerItem>()
         recyclerItems.add(note.toRecyclerItem())
         recyclerItems.addAll(note.elements
-                .sortedBy { it.order }
+                .sortedBy { it.orderNumber }
                 .map { toViewModel(it) }
                 .map { it.toRecyclerItem(editable) })
 
@@ -140,6 +136,8 @@ class NoteViewModel @Inject constructor(
                 categoryId = note.categoryId,
                 thumbnail = note.thumbnail)
 
+
+
         val noteElements : List<NoteElement> = recyclerItems
                 .subList(1, recyclerItems.size)
                 .map { it.data }
@@ -148,9 +146,9 @@ class NoteViewModel @Inject constructor(
 
         viewModelScope.launch {
             val editedNote = notesService.edit(noteRequest)
-            val editedNotes = elementsService.edit(noteElements)
+            val editedNotes = elementsRepository.edit(noteElements)
 
-            if (editedNote.body() != null && editedNotes.body() != null) {
+            if (editedNote.body() != null && editedNotes.size != noteElements.size) {
                 _noteEditResult.value = GenericResult(success = 1)
             } else {
                 _noteEditResult.value = GenericResult(error = 1)
@@ -185,8 +183,7 @@ class NoteViewModel @Inject constructor(
             val recyclerItem: RecyclerItem = recyclerItems[index]
             val imageViewModel = recyclerItem.data as ImageNoteElementViewModel
             val imageElement = imageViewModel.imageElement
-            val updatedImageElement = ImageNoteElement(imageElement.id, imageElement.order, imageElement.title, contentUrl)
-            imageViewModel.imageElement = updatedImageElement
+            imageElement.sourcePath = contentUrl
             _noteLiveData.value = _noteLiveData.value
         }
     }

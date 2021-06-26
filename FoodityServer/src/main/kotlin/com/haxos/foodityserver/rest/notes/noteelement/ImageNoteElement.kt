@@ -5,10 +5,10 @@ import javax.persistence.Entity
 
 @Entity
 class ImageNoteElement (
-    title: String,
-    orderNumber: Int,
+    title: String?,
+    orderNumber: Int?,
     note: Note?,
-    val sourcePath: String
+    var sourcePath: String?
 
 ) : NoteElement(title, orderNumber, note)
 

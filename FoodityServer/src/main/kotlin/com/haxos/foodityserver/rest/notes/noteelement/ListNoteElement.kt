@@ -9,13 +9,13 @@ import javax.persistence.OneToMany
 @Entity
 class ListNoteElement (
 
-    title: String,
-    orderNumber: Int,
+    title: String?,
+    orderNumber: Int?,
     note: Note?,
 
     @JsonManagedReference
     @OneToMany
     @JoinColumn(name = "list_element_id")
-    val entries: List<ListNoteElementEntry>
+    var entries: List<ListNoteElementEntry>?
 
 ) : NoteElement(title, orderNumber, note)

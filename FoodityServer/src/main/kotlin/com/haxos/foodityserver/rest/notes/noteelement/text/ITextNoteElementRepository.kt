@@ -1,6 +1,6 @@
-package com.haxos.foodityserver.rest.notes.noteelement
+package com.haxos.foodityserver.rest.notes.noteelement.text
 
-import com.haxos.foodityserver.rest.notes.note.Note
+import com.haxos.foodityserver.rest.notes.noteelement.TextNoteElement
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository

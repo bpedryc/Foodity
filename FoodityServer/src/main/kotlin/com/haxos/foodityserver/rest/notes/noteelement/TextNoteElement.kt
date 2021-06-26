@@ -5,9 +5,9 @@ import javax.persistence.Entity
 
 @Entity
 class TextNoteElement (
-    title: String,
-    orderNumber: Int,
+    title: String?,
+    orderNumber: Int?,
     note: Note?,
-    val contents: String
+    var contents: String?
 
 ) : NoteElement(title, orderNumber, note)

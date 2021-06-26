@@ -1,8 +1,8 @@
 package com.haxos.foodity.data.model
 
 class ImageNoteElement (
-    id: Long,
-    order: Long,
-    title: String,
-    val sourcePath: String
-) : NoteElement(id, order, title)
+        id: Long,
+        orderNumber: Int,
+        title: String,
+        var sourcePath: String
+) : NoteElement(id, orderNumber, title)

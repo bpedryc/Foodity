@@ -15,4 +15,8 @@ class NoteElementController(
     fun findByNoteId(@RequestParam noteId: Long) =
         elementService.getElementsFromNote(noteId)
 
+    /*@PutMapping()
+    fun editNotes(@RequestBody request: NoteElementsRequest) =
+        elementService.editElements(request.noteElementRequests)*/
+
 }

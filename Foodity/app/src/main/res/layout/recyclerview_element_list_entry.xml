@@ -30,7 +30,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/element_list_entry_index"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="@{viewModel.contents}"
+                android:text="@{viewModel.entry.contents}"
         />
 
 

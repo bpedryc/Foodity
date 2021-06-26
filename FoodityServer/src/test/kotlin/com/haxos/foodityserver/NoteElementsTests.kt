@@ -2,6 +2,9 @@ package com.haxos.foodityserver
 
 import com.haxos.foodityserver.rest.notes.note.INotesRepository
 import com.haxos.foodityserver.rest.notes.noteelement.*
+import com.haxos.foodityserver.rest.notes.noteelement.image.IImageNoteElementRepository
+import com.haxos.foodityserver.rest.notes.noteelement.list.IListNoteElementRepository
+import com.haxos.foodityserver.rest.notes.noteelement.text.ITextNoteElementRepository
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest

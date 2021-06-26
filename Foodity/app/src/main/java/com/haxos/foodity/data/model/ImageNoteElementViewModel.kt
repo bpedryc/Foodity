@@ -5,7 +5,7 @@ import com.haxos.foodity.R
 import com.haxos.foodity.ui.main.notes.content.RecyclerItem
 
 class ImageNoteElementViewModel (
-        var imageElement: ImageNoteElement,
+        val imageElement: ImageNoteElement,
         elementActionListener: ElementActionListener,
         val onEditImage: (ImageNoteElementViewModel) -> Unit
 ) : NoteElementViewModel(imageElement, elementActionListener) {

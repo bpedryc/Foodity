@@ -21,7 +21,6 @@ class ListNoteElementEntryViewModel(
         )
     }
 
-    var contents = entry.contents
     val orderNumber = entry.orderNumber
     fun onMoveUp() = entryActionListener.onMoveUp(this)
     fun onMoveDown() = entryActionListener.onMoveDown(this)

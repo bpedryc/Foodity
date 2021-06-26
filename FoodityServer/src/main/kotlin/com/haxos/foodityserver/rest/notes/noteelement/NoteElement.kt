@@ -1,9 +1,6 @@
 package com.haxos.foodityserver.rest.notes.noteelement
 
-import com.fasterxml.jackson.annotation.JsonBackReference
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonSubTypes
-import com.fasterxml.jackson.annotation.JsonTypeInfo
+import com.fasterxml.jackson.annotation.*
 import com.haxos.foodityserver.jpa.JPAPersistable
 import com.haxos.foodityserver.rest.notes.note.Note
 import javax.persistence.*
@@ -17,10 +14,9 @@ import javax.persistence.*
 )
 @MappedSuperclass
 abstract class NoteElement (
-    var title: String = "",
-    var orderNumber: Int = 0,
+    var title: String? = "",
+    var orderNumber: Int? = 0,
 
-    @JsonBackReference
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "note_id")
     var note: Note? = null
