@@ -65,6 +65,11 @@ class NotesFragment: Fragment(), INoteSearchingFragment {
         val notesAdapter = NotesAdapter(clickListener = NoteClickListener())
         notesRecyclerView.adapter = notesAdapter
         notesGridViewModel.notesLiveData.observe(viewLifecycleOwner, {
+            if (it.isEmpty()) {
+                binding.backgroundText.visibility = View.VISIBLE
+            } else {
+                binding.backgroundText.visibility = View.GONE
+            }
             notesAdapter.setNotes(it)
         })
 
