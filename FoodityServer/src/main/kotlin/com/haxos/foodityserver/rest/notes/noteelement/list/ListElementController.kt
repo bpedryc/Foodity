@@ -35,4 +35,15 @@ class ListElementController (
 
         return elementRepository.save(element)
     }
+
+    @DeleteMapping(params = ["id"])
+    fun delete(@RequestParam id: Long) : Boolean {
+        val element = elementRepository.findById(id)
+        var elementDeleted = false
+        element.ifPresent {
+            elementRepository.delete(it)
+            elementDeleted = true
+        }
+        return elementDeleted
+    }
 }

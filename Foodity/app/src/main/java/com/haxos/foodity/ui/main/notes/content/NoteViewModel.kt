@@ -36,6 +36,8 @@ class NoteViewModel @Inject constructor(
         field?.let { fetchNote(it) }
     }
 
+    val deletedElements = emptyList<NoteElement>().toMutableList()
+
     private fun toViewModel(noteElement: NoteElement) : NoteElementViewModel {
         val elementActionListener = ElementActionListener(
                 onMoveUp = ::moveUpElement,
@@ -132,7 +134,14 @@ class NoteViewModel @Inject constructor(
     }
 
     private fun deleteElement(elementViewModel: NoteElementViewModel) {
-        _noteLiveData.value?.removeIf { it.data == elementViewModel }
+        val recyclerItems : MutableList<RecyclerItem> = _noteLiveData.value ?: return
+
+        recyclerItems.removeIf { it.data == elementViewModel }
+
+        val note = recyclerItems[0].data as Note
+        deletedElements.add(elementViewModel.model)
+        note.elements.remove(elementViewModel.model)
+
         _noteLiveData.value = _noteLiveData.value
     }
 
@@ -172,6 +181,7 @@ class NoteViewModel @Inject constructor(
 
         viewModelScope.launch {
             val editedNote = notesService.edit(noteRequest)
+            elementsRepository.delete(deletedElements)
             val editedNotes = elementsRepository.createOrEdit(note.id, noteElements)
 
             if (editedNote.body() != null && editedNotes.size != noteElements.size) {

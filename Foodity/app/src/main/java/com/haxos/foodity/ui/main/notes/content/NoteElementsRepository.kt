@@ -18,6 +18,14 @@ class NoteElementsRepository @Inject constructor(
         return elementService.getByNoteId(noteId)
     }
 
+    suspend fun delete(noteElements: List<NoteElement>): Boolean {
+        val deleteResults = noteElements.map { delete(it) }
+        if (deleteResults.any { false }) {
+            return false
+        }
+        return true
+    }
+
     suspend fun createOrEdit(noteId: Long, elements: List<NoteElement>): List<NoteElement> {
         val editedElements = emptyList<NoteElement>().toMutableList()
         elements.forEach { element ->
@@ -68,5 +76,32 @@ class NoteElementsRepository @Inject constructor(
         }
         val response = elementService.create(imageRequest)
         return response.body()
+    }
+
+    private suspend fun delete(element: NoteElement) : Boolean {
+        return when (element) {
+            is TextNoteElement -> delete(element)
+            is ImageNoteElement -> delete(element)
+            is ListNoteElement -> delete(element)
+            else -> false
+        }
+    }
+
+    private suspend fun delete(textElement: TextNoteElement) : Boolean {
+        val id = textElement.id ?: return false
+        val response = elementService.deleteTextElement(id)
+        return response.body() ?: false
+    }
+
+    private suspend fun delete(imageElement: ImageNoteElement) : Boolean {
+        val id = imageElement.id ?: return false
+        val response = elementService.deleteImageElement(id)
+        return response.body() ?: false
+    }
+
+    private suspend fun delete(listElement: ListNoteElement) : Boolean {
+        val id = listElement.id ?: return false
+        val response = elementService.deleteListElement(id)
+        return response.body() ?: false
     }
 }

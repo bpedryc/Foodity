@@ -38,4 +38,13 @@ interface INoteElementService {
 
     @POST("/image-elements")
     suspend fun create(@Body request: ImageNoteElementRequest): Response<ImageNoteElement>
+
+    @DELETE("/list-elements")
+    suspend fun deleteListElement(@Query("id") id: Long): Response<Boolean>
+
+    @DELETE("/image-elements")
+    suspend fun deleteImageElement(@Query("id") id: Long): Response<Boolean>
+
+    @DELETE("/text-elements")
+    suspend fun deleteTextElement(@Query("id") id: Long): Response<Boolean>
 }
