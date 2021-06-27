@@ -47,6 +47,12 @@ class NoteFragment: Fragment(), Toolbar.OnMenuItemClickListener {
         setHasOptionsMenu(true)
         toolbar.setOnMenuItemClickListener(this)
 
+        noteViewModel.noteLiveData.observe(viewLifecycleOwner) {
+            if (it == null) {
+                requireActivity().onBackPressed()
+            }
+        }
+
         val noteId: Long? = arguments?.getLong("noteId")
         noteViewModel.noteId = noteId
 
