@@ -93,6 +93,16 @@ class ListNoteElementViewModel (
         bindableEntries.removeIf {
             it.data == entryViewModel
         }
+
+        var orderNumber : Long = 1
+        val entries : List<ListNoteElementEntry> = bindableEntries
+                .map {it.data}
+                .filterIsInstance<ListNoteElementEntryViewModel>()
+                .map {it.entry}
+        for (entry in entries) {
+            entry.orderNumber = orderNumber++
+        }
+
         _noteLiveData.value = _noteLiveData.value
     }
 }

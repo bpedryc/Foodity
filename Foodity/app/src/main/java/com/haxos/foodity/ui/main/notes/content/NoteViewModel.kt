@@ -142,6 +142,15 @@ class NoteViewModel @Inject constructor(
         deletedElements.add(elementViewModel.model)
         note.elements.remove(elementViewModel.model)
 
+        var orderNumber = 1
+        val noteElements : List<NoteElement> = recyclerItems
+                .map {it.data}
+                .filterIsInstance<NoteElementViewModel>()
+                .map {it.model}
+        for (element in noteElements) {
+            element.orderNumber = orderNumber++
+        }
+
         _noteLiveData.value = _noteLiveData.value
     }
 
@@ -213,8 +222,8 @@ class NoteViewModel @Inject constructor(
     }
 
     private fun requestImageEdit(imageViewModel: ImageNoteElementViewModel) {
-        val index = _noteLiveData.value?.indexOfFirst { recylerItem ->
-            recylerItem.data == imageViewModel
+        val index = _noteLiveData.value?.indexOfFirst { recyclerItem ->
+            recyclerItem.data == imageViewModel
         }
         index?.let {
             _imageElementRequest.value = ImageElementRequest(index)
