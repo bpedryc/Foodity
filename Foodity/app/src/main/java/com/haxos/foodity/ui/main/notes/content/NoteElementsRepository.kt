@@ -19,21 +19,21 @@ class NoteElementsRepository @Inject constructor(
         elements.forEach {
             when (it) {
                 is TextNoteElement -> {
-                    val textRequest = TextNoteElementRequest(it.id, it.title, it.orderNumber, it.contents)
+                    val textRequest = TextNoteElementRequest(it.id!!, it.title, it.orderNumber, it.contents)
                     val response = elementService.edit(textRequest)
                     response.body()?.let { responseBody ->
                         editedElements.add(responseBody)
                     }
                 }
                 is ImageNoteElement -> {
-                    val imageRequest = ImageNoteElementRequest(it.id, it.title, it.orderNumber, it.sourcePath)
+                    val imageRequest = ImageNoteElementRequest(it.id!!, it.title, it.orderNumber, it.sourcePath)
                     val response = elementService.edit(imageRequest)
                     response.body()?.let { responseBody ->
                         editedElements.add(responseBody)
                     }
                 }
                 is ListNoteElement -> {
-                    val listRequest = ListNoteElementRequest(it.id, it.title, it.orderNumber, it.entries)
+                    val listRequest = ListNoteElementRequest(it.id!!, it.title, it.orderNumber, it.entries)
                     val response = elementService.edit(listRequest)
                     response.body()?.let { responseBody ->
                         editedElements.add(responseBody)
