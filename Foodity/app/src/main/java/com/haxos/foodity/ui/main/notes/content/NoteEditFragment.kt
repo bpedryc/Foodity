@@ -8,7 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.haxos.foodity.R
@@ -34,21 +34,13 @@ class NoteEditFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     lateinit var binding : FragmentNoteEditBinding
     @Inject lateinit var noteViewModel : NoteViewModel
 
+    var selectedNewElement : Int = 0
+
     private val getContent = registerForActivityResult(ActivityResultContracts.GetContent())
     { uri: Uri ->
         prepareRequestBody(uri)?.let {
             noteViewModel.uploadImage(it)
         }
-    }
-
-    private fun prepareRequestBody(uri: Uri) : ContentUriRequestBody? {
-        val contentResolver : ContentResolver = activity?.contentResolver ?: return null
-        val mimeType : String? = contentResolver.getType(uri)
-        val fileExtension : String = mimeType?.split("/")?.last() ?: ""
-        val fileName = UUID.randomUUID().toString()
-        val fullFileName = "$fileName.$fileExtension"
-
-        return ContentUriRequestBody(fullFileName, contentResolver, uri)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -62,25 +54,16 @@ class NoteEditFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         setHasOptionsMenu(true)
         toolbar.setOnMenuItemClickListener(this)
 
+        noteViewModel.editable = true
+        noteViewModel.noteId = arguments?.getLong("noteId")
+
         noteViewModel.imageElementRequest.observe(viewLifecycleOwner, {
             if (it.contentUrl != null) {
-//                Toast.makeText(context, "Index: $index; URL: $url", Toast.LENGTH_LONG).show()
                 noteViewModel.editImage(it.recyclerItemIndex, it.contentUrl)
             } else {
                 getContent.launch("image/*")
             }
         })
-
-        val popupMenu = PopupMenu(requireContext(), binding.actionNoteelementAdd)
-        popupMenu.menu.add("Text")
-        popupMenu.menu.add("List")
-        popupMenu.menu.add("Image")
-        binding.actionNoteelementAdd.setOnClickListener {
-            popupMenu.show()
-        }
-
-        noteViewModel.editable = true
-        noteViewModel.noteId = arguments?.getLong("noteId")
 
         return binding.also {
             it.viewModel = noteViewModel
@@ -91,6 +74,7 @@ class NoteEditFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     override fun onMenuItemClick(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_note_confirm -> onNoteEditConfirm()
+            R.id.action_note_addelement -> onElementAdd()
         }
         return true
     }
@@ -101,10 +85,26 @@ class NoteEditFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         })
 
         noteViewModel.editNote()
+    }
 
-        /*noteViewModel.editNote(
-            binding.noteName.text.toString(),
-            binding.noteDescription.text.toString()
-        )*/
+    private fun onElementAdd() {
+        AlertDialog.Builder(requireActivity())
+            .setTitle("Create new element")
+            .setSingleChoiceItems(arrayOf("Text", "List", "Image"), 0) {
+                    _, checked  -> selectedNewElement = checked }
+            .setPositiveButton(android.R.string.yes) {_, _ -> noteViewModel.addElement(selectedNewElement) }
+            .setNegativeButton(android.R.string.no) {_, _ -> }
+            .create()
+            .show()
+    }
+
+    private fun prepareRequestBody(uri: Uri) : ContentUriRequestBody? {
+        val contentResolver : ContentResolver = activity?.contentResolver ?: return null
+        val mimeType : String? = contentResolver.getType(uri)
+        val fileExtension : String = mimeType?.split("/")?.last() ?: ""
+        val fileName = UUID.randomUUID().toString()
+        val fullFileName = "$fileName.$fileExtension"
+
+        return ContentUriRequestBody(fullFileName, contentResolver, uri)
     }
 }

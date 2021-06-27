@@ -14,37 +14,59 @@ import javax.inject.Inject
 class NoteElementsRepository @Inject constructor(
         private val elementService: INoteElementService
 ){
-    suspend fun edit(elements: List<NoteElement>): List<NoteElement> {
+    suspend fun getByNoteId(noteId: Long): Response<List<NoteElement>> {
+        return elementService.getByNoteId(noteId)
+    }
+
+    suspend fun createOrEdit(noteId: Long, elements: List<NoteElement>): List<NoteElement> {
         val editedElements = emptyList<NoteElement>().toMutableList()
-        elements.forEach {
-            when (it) {
-                is TextNoteElement -> {
-                    val textRequest = TextNoteElementRequest(it.id!!, it.title, it.orderNumber, it.contents)
-                    val response = elementService.edit(textRequest)
-                    response.body()?.let { responseBody ->
-                        editedElements.add(responseBody)
-                    }
-                }
-                is ImageNoteElement -> {
-                    val imageRequest = ImageNoteElementRequest(it.id!!, it.title, it.orderNumber, it.sourcePath)
-                    val response = elementService.edit(imageRequest)
-                    response.body()?.let { responseBody ->
-                        editedElements.add(responseBody)
-                    }
-                }
-                is ListNoteElement -> {
-                    val listRequest = ListNoteElementRequest(it.id!!, it.title, it.orderNumber, it.entries)
-                    val response = elementService.edit(listRequest)
-                    response.body()?.let { responseBody ->
-                        editedElements.add(responseBody)
-                    }
-                }
+        elements.forEach { element ->
+            createOrEdit(noteId, element)?.let {
+                editedElements.add(it)
             }
         }
         return editedElements
     }
 
-    suspend fun getByNoteId(noteId: Long): Response<List<NoteElement>> {
-        return elementService.getByNoteId(noteId)
+    private suspend fun createOrEdit(noteId: Long, element: NoteElement) : NoteElement? {
+        return when (element) {
+            is TextNoteElement -> createOrEdit(noteId, element)
+            is ImageNoteElement -> createOrEdit(noteId, element)
+            is ListNoteElement -> createOrEdit(noteId, element)
+            else -> null
+        }
+    }
+
+    private suspend fun createOrEdit(noteId: Long, textElement: TextNoteElement) : TextNoteElement? {
+        val textRequest = TextNoteElementRequest(
+            textElement.id, textElement.title, textElement.orderNumber, textElement.contents, noteId)
+        if (textElement.id != null) {
+            val response = elementService.edit(textRequest)
+            return response.body()
+        }
+        val response = elementService.create(textRequest)
+        return response.body()
+    }
+
+    private suspend fun createOrEdit(noteId: Long, listElement: ListNoteElement) : ListNoteElement? {
+        val listRequest = ListNoteElementRequest(
+            listElement.id, listElement.title, listElement.orderNumber, listElement.entries, noteId)
+        if (listElement.id != null) {
+            val response = elementService.edit(listRequest)
+            return response.body()
+        }
+        val response = elementService.create(listRequest)
+        return response.body()
+    }
+
+    private suspend fun createOrEdit(noteId: Long, imageElement: ImageNoteElement) : ImageNoteElement? {
+        val imageRequest = ImageNoteElementRequest(
+            imageElement.id, imageElement.title, imageElement.orderNumber, imageElement.sourcePath, noteId)
+        if (imageElement.id != null) {
+            val response = elementService.edit(imageRequest)
+            return response.body()
+        }
+        val response = elementService.create(imageRequest)
+        return response.body()
     }
 }

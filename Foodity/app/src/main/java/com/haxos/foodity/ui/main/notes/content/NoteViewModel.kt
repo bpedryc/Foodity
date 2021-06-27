@@ -36,6 +36,57 @@ class NoteViewModel @Inject constructor(
         field?.let { fetchNote(it) }
     }
 
+    private fun toViewModel(noteElement: NoteElement) : NoteElementViewModel {
+        val elementActionListener = ElementActionListener(
+                onMoveUp = ::moveUpElement,
+                onMoveDown = ::moveDownElement,
+                onDelete = ::deleteElement
+        )
+
+        return when (noteElement) {
+            is TextNoteElement -> TextNoteElementViewModel(noteElement, elementActionListener)
+            is ListNoteElement -> ListNoteElementViewModel(noteElement, _noteLiveData, editable, elementActionListener)
+            is ImageNoteElement ->  ImageNoteElementViewModel(noteElement, elementActionListener, onEditImage = ::requestImageEdit)
+            else -> TODO()
+        }
+    }
+
+    private fun Note.toRecyclerItem() : RecyclerItem {
+        var layout = R.layout.recyclerview_note_header
+        if (editable) {
+            layout = R.layout.recyclerview_note_header_edit
+        }
+        return RecyclerItem(
+                data = this,
+                variableId = BR.note,
+                layoutId = layout
+        )
+    }
+
+    private fun constructElement(type: Int, position: Int) : NoteElement {
+        return when (type) {
+            0 -> TextNoteElement(orderNumber = position, title = "Title", contents = "Description")
+            1 -> ListNoteElement(orderNumber = position, title = "Title",
+                    entries = emptyList<ListNoteElementEntry>().toMutableList())
+            2 -> ImageNoteElement(orderNumber = position, title = "Title", sourcePath = "")
+            else -> TODO()
+        }
+    }
+
+    fun addElement(type: Int) {
+        val recyclerItems : MutableList<RecyclerItem> = _noteLiveData.value ?: return
+        val newElement : NoteElement = constructElement(type, recyclerItems.size + 1)
+
+        val noteRecyclerItem : RecyclerItem = recyclerItems[0]
+        val note = noteRecyclerItem.data as Note
+        note.elements.add(newElement)
+
+        val elementViewModel = toViewModel(newElement)
+        recyclerItems.add(elementViewModel.toRecyclerItem(editable))
+
+        _noteLiveData.value = _noteLiveData.value
+    }
+
     private fun moveUpElement(movedElementViewModel: NoteElementViewModel) {
         val elements : MutableList<RecyclerItem> = _noteLiveData.value ?: return
         val index : Int = elements.indexOfFirst {
@@ -91,7 +142,7 @@ class NoteViewModel @Inject constructor(
 
         val note : Note = noteResponse.await().body() ?: return@launch
         val elements = elementsResponse.await().body() ?: return@launch
-        note.elements = elements
+        note.elements = elements.toMutableList()
 
         val recyclerItems = ArrayList<RecyclerItem>()
         recyclerItems.add(note.toRecyclerItem())
@@ -101,43 +152,6 @@ class NoteViewModel @Inject constructor(
                 .map { it.toRecyclerItem(editable) })
 
         _noteLiveData.value = recyclerItems
-    }
-
-
-    private fun toViewModel(noteElement: NoteElement) : NoteElementViewModel {
-        val elementActionListener = ElementActionListener(
-                onMoveUp = ::moveUpElement,
-                onMoveDown = ::moveDownElement,
-                onDelete = ::deleteElement
-        )
-
-        return when (noteElement) {
-            is TextNoteElement -> TextNoteElementViewModel(noteElement, elementActionListener)
-            is ListNoteElement -> ListNoteElementViewModel(noteElement, _noteLiveData, editable, elementActionListener)
-            is ImageNoteElement ->  ImageNoteElementViewModel(noteElement, elementActionListener, onEditImage = ::requestImageEdit)
-            else -> TODO()
-        }
-    }
-
-    private fun requestImageEdit(imageViewModel: ImageNoteElementViewModel) {
-        val index = _noteLiveData.value?.indexOfFirst { recylerItem ->
-            recylerItem.data == imageViewModel
-        }
-        index?.let {
-            _imageElementRequest.value = ImageElementRequest(index)
-        }
-    }
-
-    private fun Note.toRecyclerItem() : RecyclerItem {
-        var layout = R.layout.recyclerview_note_header
-        if (editable) {
-            layout = R.layout.recyclerview_note_header_edit
-        }
-        return RecyclerItem(
-                data = this,
-                variableId = BR.note,
-                layoutId = layout
-        )
     }
 
     fun editNote() {
@@ -158,7 +172,7 @@ class NoteViewModel @Inject constructor(
 
         viewModelScope.launch {
             val editedNote = notesService.edit(noteRequest)
-            val editedNotes = elementsRepository.edit(noteElements)
+            val editedNotes = elementsRepository.createOrEdit(note.id, noteElements)
 
             if (editedNote.body() != null && editedNotes.size != noteElements.size) {
                 _noteEditResult.value = GenericResult(success = 1)
@@ -167,7 +181,6 @@ class NoteViewModel @Inject constructor(
             }
         }
     }
-
 
     fun deleteNote() = viewModelScope.launch {
         noteId?.let {
@@ -186,6 +199,15 @@ class NoteViewModel @Inject constructor(
         fileUrl?.let {
             _imageElementRequest.value = ImageElementRequest(
                     _imageElementRequest.value!!.recyclerItemIndex, it)
+        }
+    }
+
+    private fun requestImageEdit(imageViewModel: ImageNoteElementViewModel) {
+        val index = _noteLiveData.value?.indexOfFirst { recylerItem ->
+            recylerItem.data == imageViewModel
+        }
+        index?.let {
+            _imageElementRequest.value = ImageElementRequest(index)
         }
     }
 

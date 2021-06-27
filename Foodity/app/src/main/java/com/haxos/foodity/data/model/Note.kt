@@ -6,5 +6,5 @@ data class Note (
     val categoryId: Long,
     val thumbnail: Int,
     var description: String,
-    var elements: List<NoteElement>
+    var elements: MutableList<NoteElement>
 )

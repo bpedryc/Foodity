@@ -9,10 +9,7 @@ import com.haxos.foodity.data.model.ListNoteElement
 import com.haxos.foodity.data.model.NoteElement
 import com.haxos.foodity.data.model.TextNoteElement
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.PUT
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface INoteElementService {
     @GET("/elements")
@@ -27,9 +24,18 @@ interface INoteElementService {
     @PUT("/text-elements")
     suspend fun edit(@Body request: TextNoteElementRequest): Response<TextNoteElement>
 
+    @POST("/text-elements")
+    suspend fun create(@Body request: TextNoteElementRequest): Response<TextNoteElement>
+
     @PUT("/list-elements")
     suspend fun edit(@Body request: ListNoteElementRequest): Response<ListNoteElement>
 
+    @POST("/list-elements")
+    suspend fun create(@Body request: ListNoteElementRequest): Response<ListNoteElement>
+
     @PUT("/image-elements")
     suspend fun edit(@Body request: ImageNoteElementRequest): Response<ImageNoteElement>
+
+    @POST("/image-elements")
+    suspend fun create(@Body request: ImageNoteElementRequest): Response<ImageNoteElement>
 }

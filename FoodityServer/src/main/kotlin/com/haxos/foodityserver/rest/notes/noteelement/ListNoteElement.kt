@@ -7,9 +7,9 @@ import javax.persistence.*
 @Entity
 class ListNoteElement (
 
-    title: String?,
-    orderNumber: Int?,
-    note: Note?,
+    title: String? = null,
+    orderNumber: Int? = null,
+    note: Note? = null,
 
     @JsonManagedReference
     @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)

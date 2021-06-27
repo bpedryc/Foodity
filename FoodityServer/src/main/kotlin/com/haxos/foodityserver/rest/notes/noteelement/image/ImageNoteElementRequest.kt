@@ -1,8 +1,9 @@
 package com.haxos.foodityserver.rest.notes.noteelement.image
 
 class ImageNoteElementRequest (
-        val id: Long,
+        val id: Long?,
         val title: String,
         val orderNumber: Int,
-        val sourcePath: String
+        val sourcePath: String,
+        val noteId: Long? = null
 )
