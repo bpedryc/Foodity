@@ -1,13 +1,22 @@
 package com.haxos.foodityserver.rest.notes.note
 
+import com.haxos.foodityserver.rest.logs.note.INoteLogsRepository
+import com.haxos.foodityserver.rest.logs.note.NoteLog
+import com.haxos.foodityserver.rest.logs.note.NoteLogsService
 import com.haxos.foodityserver.rest.notes.category.INotesCategoriesRepository
+import com.haxos.foodityserver.rest.notes.noteelement.NoteElementService
+import javassist.NotFoundException
+import org.hibernate.annotations.NotFound
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 import java.util.*
 
 @Service
 class NotesService (
     val notesRepository: INotesRepository,
-    val categoriesRepository: INotesCategoriesRepository
+    val categoriesRepository: INotesCategoriesRepository,
+    val noteLogsRepository: INoteLogsRepository,
+    val noteElementService: NoteElementService
 ){
     fun getNotesFromCategory(categoryId: Long) : List<Note> =
         notesRepository.findByCategory(categoryId)
@@ -21,16 +30,46 @@ class NotesService (
     fun createNote(request: NoteRequest) : Note {
         val category = categoriesRepository.getOne(request.categoryId)
         val note = Note(request.name, request.description, request.thumbnail, category)
-        return notesRepository.save(note)
+        val createdNote = notesRepository.save(note)
+
+        val profile = category.profile
+        val noteLog = NoteLog(NoteLog.Type.CREATE, profile, note, LocalDateTime.now())
+        noteLogsRepository.save(noteLog)
+
+        return createdNote
     }
 
-    fun deleteNote(noteId: Long) =
-        notesRepository.deleteById(noteId)
-
     fun editNote(request: NoteRequest): Note {
-        val note : Note = notesRepository.getOne(request.id!!)
+        val noteId = request.id
+            ?: throw NotFoundException("Can't edit a note without id")
+
+        val note : Note = notesRepository.getOne(noteId)
+        val noteOwner = note.category?.profile
+            ?: throw NotFoundException("Note with $noteId has no owner")
+
         note.name = request.name
         note.description = request.description
-        return notesRepository.save(note)
+        val editedNote = notesRepository.save(note)
+
+        val noteLog = NoteLog(NoteLog.Type.EDIT, noteOwner, note, LocalDateTime.now())
+        noteLogsRepository.save(noteLog)
+
+        return editedNote
+    }
+
+    fun deleteNote(noteId: Long) {
+        val note = notesRepository.findById(noteId)
+            .orElseThrow { NotFoundException("Can't find a note with id $noteId to delete") }
+        val noteOwner = note.category?.profile
+            ?: throw NotFoundException("Note with $noteId has no owner")
+        val noteName = note.name
+
+        notesRepository.deleteById(noteId)
+
+        val noteGhost = Note(name = noteName)
+        notesRepository.save(noteGhost)
+
+        val noteLog = NoteLog(NoteLog.Type.DELETE, noteOwner, noteGhost, LocalDateTime.now())
+        noteLogsRepository.save(noteLog)
     }
 }

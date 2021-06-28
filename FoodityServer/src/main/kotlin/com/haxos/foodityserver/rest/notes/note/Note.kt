@@ -10,13 +10,13 @@ import javax.persistence.ManyToOne
 
 @Entity
 data class Note (
-    var name: String,
-    var description: String,
-    var thumbnail: Int,
+    var name: String? = null,
+    var description: String? = null,
+    var thumbnail: Int? = null,
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
-    var category: NotesCategory
+    var category: NotesCategory? = null
 
 ) : JPAPersistable<Long>()

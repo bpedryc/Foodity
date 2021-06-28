@@ -1,5 +1,6 @@
 package com.haxos.foodityserver.rest.profiles
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import com.haxos.foodityserver.jpa.JPAPersistable
 import com.haxos.foodityserver.rest.notes.category.NotesCategory
@@ -15,7 +16,7 @@ data class Profile (
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     val notesCategories: List<NotesCategory> = ArrayList(),
 
-    @JsonManagedReference
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     val followers: MutableList<Profile> = ArrayList()
 
