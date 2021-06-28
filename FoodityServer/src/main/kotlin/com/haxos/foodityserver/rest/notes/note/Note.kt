@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne
 data class Note (
     var name: String? = null,
     var description: String? = null,
-    var thumbnail: Int? = null,
+    var thumbnail: Int = 0,
 
     @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)

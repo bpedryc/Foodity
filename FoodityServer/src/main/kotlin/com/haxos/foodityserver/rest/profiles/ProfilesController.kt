@@ -1,5 +1,6 @@
 package com.haxos.foodityserver.rest.profiles
 
+import javassist.NotFoundException
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -48,7 +49,7 @@ class ProfilesController (
         return repository.save(profile)
     }
 
-    @DeleteMapping("{id}/followers")
+    @DeleteMapping("/{id}/followers")
     fun removeFollower(
         @PathVariable("id") profileId: Long,
         @RequestParam("followerId") followerId: Long
@@ -61,5 +62,13 @@ class ProfilesController (
 
         profile.followers.remove(follower)
         return repository.save(profile)
+    }
+
+    @GetMapping("/{id}/followers")
+    fun getFollowers(@PathVariable("id") profileId: Long): List<Long> {
+        val profile: Profile = repository.findById(profileId)
+            .orElseThrow { NotFoundException("Cannot get followers from non-existing profile") }
+        return profile.followers
+            .map { it.getId()!! }
     }
 }

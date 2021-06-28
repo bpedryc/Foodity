@@ -61,6 +61,12 @@ class SocialFragment : Fragment() {
         socialViewModel.logsLiveData.observe(viewLifecycleOwner, {
             val displayableLogs = it.map { template -> template.getInContext(requireContext()) }
             userLogAdapter.setLogs(displayableLogs)
+
+            if (displayableLogs.isEmpty()) {
+                binding.textDashboard.visibility = View.VISIBLE
+            } else {
+                binding.textDashboard.visibility = View.GONE
+            }
         })
     }
 

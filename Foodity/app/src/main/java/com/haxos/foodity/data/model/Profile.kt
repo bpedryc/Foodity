@@ -5,6 +5,6 @@ data class Profile (
         val username: String,
         val firstName: String,
         val lastName: String,
-        val following: MutableList<Profile>,
-        val followers: MutableList<Profile>
+        val followingIds: MutableList<Long> = emptyList<Long>().toMutableList(),
+        var followerIds: MutableList<Long> = emptyList<Long>().toMutableList()
 )

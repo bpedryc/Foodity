@@ -8,9 +8,8 @@ import androidx.lifecycle.viewModelScope
 import com.haxos.foodity.data.ICurrentUserInfo
 import com.haxos.foodity.data.model.Profile
 import com.haxos.foodity.retrofit.IProfileService
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import retrofit2.Response
 import javax.inject.Inject
 
 class ProfileViewModel @Inject constructor(
@@ -25,33 +24,42 @@ class ProfileViewModel @Inject constructor(
 
     fun fetchProfile(profileId: Long) {
         viewModelScope.launch {
-            val profileResponse = profileService.getById(profileId)
-            _profileLiveData.value = profileResponse.body()
+            val profileResponse : Response<Profile> = profileService.getById(profileId)
+            val followersResponse : Response<List<Long>> = profileService.getFollowers(profileId)
+
+            val profile : Profile = profileResponse.body() ?: return@launch
+            val followerIds : List<Long> = followersResponse.body() ?: return@launch
+
+            profile.followerIds = followerIds.toMutableList()
+
+            _profileLiveData.value = profile
         }
     }
 
     inner class UnfollowClickListener : View.OnClickListener {
         override fun onClick(view: View) {
+            val currentProfileId : Long = currentUserInfo.profileId ?: return
             val profile : Profile = _profileLiveData.value ?: return
-            val followerToDelete: Profile = profile.followers.find {it.id == currentUserInfo.profileId} ?: return
-            profile.followers.remove(followerToDelete)
-            runBlocking {
-                val followerRemoval = async { profileService.removeFollower(profile.id, followerToDelete.id) }
-                followerRemoval.await()
-                _profileLiveData.postValue(profile)
+
+            val followerIds = profile.followerIds
+            followerIds.remove(currentProfileId)
+
+            viewModelScope.launch {
+                profileService.removeFollower(profile.id, currentProfileId)
+                _profileLiveData.value = _profileLiveData.value
             }
         }
     }
 
     inner class FollowClickListener : View.OnClickListener {
         override fun onClick(view: View) {
+            val currentProfileId : Long = currentUserInfo.profileId ?: return
             val profile : Profile = _profileLiveData.value ?: return
-            val followerToAdd = currentUserInfo.user?.profile ?: return
-            profile.followers.add(followerToAdd)
-            runBlocking {
-                val followerSaving = async { profileService.addFollower(profile.id, followerToAdd.id) }
-                followerSaving.await()
-                _profileLiveData.postValue(profile)
+
+            profile.followerIds.add(currentProfileId)
+            viewModelScope.launch {
+                profileService.addFollower(profile.id, currentProfileId)
+                _profileLiveData.value = _profileLiveData.value
             }
         }
     }

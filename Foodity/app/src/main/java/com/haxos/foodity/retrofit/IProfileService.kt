@@ -27,7 +27,7 @@ interface IProfileService {
 
 
     @GET("/profiles/{id}/followers")
-    suspend fun getFollowers(@Path("id") profileId: Long): Response<List<Profile>>
+    suspend fun getFollowers(@Path("id") profileId: Long): Response<List<Long>>
 
     @GET("/profiles/{id}/following")
     suspend fun getFollowing(@Path("id") profileId: Long): Response<List<Profile>>
