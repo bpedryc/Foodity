@@ -38,6 +38,12 @@ class NoteLogTemplate(private val noteLog: NoteLog) : ILogTemplate {
         val now = LocalDateTime.now()
         val timestamp = noteLog.timestamp
 
+        val hourAgo = now.minusHours(1)
+        if (timestamp.isAfter(hourAgo)) {
+            val minutesAgo: Long = ChronoUnit.MINUTES.between(now, timestamp).absoluteValue
+            return "$minutesAgo min"
+        }
+
         val yesterday = now.minusDays(1)
         if (timestamp.isAfter(yesterday)) {
             val hoursAgo: Long = ChronoUnit.HOURS.between(now, timestamp).absoluteValue
@@ -53,7 +59,7 @@ class NoteLogTemplate(private val noteLog: NoteLog) : ILogTemplate {
         val oneYearAgo = now.minusYears(1)
         if (timestamp.isAfter(oneYearAgo)) {
             val monthsAgo = ChronoUnit.MONTHS.between(now, timestamp).absoluteValue
-            return "$monthsAgo m"
+            return "$monthsAgo mon"
         }
 
         val yearsAgo = ChronoUnit.YEARS.between(now, timestamp)

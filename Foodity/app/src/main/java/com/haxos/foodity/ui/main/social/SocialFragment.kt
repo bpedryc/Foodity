@@ -43,11 +43,6 @@ class SocialFragment : Fragment() {
 
         setUpActivityLog()
 
-        val textView: TextView = binding.textDashboard
-        socialViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-
         return binding.root
     }
 

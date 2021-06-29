@@ -24,12 +24,6 @@ class SocialViewModel @Inject constructor(
     private val userLogService: UserLogService
 ): ViewModel() {
 
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is the Social Fragment"
-    }
-    val text: LiveData<String> = _text
-
     private var _profileLiveData = MutableLiveData<List<Profile>>()
     var profileLiveData: LiveData<List<Profile>> = _profileLiveData
 
