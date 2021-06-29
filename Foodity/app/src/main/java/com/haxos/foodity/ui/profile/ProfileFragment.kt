@@ -34,6 +34,9 @@ class ProfileFragment : Fragment() {
             binding.fullName.text = it.firstName + " " + it.lastName
             binding.username.text = it.username
 
+            binding.followersCount.text = it.followerIds.size.toString()
+            binding.followingCount.text = it.followingIds.size.toString()
+
             val alreadyFollowed = it.followerIds.any { follower ->
                 follower == currentUserInfo.user?.profile?.id }
 

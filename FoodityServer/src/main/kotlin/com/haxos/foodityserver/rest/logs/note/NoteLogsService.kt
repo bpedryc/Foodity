@@ -27,5 +27,5 @@ class NoteLogsService (
     }
 
     private fun isFollowedBy(follower: Profile, profile: Profile) : Boolean =
-        profile.followers.any {it == follower}
+        profile.followers.any {it.from == follower}
 }

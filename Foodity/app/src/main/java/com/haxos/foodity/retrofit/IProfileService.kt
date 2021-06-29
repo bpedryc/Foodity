@@ -30,7 +30,7 @@ interface IProfileService {
     suspend fun getFollowers(@Path("id") profileId: Long): Response<List<Long>>
 
     @GET("/profiles/{id}/following")
-    suspend fun getFollowing(@Path("id") profileId: Long): Response<List<Profile>>
+    suspend fun getFollowing(@Path("id") profileId: Long): Response<List<Long>>
 
     @PUT("/profiles/{id}/followers")
     suspend fun addFollower(

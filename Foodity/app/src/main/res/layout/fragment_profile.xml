@@ -60,7 +60,6 @@
 
             <TextView
                 android:id="@+id/followers_count"
-                android:text="179"
                 android:textStyle="bold"
                 android:textSize="16dp"
                 android:layout_width="wrap_content"
@@ -83,7 +82,6 @@
 
             <TextView
                     android:id="@+id/following_count"
-                    android:text="32"
                     android:textStyle="bold"
                     android:textSize="16dp"
                     android:layout_width="wrap_content"
@@ -91,7 +89,7 @@
                     android:layout_gravity="center_horizontal"/>
             <TextView
                     android:id="@+id/following_title"
-                    android:text="FOLLOWERS"
+                    android:text="FOLLOWING"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"/>

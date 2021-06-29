@@ -6,31 +6,32 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/profiles")
 class ProfilesController (
-        val repository: IProfilesRepository
+        val profilesRepository: IProfilesRepository,
+        val followersRepository: IFollowersRepository
 ) {
     @GetMapping
     fun all() : List<Profile> {
-        return repository.findAll()
+        return profilesRepository.findAll()
     }
 
     @GetMapping(params = ["id"])
     fun findById(id: Long) : Profile {
-        return repository.findById(id).orElse(null)
+        return profilesRepository.findById(id).orElse(null)
     }
 
     @GetMapping(params = ["username"])
     fun findByUsername(username: String) : Profile {
-        return repository.findByUsername(username)
+        return profilesRepository.findByUsername(username)
     }
 
     @PostMapping
     fun saveOrUpdate(@RequestBody profile: Profile) : Profile {
-        return repository.save(profile)
+        return profilesRepository.save(profile)
     }
 
     @DeleteMapping(params = ["id"])
     fun delete(id: Long) : Long {
-        repository.deleteById(id)
+        profilesRepository.deleteById(id)
         return id
     }
 
@@ -38,37 +39,41 @@ class ProfilesController (
     fun saveFollower(
         @PathVariable("id") profileId: Long,
         @RequestParam("followerId") followerId: Long
-    ) : Profile {
-        val profile : Profile = repository.findById(profileId)
+    ) : Follower {
+        val profile : Profile = profilesRepository.findById(profileId)
             .orElseThrow { ProfileNotFoundException(profileId) }
 
-        val follower = repository.findById(followerId)
+        val followerProfile : Profile = profilesRepository.findById(followerId)
             .orElseThrow { ProfileNotFoundException(followerId) }
 
-        profile.followers.add(follower)
-        return repository.save(profile)
+        val follower = Follower(followerProfile, profile)
+
+        return followersRepository.save(follower)
     }
 
     @DeleteMapping("/{id}/followers")
     fun removeFollower(
         @PathVariable("id") profileId: Long,
-        @RequestParam("followerId") followerId: Long
-    ) : Profile {
-        val profile : Profile = repository.findById(profileId)
-            .orElseThrow { ProfileNotFoundException(profileId) }
-
-        val follower = repository.findById(followerId)
-            .orElseThrow { ProfileNotFoundException(followerId) }
-
-        profile.followers.remove(follower)
-        return repository.save(profile)
+        @RequestParam("followerId") followerProfileId: Long
+    ) {
+        val follower = followersRepository.findFromTo(followerProfileId, profileId)
+            .orElseThrow { ProfileNotFoundException(followerProfileId) }
+        followersRepository.delete(follower)
     }
 
     @GetMapping("/{id}/followers")
     fun getFollowers(@PathVariable("id") profileId: Long): List<Long> {
-        val profile: Profile = repository.findById(profileId)
+        val profile: Profile = profilesRepository.findById(profileId)
             .orElseThrow { NotFoundException("Cannot get followers from non-existing profile") }
         return profile.followers
-            .map { it.getId()!! }
+            .map { it.from.getId()!! }
+    }
+
+    @GetMapping("/{id}/following")
+    fun getFollowing(@PathVariable("id") profileId: Long): List<Long> {
+        val profile: Profile = profilesRepository.findById(profileId)
+            .orElseThrow { NotFoundException("Cannot get followers from non-existing profile") }
+        return profile.following
+            .map { it.to.getId()!! }
     }
 }

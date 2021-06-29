@@ -26,11 +26,14 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             val profileResponse : Response<Profile> = profileService.getById(profileId)
             val followersResponse : Response<List<Long>> = profileService.getFollowers(profileId)
+            val followingResponse : Response<List<Long>> = profileService.getFollowing(profileId)
 
             val profile : Profile = profileResponse.body() ?: return@launch
             val followerIds : List<Long> = followersResponse.body() ?: return@launch
+            val followingIds : List<Long> = followingResponse.body() ?: return@launch
 
             profile.followerIds = followerIds.toMutableList()
+            profile.followingIds = followingIds.toMutableList()
 
             _profileLiveData.value = profile
         }
