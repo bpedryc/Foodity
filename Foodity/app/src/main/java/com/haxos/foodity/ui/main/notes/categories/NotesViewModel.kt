@@ -21,6 +21,9 @@ class NotesViewModel @Inject constructor(
     private val categoriesService: INotesCategoriesService
 ): ViewModel(), INoteSearchingViewModel {
 
+    val currentProfileId: Long?
+        get() = currentUserInfo.profileId
+
     private val _categoriesLiveData = MutableLiveData<MutableList<NotesCategory>>()
     val categoriesLiveData: LiveData<MutableList<NotesCategory>> = _categoriesLiveData
 
@@ -29,11 +32,10 @@ class NotesViewModel @Inject constructor(
 
     override val searchListener = NoteSearchListener(currentUserInfo, notesService, _searchLiveData)
 
-    init {
-        viewModelScope.launch {
-            val response = categoriesService.getCategoriesByUsername(currentUserInfo.user?.username!!)
-            _categoriesLiveData.value = response.body()?.toMutableList()
-        }
+    fun fetchCategories(profileId: Long) = viewModelScope.launch {
+        val response = categoriesService.getCategoriesByProfileId(profileId)
+        val categories = response.body() ?: return@launch
+        _categoriesLiveData.value = categories.toMutableList()
     }
 
     fun createCategory(name: String) = viewModelScope.launch {
@@ -51,5 +53,9 @@ class NotesViewModel @Inject constructor(
             _categoriesLiveData.value?.removeIf { id == it.id }
             _categoriesLiveData.value = _categoriesLiveData.value
         }
+    }
+
+    fun isCurrentProfile(profileId: Long): Boolean {
+        return currentUserInfo.profileId == profileId
     }
 }

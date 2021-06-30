@@ -1,6 +1,7 @@
 package com.haxos.foodityserver.rest.notes.category
 
 import com.haxos.foodityserver.rest.profiles.IProfilesRepository
+import javassist.NotFoundException
 import org.springframework.stereotype.Service
 
 @Service
@@ -20,6 +21,13 @@ class NotesCategoriesService (
 
     fun getCategoriesOfUser(username: String): List<NotesCategory> {
         return profilesRepository.findByUsername(username).notesCategories
+    }
+
+    fun getCategoriesOfProfile(profileId: Long): List<NotesCategory> {
+        val profile = profilesRepository.findById(profileId).
+                orElseThrow { NotFoundException("There is no profile with id $profileId") }
+        val categories : List<NotesCategory> = profile.notesCategories
+        return categories
     }
 
     fun deleteCategory(id: Long) {

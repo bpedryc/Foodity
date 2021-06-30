@@ -15,6 +15,10 @@ class NotesCategoriesController (
     fun findByUserId(@RequestParam username: String) : List<NotesCategory> =
         categoriesService.getCategoriesOfUser(username)
 
+    @GetMapping(params = ["profileId"])
+    fun findByProfileId(@RequestParam profileId: Long) : List<NotesCategory> =
+        categoriesService.getCategoriesOfProfile(profileId)
+
     @PostMapping()
     fun createCategory(@RequestBody category: NotesCategoryRequest) =
         categoriesService.createCategory(category)

@@ -53,7 +53,7 @@ class ProfileFragment : Fragment() {
 
 
         binding.buttonViewNotes.setOnClickListener {
-//            replace(CategoriesFragment.newInstance(profileId))
+            replace(CategoriesFragment.newInstance(profileId))
         }
 
         profileViewModel.fetchProfile(profileId)

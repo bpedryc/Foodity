@@ -16,6 +16,7 @@ import com.haxos.foodity.ui.main.notes.notes.NotesFragment
 import com.haxos.foodity.ui.main.notes.notesearch.INoteSearchingFragment
 import com.haxos.foodity.ui.main.notes.notesearch.INoteSearchingViewModel
 import com.haxos.foodity.ui.main.notes.notesearch.NotesSearchingToolbar
+import com.haxos.foodity.ui.profile.ProfileFragment
 import com.haxos.foodity.ui.settings.SettingsActivity
 import com.haxos.foodity.utils.replace
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +24,16 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class CategoriesFragment : Fragment(), INoteSearchingFragment {
+
+    companion object {
+        fun newInstance(profileId: Long): CategoriesFragment {
+            val args = Bundle()
+            args.putLong("profileId", profileId)
+            val fragment = CategoriesFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
 
     @Inject lateinit var notesViewModel: NotesViewModel
     lateinit var binding: FragmentCategoriesBinding
@@ -42,28 +53,38 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
         toolbar.setNavigationOnClickListener {
             startActivity(Intent(context, SettingsActivity::class.java))
         }
-        toolbar.inflateMenu(R.menu.menu_notes_categories)
-        toolbar.setOnMenuItemClickListener {
-            val builder: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
-                .setView(R.layout.dialog_category)
-                .setTitle("New category")
-                .setMessage("Create a category")
-                .setPositiveButton(android.R.string.yes) {_, _ -> createCategory() }
-                .setNegativeButton(android.R.string.no) {_, _ -> }
-            categoryCreationDialog = builder.show()
-            true
-        }
         val notesSearchingToolbar = NotesSearchingToolbar(toolbar, this)
 
         val categoriesRecyclerView : CategoriesRecyclerView = binding.recyclerviewCategories
         categoriesRecyclerView.layoutManager = GridLayoutManager(context, 2)
-        registerForContextMenu(categoriesRecyclerView)
 
         val categoriesAdapter = CategoriesAdapter(clickListener = CategoryClickListener())
         categoriesRecyclerView.adapter = categoriesAdapter
         notesViewModel.categoriesLiveData.observe(viewLifecycleOwner, {
             categoriesAdapter.setCategories(it)
         })
+
+        val profileId : Long = arguments?.getLong("profileId")
+                ?: notesViewModel.currentProfileId
+                ?: return binding.root
+
+        if (notesViewModel.isCurrentProfile(profileId)) {
+            toolbar.inflateMenu(R.menu.menu_notes_categories)
+            toolbar.setOnMenuItemClickListener {
+                val builder: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
+                        .setView(R.layout.dialog_category)
+                        .setTitle("New category")
+                        .setMessage("Create a category")
+                        .setPositiveButton(android.R.string.yes) {_, _ -> createCategory() }
+                        .setNegativeButton(android.R.string.no) {_, _ -> }
+                categoryCreationDialog = builder.show()
+                true
+            }
+
+            registerForContextMenu(categoriesRecyclerView)
+        }
+
+        notesViewModel.fetchCategories(profileId)
 
         return binding.root
     }
