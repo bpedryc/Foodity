@@ -39,6 +39,14 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    fun isCurrentProfile(profileId: Long): Boolean {
+        return currentUserInfo.profileId == profileId
+    }
+
+    fun isFollowedByCurrentUser(profile: Profile): Boolean {
+        return profile.followerIds.any { it == currentUserInfo.profileId }
+    }
+
     inner class UnfollowClickListener : View.OnClickListener {
         override fun onClick(view: View) {
             val currentProfileId : Long = currentUserInfo.profileId ?: return
