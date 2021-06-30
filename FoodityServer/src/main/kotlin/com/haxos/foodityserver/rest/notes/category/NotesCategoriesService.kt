@@ -34,4 +34,11 @@ class NotesCategoriesService (
         categoriesRepository.deleteById(id)
     }
 
+    fun getProfileId(categoryId: Long): Long {
+        val category = categoriesRepository.findById(categoryId)
+            .orElseThrow { NotFoundException("No category with id $categoryId found") }
+        val ownerProfile = category.profile
+        return ownerProfile.getId()!!
+    }
+
 }

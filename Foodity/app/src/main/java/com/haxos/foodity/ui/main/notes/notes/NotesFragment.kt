@@ -25,9 +25,10 @@ import javax.inject.Inject
 class NotesFragment: Fragment(), INoteSearchingFragment {
 
     companion object {
-        fun newInstance(categoryId: Long): NotesFragment {
+        fun newInstance(categoryId: Long, profileId: Long): NotesFragment {
             val args = Bundle()
             args.putLong("categoryId", categoryId)
+            args.putLong("profileId", profileId)
             val fragment = NotesFragment()
             fragment.arguments = args
             return fragment
@@ -35,7 +36,7 @@ class NotesFragment: Fragment(), INoteSearchingFragment {
     }
 
     lateinit var binding: FragmentNotesBinding
-    @Inject lateinit var notesGridViewModel: NotesGridViewModel
+    @Inject lateinit var notesViewModel: NotesViewModel
 
     var noteCreationDialog: AlertDialog? = null
 
@@ -46,17 +47,6 @@ class NotesFragment: Fragment(), INoteSearchingFragment {
         toolbar.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
-        toolbar.inflateMenu(R.menu.menu_notes)
-        toolbar.setOnMenuItemClickListener {
-            val builder: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
-                .setView(R.layout.dialog_note)
-                .setTitle("New note")
-                .setMessage("Create a note")
-                .setPositiveButton(android.R.string.yes) {_, _ -> createNote()}
-                .setNegativeButton(android.R.string.no) {_, _ -> }
-            noteCreationDialog = builder.show()
-            true
-        }
         val notesSearchingToolbar = NotesSearchingToolbar(toolbar, this)
 
         val notesRecyclerView: RecyclerView = binding.recyclerviewNotes
@@ -64,7 +54,7 @@ class NotesFragment: Fragment(), INoteSearchingFragment {
 
         val notesAdapter = NotesAdapter(clickListener = NoteClickListener())
         notesRecyclerView.adapter = notesAdapter
-        notesGridViewModel.notesLiveData.observe(viewLifecycleOwner, {
+        notesViewModel.notesLiveData.observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
                 binding.backgroundText.visibility = View.VISIBLE
             } else {
@@ -73,10 +63,28 @@ class NotesFragment: Fragment(), INoteSearchingFragment {
             notesAdapter.setNotes(it)
         })
 
-        val categoryId: Long? = arguments?.getLong("categoryId")
-        if (categoryId != null) {
-            notesGridViewModel.fetchNotes(categoryId)
+        val categoryId: Long = arguments?.getLong("categoryId")
+                ?: return binding.root
+        val profileId: Long = arguments?.getLong("profileId")
+                ?: return binding.root
+
+
+        notesViewModel.fetchNotes(categoryId)
+
+        if (notesViewModel.isCurrentProfile(profileId)) {
+            toolbar.inflateMenu(R.menu.menu_notes)
+            toolbar.setOnMenuItemClickListener {
+                val builder: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
+                        .setView(R.layout.dialog_note)
+                        .setTitle("New note")
+                        .setMessage("Create a note")
+                        .setPositiveButton(android.R.string.yes) {_, _ -> createNote()}
+                        .setNegativeButton(android.R.string.no) {_, _ -> }
+                noteCreationDialog = builder.show()
+                true
+            }
         }
+
 
         return binding.root
     }
@@ -84,7 +92,7 @@ class NotesFragment: Fragment(), INoteSearchingFragment {
     private fun createNote() {
         val nameEditText = noteCreationDialog?.findViewById<EditText>(R.id.note_name) ?: return
         val name = nameEditText.text.toString()
-        notesGridViewModel.addNote(name)
+        notesViewModel.addNote(name)
     }
 
     inner class NoteClickListener : NotesAdapter.INoteClickListener {
@@ -95,7 +103,7 @@ class NotesFragment: Fragment(), INoteSearchingFragment {
     }
 
     override val noteSearchingViewModel: INoteSearchingViewModel
-        get() = notesGridViewModel
+        get() = notesViewModel
     override val noteSearchRecyclerView: RecyclerView
         get() = binding.recyclerviewSearch
 }

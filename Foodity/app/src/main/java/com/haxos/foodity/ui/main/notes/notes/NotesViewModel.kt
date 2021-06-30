@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.haxos.foodity.data.ICurrentUserInfo
 import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.data.model.NoteRequest
+import com.haxos.foodity.retrofit.INotesCategoriesService
 import com.haxos.foodity.retrofit.INotesService
 import com.haxos.foodity.ui.main.notes.notesearch.NoteSearchListener
 import com.haxos.foodity.ui.main.notes.notesearch.INoteSearchingViewModel
@@ -17,9 +18,9 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-class NotesGridViewModel @Inject constructor(
+class NotesViewModel @Inject constructor(
     private val currentUserInfo: ICurrentUserInfo,
-    private val notesService: INotesService
+    private val notesService: INotesService,
 ) : ViewModel(), INoteSearchingViewModel {
 
     private val _notesLiveData = MutableLiveData<MutableList<Note>>()
@@ -32,17 +33,12 @@ class NotesGridViewModel @Inject constructor(
 
     fun fetchNotes(categoryId: Long) {
         this.categoryId = categoryId
-        notesService.getNotesByCategory(categoryId).enqueue(object : Callback<List<Note>> {
-            override fun onResponse(call: Call<List<Note>>, response: Response<List<Note>>) {
-                val responseBody = response.body()
-                if (responseBody != null) {
-                    _notesLiveData.value = responseBody.toMutableList()
-                }
-            }
-            override fun onFailure(call: Call<List<Note>>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-        })
+
+        viewModelScope.launch {
+            val notesResponse = notesService.getNotesByCategory(categoryId)
+            val notes = notesResponse.body() ?: return@launch
+            _notesLiveData.value = notes.toMutableList()
+        }
     }
 
     fun addNote(name: String) {
@@ -56,6 +52,10 @@ class NotesGridViewModel @Inject constructor(
                 _notesLiveData.value = _notesLiveData.value
             }
         }
+    }
+
+    fun isCurrentProfile(profileId: Long): Boolean {
+        return currentUserInfo.profileId == profileId
     }
 
     override val searchListener: SearchView.OnQueryTextListener

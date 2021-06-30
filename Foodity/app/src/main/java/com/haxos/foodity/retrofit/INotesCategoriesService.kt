@@ -22,4 +22,7 @@ interface INotesCategoriesService {
 
     @DELETE("/categories")
     suspend fun delete(@Query("id") id: Long) : Response<Boolean>
+
+    @GET("/categories/{id}/profileId")
+    suspend fun getCategoryOwnerId(@Query("id") categoryId: Long): Response<Long>
 }

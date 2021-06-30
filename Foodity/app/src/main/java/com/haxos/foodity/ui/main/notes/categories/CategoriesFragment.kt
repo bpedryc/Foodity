@@ -16,7 +16,6 @@ import com.haxos.foodity.ui.main.notes.notes.NotesFragment
 import com.haxos.foodity.ui.main.notes.notesearch.INoteSearchingFragment
 import com.haxos.foodity.ui.main.notes.notesearch.INoteSearchingViewModel
 import com.haxos.foodity.ui.main.notes.notesearch.NotesSearchingToolbar
-import com.haxos.foodity.ui.profile.ProfileFragment
 import com.haxos.foodity.ui.settings.SettingsActivity
 import com.haxos.foodity.utils.replace
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,15 +57,15 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
         val categoriesRecyclerView : CategoriesRecyclerView = binding.recyclerviewCategories
         categoriesRecyclerView.layoutManager = GridLayoutManager(context, 2)
 
-        val categoriesAdapter = CategoriesAdapter(clickListener = CategoryClickListener())
+        val profileId : Long = arguments?.getLong("profileId")
+                ?: notesViewModel.currentProfileId
+                ?: return binding.root
+
+        val categoriesAdapter = CategoriesAdapter(clickListener = CategoryClickListener(profileId))
         categoriesRecyclerView.adapter = categoriesAdapter
         notesViewModel.categoriesLiveData.observe(viewLifecycleOwner, {
             categoriesAdapter.setCategories(it)
         })
-
-        val profileId : Long = arguments?.getLong("profileId")
-                ?: notesViewModel.currentProfileId
-                ?: return binding.root
 
         if (notesViewModel.isCurrentProfile(profileId)) {
             toolbar.inflateMenu(R.menu.menu_notes_categories)
@@ -95,16 +94,16 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
         notesViewModel.createCategory(name)
     }
 
-    inner class CategoryClickListener : CategoriesAdapter.ICategoryClickListener {
+    inner class CategoryClickListener(val profileId: Long
+    ) : CategoriesAdapter.ICategoryClickListener {
         override fun onClick(category: NotesCategory) {
-            val notesGridFragment = NotesFragment.newInstance(category.id)
+            val notesGridFragment = NotesFragment.newInstance(category.id, profileId)
             replace(notesGridFragment)
         }
     }
 
     override val noteSearchingViewModel: INoteSearchingViewModel
         get() = notesViewModel
-
 
     override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)

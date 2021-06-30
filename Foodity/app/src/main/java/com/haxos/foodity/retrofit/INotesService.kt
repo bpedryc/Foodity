@@ -11,7 +11,7 @@ import retrofit2.http.*
 interface INotesService {
 
     @GET("/notes")
-    fun getNotesByCategory(@Query("categoryId") notesCategoryId: Long): Call<List<Note>>
+    suspend fun getNotesByCategory(@Query("categoryId") notesCategoryId: Long): Response<List<Note>>
 
     @GET("/notes")
     suspend fun getNoteById(@Query("id") id: Long): Response<Note>

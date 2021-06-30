@@ -29,4 +29,9 @@ class NotesCategoriesController (
         return true
     }
 
+    @GetMapping("/{id}/profileId")
+    fun getOwnerProfileId(@PathVariable("id") categoryId: Long) : Long {
+        return categoriesService.getProfileId(categoryId)
+    }
+
 }
