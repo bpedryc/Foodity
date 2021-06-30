@@ -53,13 +53,13 @@ class ProfileFragment : Fragment() {
 
 
         binding.buttonViewNotes.setOnClickListener {
-            replace(CategoriesFragment.newInstance(profileId))
+//            replace(CategoriesFragment.newInstance(profileId))
         }
 
         profileViewModel.fetchProfile(profileId)
 
         if (profileViewModel.isCurrentProfile(profileId)) {
-//            binding.root.removeView(binding.layoutActions)
+            binding.root.removeView(binding.layoutActions)
         }
 
         return binding.root
