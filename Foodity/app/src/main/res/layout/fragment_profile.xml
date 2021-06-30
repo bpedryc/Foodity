@@ -24,7 +24,6 @@
 
     <TextView
         android:id="@+id/full_name"
-        android:text="Janusz Kowalski"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/avatar"
@@ -35,7 +34,6 @@
 
     <TextView
             android:id="@+id/username"
-            android:text="jkowalski"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/full_name"
