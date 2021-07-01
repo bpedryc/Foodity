@@ -13,7 +13,7 @@ import com.haxos.foodity.utils.replace
 
 class NotesSearchingToolbar(
     val toolbar: Toolbar,
-    val searchingFragment: INoteSearchingFragment
+    val searchingFragment: INoteSearchingFragment,
 ) {
 
     init {
@@ -41,7 +41,10 @@ class NotesSearchingToolbar(
     inner class NoteSearchClickListener : SearchResultAdapter.IItemClickListener {
         override fun onItemClick(item: Any) {
             val note = item as Note
-            (searchingFragment as Fragment).replace(NoteFragment.newInstance(note.id))
+            val fragment = searchingFragment as Fragment
+            val profileId = fragment.arguments?.getLong("profileId")
+                ?: return
+            (searchingFragment as Fragment).replace(NoteFragment.newInstance(note.id, profileId))
         }
     }
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.haxos.foodity.BR
 import com.haxos.foodity.R
+import com.haxos.foodity.data.ICurrentUserInfo
 import com.haxos.foodity.data.model.*
 import com.haxos.foodity.retrofit.INotesService
 import kotlinx.coroutines.async
@@ -14,6 +15,7 @@ import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class NoteViewModel @Inject constructor(
+        private val currentUser: ICurrentUserInfo,
         private val notesService: INotesService,
         private val elementsRepository: NoteElementsRepository,
         private val fileService: IFileService
@@ -36,7 +38,7 @@ class NoteViewModel @Inject constructor(
         field?.let { fetchNote(it) }
     }
 
-    val deletedElements = emptyList<NoteElement>().toMutableList()
+    private val deletedElements = emptyList<NoteElement>().toMutableList()
 
     private fun toViewModel(noteElement: NoteElement) : NoteElementViewModel {
         val elementActionListener = ElementActionListener(
@@ -154,7 +156,7 @@ class NoteViewModel @Inject constructor(
         _noteLiveData.value = _noteLiveData.value
     }
 
-    private fun fetchNote(noteId: Long) = viewModelScope.launch {
+    fun fetchNote(noteId: Long) = viewModelScope.launch {
         val noteResponse = async {notesService.getNoteById(noteId) }
         val elementsResponse = async { elementsRepository.getByNoteId(noteId) }
 
@@ -239,5 +241,9 @@ class NoteViewModel @Inject constructor(
             imageElement.sourcePath = contentUrl
             _noteLiveData.value = _noteLiveData.value
         }
+    }
+
+    fun isCurrentProfile(profileId: Long): Boolean {
+        return currentUser.profileId == profileId
     }
 }

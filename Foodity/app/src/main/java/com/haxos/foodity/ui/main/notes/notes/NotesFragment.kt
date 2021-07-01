@@ -52,7 +52,12 @@ class NotesFragment: Fragment(), INoteSearchingFragment {
         val notesRecyclerView: RecyclerView = binding.recyclerviewNotes
         notesRecyclerView.layoutManager = GridLayoutManager(context, 2)
 
-        val notesAdapter = NotesAdapter(clickListener = NoteClickListener())
+        val categoryId: Long = arguments?.getLong("categoryId")
+                ?: return binding.root
+        val profileId: Long = arguments?.getLong("profileId")
+                ?: return binding.root
+
+        val notesAdapter = NotesAdapter(clickListener = NoteClickListener(profileId))
         notesRecyclerView.adapter = notesAdapter
         notesViewModel.notesLiveData.observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
@@ -62,12 +67,6 @@ class NotesFragment: Fragment(), INoteSearchingFragment {
             }
             notesAdapter.setNotes(it)
         })
-
-        val categoryId: Long = arguments?.getLong("categoryId")
-                ?: return binding.root
-        val profileId: Long = arguments?.getLong("profileId")
-                ?: return binding.root
-
 
         notesViewModel.fetchNotes(categoryId)
 
@@ -95,9 +94,9 @@ class NotesFragment: Fragment(), INoteSearchingFragment {
         notesViewModel.addNote(name)
     }
 
-    inner class NoteClickListener : NotesAdapter.INoteClickListener {
+    inner class NoteClickListener(val profileId: Long) : NotesAdapter.INoteClickListener {
         override fun onClick(note: Note) {
-            val noteContentFragment = NoteFragment.newInstance(note.id)
+            val noteContentFragment = NoteFragment.newInstance(note.id, profileId)
             replace(noteContentFragment)
         }
     }

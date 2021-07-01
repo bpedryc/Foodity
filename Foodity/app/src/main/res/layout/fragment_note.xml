@@ -22,8 +22,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:contentInsetStartWithNavigation="50dp"
                 app:contentInsetEnd="50dp"
-                app:navigationIcon="?attr/homeAsUpIndicator"
-                app:menu="@menu/menu_note"/>
+                app:navigationIcon="?attr/homeAsUpIndicator"/>
 
 
         <androidx.recyclerview.widget.RecyclerView

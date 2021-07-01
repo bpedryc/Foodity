@@ -1,17 +1,13 @@
 package com.haxos.foodity.ui.main.notes.content
 
 import android.app.AlertDialog
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.haxos.foodity.R
 import com.haxos.foodity.databinding.FragmentNoteBinding
 import com.haxos.foodity.utils.replace
@@ -22,9 +18,11 @@ import javax.inject.Inject
 class NoteFragment: Fragment(), Toolbar.OnMenuItemClickListener {
 
     companion object {
-        fun newInstance (noteId: Long): NoteFragment {
+        fun newInstance (noteId: Long, profileId: Long): NoteFragment {
             val args = Bundle()
             args.putLong("noteId", noteId)
+            args.putLong("profileId", profileId)
+
             val fragment = NoteFragment()
             fragment.arguments = args
             return fragment
@@ -33,6 +31,8 @@ class NoteFragment: Fragment(), Toolbar.OnMenuItemClickListener {
 
     lateinit var binding : FragmentNoteBinding
     @Inject lateinit var noteViewModel: NoteViewModel
+
+    var noteId: Long = 0
 
     lateinit var toolbar: Toolbar
 
@@ -44,22 +44,31 @@ class NoteFragment: Fragment(), Toolbar.OnMenuItemClickListener {
             requireActivity().onBackPressed()
         }
 
-        setHasOptionsMenu(true)
-        toolbar.setOnMenuItemClickListener(this)
-
         noteViewModel.noteLiveData.observe(viewLifecycleOwner) {
             if (it == null) {
                 requireActivity().onBackPressed()
             }
         }
 
-        val noteId: Long? = arguments?.getLong("noteId")
-        noteViewModel.noteId = noteId
-
-        return binding.also {
+        val bindingRoot = binding.also {
             it.viewModel = noteViewModel
             it.lifecycleOwner = viewLifecycleOwner
         }.root
+
+        noteId = arguments?.getLong("noteId")
+            ?: return bindingRoot
+        val profileId: Long = arguments?.getLong("profileId")
+            ?: return bindingRoot
+
+        if (noteViewModel.isCurrentProfile(profileId)) {
+            toolbar.inflateMenu(R.menu.menu_note)
+            toolbar.setOnMenuItemClickListener(this)
+            setHasOptionsMenu(true)
+        }
+
+        noteViewModel.fetchNote(noteId)
+
+        return bindingRoot
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {
@@ -71,10 +80,8 @@ class NoteFragment: Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun onNoteEdit() {
-        noteViewModel.noteId?.let {
-            val editFragment = NoteEditFragment.newInstance(it)
-            replace(editFragment)
-        }
+        val editFragment = NoteEditFragment.newInstance(noteId)
+        replace(editFragment)
     }
 
     private fun onNoteDelete() {

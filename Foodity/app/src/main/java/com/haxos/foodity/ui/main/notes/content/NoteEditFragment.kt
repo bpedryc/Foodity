@@ -55,7 +55,11 @@ class NoteEditFragment : Fragment(), Toolbar.OnMenuItemClickListener {
         toolbar.setOnMenuItemClickListener(this)
 
         noteViewModel.editable = true
-        noteViewModel.noteId = arguments?.getLong("noteId")
+
+        val noteId = arguments?.getLong("noteId")
+        noteId?.let {
+            noteViewModel.fetchNote(it)
+        }
 
         noteViewModel.imageElementRequest.observe(viewLifecycleOwner, {
             if (it.contentUrl != null) {
