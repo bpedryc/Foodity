@@ -1,17 +1,22 @@
 package com.haxos.foodity.data
 
+import android.accounts.Account
+import android.accounts.AccountManager
+import android.app.Activity
 import com.haxos.foodity.data.model.Profile
 import com.haxos.foodity.data.model.Token
 import com.haxos.foodity.data.model.User
 import com.haxos.foodity.retrofit.IAuthService
 import com.haxos.foodity.retrofit.IProfileService
+import com.haxos.foodity.retrofit.IUserService
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class UserSession @Inject constructor(
         private val authService: IAuthService,
-        private val profileService: IProfileService
+        private val profileService: IProfileService,
+        private val userService: IUserService
 ) : ICurrentUserInfo {
     override var user: User? = null
         private set
@@ -19,19 +24,31 @@ class UserSession @Inject constructor(
     override val isLoggedIn: Boolean
         get() = user != null
 
+    override val userRoles: List<String>
+        get() = user?.roles ?: emptyList()
+
     override val profileId: Long?
         get() = user?.profile?.id
 
-    fun logout(): User? {
-        val loggedOutUser = user?.copy()
+    fun logout(accountManagerActivity: Activity): User? {
+        val loggedOutUser = user?.copy() ?: return null
+
+        val accountManager = AccountManager.get(accountManagerActivity)
+        Account(loggedOutUser.username, "com.haxos.foodity").also { account ->
+            accountManager.removeAccount(
+                    account, accountManagerActivity, null, null)
+        }
+
         user = null
         return loggedOutUser
     }
 
-    suspend fun login(username: String, password: String) {
-        val tokenResponse: Token = authService.getToken(username, password).body() ?: return
-        val userProfile: Profile = profileService.getByUsername(username).body() ?: return
+    suspend fun login(username: String, password: String) : User? {
+        val tokenResponse: Token = authService.getToken(username, password).body() ?: return null
+        val userProfile: Profile? = profileService.getByUsername(username).body()
+        val userRoles: List<String> = userService.getUserRoles(username).body() ?: emptyList()
 
-        user = User(0, username, "", "", userProfile)
+        user = User(0, username, "", "", userProfile, userRoles)
+        return user
     }
 }

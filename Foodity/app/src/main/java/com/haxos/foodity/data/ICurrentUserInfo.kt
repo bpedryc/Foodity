@@ -6,4 +6,5 @@ interface ICurrentUserInfo {
     val user: User?
     val profileId: Long?
     val isLoggedIn: Boolean
+    val userRoles: List<String>
 }

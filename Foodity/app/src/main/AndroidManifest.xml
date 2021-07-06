@@ -66,6 +66,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.haxos.foodity.ui.main.MainActivity" />
         </activity>
+
+        <activity
+            android:name=".ui.moderator.ModeratorActivity"
+            android:label="Admin Panel">
+        </activity>
     </application>
 
 </manifest>

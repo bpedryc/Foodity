@@ -1,7 +1,6 @@
 package com.haxos.foodity.ui.settings
 
-import android.accounts.Account
-import android.accounts.AccountManager
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -41,14 +40,7 @@ class SettingsMenuFragment: Fragment() {
     }
 
     private fun logOut() {
-        val loggedOutUser = userSession.logout()
-        val accountManager = AccountManager.get(activity)
-
-        if (loggedOutUser != null) {
-            Account(loggedOutUser.username, "com.haxos.foodity").also { account ->
-                accountManager.removeAccount(account, activity, null, null)
-            }
-        }
+        userSession.logout(activity as Activity)
 
         val intent = Intent(activity, AuthenticationActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

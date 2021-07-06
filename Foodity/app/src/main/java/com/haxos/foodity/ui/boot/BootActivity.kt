@@ -10,10 +10,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.lifecycleScope
 import com.haxos.foodity.data.UserSession
+import com.haxos.foodity.data.model.User
 import com.haxos.foodity.ui.authentication.AuthenticationActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import com.haxos.foodity.ui.main.MainActivity
+import com.haxos.foodity.ui.moderator.ModeratorActivity
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -65,19 +67,25 @@ class BootActivity : ComponentActivity()
             lifecycleScope.launch {
                 val username : String = userAccount!!.name
                 val password : String = accountManager.getPassword(userAccount)
-                userSession.login(username, password)
+                val loggedInUser : User? = userSession.login(username, password)
 
-                if (userSession.isLoggedIn) {
-                    startActivity(Intent(this@BootActivity, MainActivity::class.java))
-                } else {
+                if (loggedInUser == null) {
                     AlertDialog.Builder(this@BootActivity)
-                        .setTitle("Warning")
-                        .setMessage("This app requires an active internet connection")
-                        .setPositiveButton(android.R.string.yes) { _, _ ->
-                            finish()
-                        }
-                        .show()
+                            .setTitle("Warning")
+                            .setMessage("This app requires an active internet connection")
+                            .setPositiveButton(android.R.string.yes) { _, _ ->
+                                finish()
+                            }
+                            .show()
+                    return@launch
                 }
+
+                if (loggedInUser.roles.any { it.contains("moderator")} ) {
+                    startActivity(Intent(this@BootActivity, ModeratorActivity::class.java))
+                    return@launch
+                }
+                startActivity(Intent(this@BootActivity, MainActivity::class.java))
+
             }
         }
     }
