@@ -1,26 +1,16 @@
 package com.haxos.foodityserver.rest.users
 
 import org.springframework.web.bind.annotation.*
-import java.lang.RuntimeException
 
 @RestController
 class UsersController (
         val service: UsersService,
 ){
-    /*@RequestMapping("/users", method = [RequestMethod.GET])
-    fun getAll(): MutableList<Profile> {
-        return service.findAll()
-    }
 
-    @RequestMapping(value = ["/users"], params = ["email"], method = [RequestMethod.GET])
-    fun getByEmail(@RequestParam email: String): Profile {
-        return service.findByEmail(email)
+    @GetMapping("/users/{username}/roles")
+    fun getRole(@PathVariable("username") username: String): List<String> {
+        return service.getUserRolesByUsername(username)
     }
-
-    @RequestMapping(value = ["/users"], params = ["username"], method = [RequestMethod.GET])
-    fun getByUsername(@RequestParam username: String): Profile {
-        return service.findByUsername(username)
-    }*/
 
     @RequestMapping(value = ["/users"], method = [RequestMethod.POST])
     fun createUser(@RequestBody user: UserRequest): UserRequest {

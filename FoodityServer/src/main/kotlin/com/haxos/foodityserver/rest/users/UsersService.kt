@@ -1,7 +1,9 @@
 package com.haxos.foodityserver.rest.users
 
 import org.keycloak.admin.client.Keycloak
+import org.keycloak.admin.client.resource.UserResource
 import org.keycloak.representations.idm.CredentialRepresentation
+import org.keycloak.representations.idm.RoleRepresentation
 import org.keycloak.representations.idm.UserRepresentation
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -12,6 +14,32 @@ class UsersService (
     private val keycloak: Keycloak,
     @Value("\${keycloak.realm}") private val realm: String
 ){
+    private fun getUser(id: String): UserResource {
+        return keycloak
+            .realm(realm)
+            .users()
+            .get(id)
+    }
+
+    fun getUserId(username: String): String? {
+        return keycloak
+            .realm(realm)
+            .users()
+            .search(username)
+            .firstOrNull()
+            ?.id
+    }
+
+    fun getUserRolesByUsername(username: String) : List<String> {
+        val userId = getUserId(username) ?: return emptyList()
+        val user = getUser(userId)
+        return user
+            .roles()
+            .realmLevel()
+            .listAll()
+            .map { it.name }
+    }
+
     fun createUser(request: UserRequest): Response {
         val credentialRepresentation = prepareCredentialRepresentation(request.password)
         val user = prepareUserRepresentation(request, credentialRepresentation)
