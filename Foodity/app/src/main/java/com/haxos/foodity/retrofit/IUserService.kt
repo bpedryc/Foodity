@@ -8,7 +8,7 @@ import retrofit2.http.*
 
 interface IUserService {
     @GET("/users")
-    fun getUsers() : Call<List<User>>
+    suspend fun getUsers() : Response<List<User>>
 
     @GET("/users/{username}/roles")
     suspend fun getUserRoles(@Path("username") username: String): Response<List<String>>
