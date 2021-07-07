@@ -21,4 +21,9 @@ class UsersController (
         return user //TODO: create profile for created user and connect them
         //return ResponseEntity.created(response.location).build()
     }
+
+    @GetMapping("/users")
+    fun getUsers() : List<User> {
+        return service.getAllUsers()
+    }
 }

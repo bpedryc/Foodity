@@ -19,13 +19,13 @@ class ModeratorViewModel @Inject constructor(
         private val userService: IUserService
 ) : ViewModel() {
 
-    private val _usersLiveData = MutableLiveData<List<RecyclerItem>>(emptyList())
+    private val _usersLiveData = MutableLiveData<List<RecyclerItem>>()
     val usersLiveData : LiveData<List<RecyclerItem>> = _usersLiveData
 
     fun fetchUsers() = viewModelScope.launch {
         val usersResponse = userService.getUsers()
         if (!usersResponse.isSuccessful) {
-            val errorUser = User(-1, "ERROR", usersResponse.errorBody().toString(),
+            val errorUser = User("", "ERROR", usersResponse.errorBody().toString(),
                     password = "", null, emptyList())
             _usersLiveData.value = listOf(errorUser.toRecyclerItem())
             return@launch
@@ -41,7 +41,7 @@ class ModeratorViewModel @Inject constructor(
     private fun User.toRecyclerItem() : RecyclerItem {
         return RecyclerItem(
                 data = this,
-                variableId = BR.viewModel,
+                variableId = BR.user,
                 layoutId = R.layout.recyclerview_user
         )
     }

@@ -15,8 +15,7 @@ import javax.inject.Inject
 class ModeratorFragment : Fragment() {
 
     private lateinit var binding: FragmentModeratorBinding
-    @Inject
-    lateinit var viewModel: ModeratorViewModel
+    @Inject lateinit var viewModel: ModeratorViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentModeratorBinding.inflate(inflater)
@@ -31,11 +30,11 @@ class ModeratorFragment : Fragment() {
             activity.finish()
         }
 
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         viewModel.fetchUsers()
 
-        return binding.also {
-            it.viewModel = viewModel
-            it.lifecycleOwner = viewLifecycleOwner
-        }.root
+        return binding.root
     }
 }

@@ -30,6 +30,16 @@ class UsersService (
             ?.id
     }
 
+    fun getAllUsers() : List<User> {
+        val keycloakUsers : List<UserRepresentation> = keycloak
+            .realm(realm)
+            .users()
+            .list()
+        return keycloakUsers.map {
+            User(it.id, it.username, it.email ?: "", "", null, emptyList())
+        }
+    }
+
     fun getUserRolesByUsername(username: String) : List<String> {
         val userId = getUserId(username) ?: return emptyList()
         val user = getUser(userId)

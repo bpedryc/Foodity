@@ -31,12 +31,14 @@ class UserSession @Inject constructor(
         get() = user?.profile?.id
 
     fun logout(accountManagerActivity: Activity): User? {
-        val loggedOutUser = user?.copy() ?: return null
-
-        val accountManager = AccountManager.get(accountManagerActivity)
-        Account(loggedOutUser.username, "com.haxos.foodity").also { account ->
-            accountManager.removeAccount(
-                    account, accountManagerActivity, null, null)
+        var loggedOutUser : User? = null
+        user?.let {
+            loggedOutUser = User(it.id, it.username, it.email, it.password, it.profile, it.roles)
+            val accountManager = AccountManager.get(accountManagerActivity)
+            Account(it.username, "com.haxos.foodity").also { account ->
+                accountManager.removeAccount(
+                        account, accountManagerActivity, null, null)
+            }
         }
 
         user = null
@@ -48,7 +50,7 @@ class UserSession @Inject constructor(
         val userProfile: Profile? = profileService.getByUsername(username).body()
         val userRoles: List<String> = userService.getUserRoles(username).body() ?: emptyList()
 
-        user = User(0, username, "", "", userProfile, userRoles)
+        user = User("ABCD", username, "", "", userProfile, userRoles)
         return user
     }
 }
