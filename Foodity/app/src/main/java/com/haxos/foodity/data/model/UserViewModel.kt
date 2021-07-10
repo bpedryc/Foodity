@@ -7,7 +7,7 @@ class UserViewModel (
 ) {
 
     fun redirectToEdit() {
-        print("REDIRECT EDIT")
+        listener.onPageRedirect(profile)
     }
 
     fun ban() {

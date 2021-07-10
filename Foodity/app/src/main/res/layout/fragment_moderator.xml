@@ -21,8 +21,8 @@
             app:contentInsetEnd="50dp"
             app:contentInsetStartWithNavigation="50dp"
             app:layout_constraintTop_toTopOf="parent"
-            app:navigationIcon="?attr/homeAsUpIndicator"
             app:title="Admin Panel"
+            app:menu="@menu/menu_moderator"
             app:titleTextColor="#515151"/>
 
         <androidx.recyclerview.widget.RecyclerView

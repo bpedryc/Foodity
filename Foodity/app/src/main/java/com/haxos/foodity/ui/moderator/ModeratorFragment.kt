@@ -6,8 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.haxos.foodity.R
 import com.haxos.foodity.databinding.FragmentModeratorBinding
 import com.haxos.foodity.ui.authentication.AuthenticationActivity
+import com.haxos.foodity.ui.profile.ProfileFragment
+import com.haxos.foodity.utils.replace
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -15,24 +18,35 @@ import javax.inject.Inject
 class ModeratorFragment : Fragment() {
 
     private lateinit var binding: FragmentModeratorBinding
-    @Inject lateinit var viewModel: ModeratorViewModel
+    @Inject lateinit var moderatorViewModel: ModeratorViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentModeratorBinding.inflate(inflater)
+        binding = FragmentModeratorBinding.inflate(inflater, container, false)
 
-        val toolbar = binding.toolbarModerator
-        toolbar.setNavigationOnClickListener {
-            val activity = requireActivity()
-            viewModel.logout(activity)
-            val intent = Intent(context, AuthenticationActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
-            activity.finish()
+        binding.toolbarModerator.setOnMenuItemClickListener { item ->
+            if (item.itemId == R.id.action_moderator_logout) {
+                val activity = requireActivity()
+                moderatorViewModel.logout(activity)
+                val intent = Intent(context, AuthenticationActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                activity.finish()
+                true
+            } else {
+                false
+            }
         }
 
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = viewLifecycleOwner
+        moderatorViewModel.userPageRedirectRequest.observe (viewLifecycleOwner) {
+            it.getContentIfNotHandled()?.let { profileId ->
+                val userFragment = ProfileFragment.newInstance(profileId)
+                replace(userFragment)
+            }
+        }
 
-        return binding.root
+        return binding.also {
+            it.viewModel = moderatorViewModel
+            it.lifecycleOwner = viewLifecycleOwner
+        }.root
     }
 }

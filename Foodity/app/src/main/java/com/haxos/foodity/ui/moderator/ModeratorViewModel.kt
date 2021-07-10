@@ -1,5 +1,6 @@
 package com.haxos.foodity.ui.moderator
 
+import com.haxos.foodity.data.model.Event
 import android.app.Activity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,10 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.haxos.foodity.BR
 import com.haxos.foodity.R
 import com.haxos.foodity.data.UserSession
-import com.haxos.foodity.data.model.Profile
-import com.haxos.foodity.data.model.User
-import com.haxos.foodity.data.model.IUserActionListener
-import com.haxos.foodity.data.model.UserViewModel
+import com.haxos.foodity.data.model.*
 import com.haxos.foodity.retrofit.IProfileService
 import com.haxos.foodity.retrofit.IUserService
 import com.haxos.foodity.ui.main.notes.content.RecyclerItem
@@ -23,6 +21,9 @@ class ModeratorViewModel @Inject constructor(
         private val userService: IUserService,
         private val profileService: IProfileService
 ) : ViewModel() {
+
+    private val _userPageRedirectRequest = MutableLiveData<Event<Long>>()
+    val userPageRedirectRequest: LiveData<Event<Long>> = _userPageRedirectRequest
 
     private val _usersLiveData = MutableLiveData<List<RecyclerItem>>()
     val usersLiveData : LiveData<List<RecyclerItem>> = _usersLiveData
@@ -70,6 +71,10 @@ class ModeratorViewModel @Inject constructor(
                 profileService.toggleBan(bannedProfile.id)
                 _usersLiveData.value = _usersLiveData.value
             }
+        }
+
+        override fun onPageRedirect(profile: Profile) {
+            _userPageRedirectRequest.value = Event(profile.id)
         }
     }
 
