@@ -50,7 +50,9 @@ class ProfileFragment : Fragment() {
             }
         })
 
-
+        binding.toolbarProfile.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
+        }
 
         binding.buttonViewNotes.setOnClickListener {
             replace(CategoriesFragment.newInstance(profileId))

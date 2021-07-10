@@ -7,11 +7,34 @@
                                                    tools:context=".ui.settings.SettingsActivity"
                                                    android:background="@color/grey">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/settings_activity_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/cardview_light_background"
+        android:elevation="4dp"
+        app:title="Settings"
+        app:navigationIcon="@drawable/ic_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <ImageView
+        android:id="@+id/settingsPicture"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/button_profile"
+        app:layout_constraintTop_toBottomOf="@id/settings_activity_toolbar"/>
+
     <Button
             android:id="@+id/button_profile"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="28dp"
+            android:layout_marginBottom="30dp"
             android:background="@color/cardview_light_background"
             android:drawableLeft="@drawable/ic_settings"
             android:drawablePadding="10dp"
@@ -22,7 +45,7 @@
             android:textSize="17sp"
             style="@style/GenericButton"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/button_logout"/>
     <Button
             android:id="@+id/button_logout"
@@ -30,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
             android:background="@color/cardview_light_background"
-            android:drawableLeft="@drawable/ic_settings"
+            android:drawableLeft="@drawable/exit"
             android:drawablePadding="10dp"
             android:gravity="left"
             android:padding="16dp"

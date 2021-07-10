@@ -58,4 +58,8 @@ class NotesViewModel @Inject constructor(
     fun isCurrentProfile(profileId: Long): Boolean {
         return currentUserInfo.profileId == profileId
     }
+
+    fun isCurrentUserModerator(): Boolean {
+        return currentUserInfo.userRoles.any {it.contains("moderator")}
+    }
 }

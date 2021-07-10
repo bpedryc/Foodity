@@ -6,6 +6,7 @@ import android.view.*
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -49,17 +50,26 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
         noteSearchRecyclerView = binding.recyclerviewSearch
 
         val toolbar: Toolbar = binding.toolbarActivityMain
-        toolbar.setNavigationOnClickListener {
-            startActivity(Intent(context, SettingsActivity::class.java))
+
+        val profileId : Long = arguments?.getLong("profileId")
+            ?: notesViewModel.currentProfileId
+            ?: return binding.root
+
+        if (!notesViewModel.isCurrentProfile(profileId)) {
+            toolbar.setNavigationIcon(R.drawable.ic_back)
+            toolbar.setNavigationOnClickListener {
+                requireActivity().onBackPressed()
+            }
+        } else {
+            toolbar.setNavigationOnClickListener {
+                startActivity(Intent(context, SettingsActivity::class.java))
+            }
         }
+
         val notesSearchingToolbar = NotesSearchingToolbar(toolbar, this)
 
         val categoriesRecyclerView : CategoriesRecyclerView = binding.recyclerviewCategories
         categoriesRecyclerView.layoutManager = GridLayoutManager(context, 2)
-
-        val profileId : Long = arguments?.getLong("profileId")
-                ?: notesViewModel.currentProfileId
-                ?: return binding.root
 
         val categoriesAdapter = CategoriesAdapter(clickListener = CategoryClickListener(profileId))
         categoriesRecyclerView.adapter = categoriesAdapter

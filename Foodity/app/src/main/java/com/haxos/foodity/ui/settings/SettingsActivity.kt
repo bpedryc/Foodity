@@ -18,9 +18,6 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        setSupportActionBar(findViewById(R.id.settings_activity_toolbar))
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         supportFragmentManager.commit {
             setReorderingAllowed(true)
             replace<SettingsMenuFragment>(R.id.fragment_settings)

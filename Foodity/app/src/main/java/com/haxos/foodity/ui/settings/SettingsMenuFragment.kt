@@ -24,8 +24,11 @@ class SettingsMenuFragment: Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSettingsBinding.inflate(inflater)
 
-        binding.buttonLogout.setOnClickListener { logOut() }
+        binding.settingsActivityToolbar.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
+        }
 
+        binding.buttonLogout.setOnClickListener { logOut() }
         binding.buttonProfile.setOnClickListener { viewProfile() }
 
         return binding.root

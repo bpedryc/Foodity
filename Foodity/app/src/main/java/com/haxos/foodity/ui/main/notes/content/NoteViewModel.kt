@@ -243,7 +243,13 @@ class NoteViewModel @Inject constructor(
         }
     }
 
-    fun isCurrentProfile(profileId: Long): Boolean {
-        return currentUser.profileId == profileId
+    fun canCurrentUserEdit(ownerProfileId: Long): Boolean {
+        if (currentUser.profileId == ownerProfileId) {
+            return true
+        }
+        if (currentUser.userRoles.any {it.contains("moderator")}) {
+            return true
+        }
+        return false
     }
 }

@@ -4,13 +4,19 @@
                                                    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
                                                    android:layout_height="match_parent">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_profile"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:drawable/screen_background_dark_transparent"
+        app:navigationIcon="@drawable/ic_back"/>
+
     <ImageView
             android:id="@+id/profile_background"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="100dp"
             app:srcCompat="@android:drawable/screen_background_dark_transparent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+        android:layout_below="@id/toolbar_profile"
     />
     <ImageView
             android:id="@+id/avatar"

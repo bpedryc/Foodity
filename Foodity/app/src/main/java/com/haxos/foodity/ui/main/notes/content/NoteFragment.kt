@@ -57,10 +57,10 @@ class NoteFragment: Fragment(), Toolbar.OnMenuItemClickListener {
 
         noteId = arguments?.getLong("noteId")
             ?: return bindingRoot
-        val profileId: Long = arguments?.getLong("profileId")
+        val ownerProfileId: Long = arguments?.getLong("profileId")
             ?: return bindingRoot
 
-        if (noteViewModel.isCurrentProfile(profileId)) {
+        if (noteViewModel.canCurrentUserEdit(ownerProfileId)) {
             toolbar.inflateMenu(R.menu.menu_note)
             toolbar.setOnMenuItemClickListener(this)
             setHasOptionsMenu(true)
