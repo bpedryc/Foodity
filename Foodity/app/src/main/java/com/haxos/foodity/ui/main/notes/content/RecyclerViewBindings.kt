@@ -39,5 +39,5 @@ fun setImageTint(
     imageButton: ImageButton,
     @ColorInt color: Int
 ) {
-    imageButton.setColorFilter(color, PorterDuff.Mode.SRC_OVER)
+    imageButton.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
 }

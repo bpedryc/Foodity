@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="com.haxos.foodity.R" />
         <variable
             name="viewModel"
             type="com.haxos.foodity.data.model.UserViewModel"
@@ -60,8 +61,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@android:color/transparent"
             android:onClick="@{() -> viewModel.ban()}"
-            app:tint="@{viewModel.blockButtonColor}"
-            android:alpha="1"
+            app:tint="@{viewModel.profile.blocked ? @color/danger : @color/black}"
         />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
