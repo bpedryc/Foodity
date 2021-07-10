@@ -1,6 +1,9 @@
 package com.haxos.foodity.ui.main.notes.content
 
+import android.graphics.PorterDuff
+import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.annotation.ColorInt
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.haxos.foodity.R
@@ -29,4 +32,12 @@ fun setImageViewResource(
         .placeholder(R.drawable.foodity_logo)
         .error(R.drawable.foodity_logo)
         .load(url)
+}
+
+@BindingAdapter("tint")
+fun setImageTint(
+    imageButton: ImageButton,
+    @ColorInt color: Int
+) {
+    imageButton.setColorFilter(color, PorterDuff.Mode.SRC_OVER)
 }

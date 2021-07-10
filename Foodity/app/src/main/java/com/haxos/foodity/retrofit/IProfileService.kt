@@ -8,7 +8,7 @@ import retrofit2.http.*
 interface IProfileService {
 
     @GET("/profiles")
-    fun getAll(): Call<List<Profile>>
+    suspend fun getAll(): Response<List<Profile>>
 
     @GET("/profiles")
     suspend fun getById(@Query("id") id: Long): Response<Profile>
@@ -18,6 +18,9 @@ interface IProfileService {
 
     @POST("/profiles")
     suspend fun post(@Body profile: Profile): Response<Profile>
+
+    @PUT("/profiles/{id}/ban")
+    suspend fun toggleBan(@Path("id") id: Long) : Response<Boolean>
 
     @GET("/profiles/follower")
     suspend fun getFollower(

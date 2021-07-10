@@ -51,6 +51,7 @@ class LoginFragment : Fragment() {
             binding.loading.visibility = View.GONE
             if (loginResult.error != null) {
                 showLoginFailed(loginResult.error)
+                loginViewModel.logout(requireActivity())
             }
             if (loginResult.success != null) {
                 val accountManager: AccountManager = AccountManager.get(activity)

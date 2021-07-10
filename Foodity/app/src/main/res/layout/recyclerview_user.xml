@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="user"
-            type="com.haxos.foodity.data.model.User"
+            name="viewModel"
+            type="com.haxos.foodity.data.model.UserViewModel"
             />
     </data>
 
@@ -27,17 +27,17 @@
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:text="@{user.id}" />
+                android:text="@{viewModel.user.id}" />
 
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:text="@{user.username}" />
+                android:text="@{viewModel.user.username}" />
 
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:text="@{user.email}" />
+                android:text="@{viewModel.user.email}" />
         </LinearLayout>
 
         <ImageButton
@@ -48,18 +48,20 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@android:color/transparent"
-            android:onClick="@{() -> user.redirectToEdit()}"
+            android:onClick="@{() -> viewModel.redirectToEdit()}"
             />
 
         <ImageButton
             android:id="@+id/button_user_ban"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:src="@drawable/ic_delete"
+            android:src="@drawable/ic_block"
             app:layout_constraintTop_toBottomOf="@id/button_user_edit"
             app:layout_constraintEnd_toEndOf="parent"
             android:background="@android:color/transparent"
-            android:onClick="@{() -> user.ban()}"
+            android:onClick="@{() -> viewModel.ban()}"
+            app:tint="@{viewModel.blockButtonColor}"
+            android:alpha="1"
         />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

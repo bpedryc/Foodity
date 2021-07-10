@@ -2,6 +2,7 @@ package com.haxos.foodityserver.rest.profiles
 
 import javassist.NotFoundException
 import org.springframework.web.bind.annotation.*
+import javax.ws.rs.PathParam
 
 @RestController
 @RequestMapping("/profiles")
@@ -22,6 +23,17 @@ class ProfilesController (
     @GetMapping(params = ["username"])
     fun findByUsername(username: String) : Profile {
         return profilesRepository.findByUsername(username)
+    }
+
+    @PutMapping("/{id}/ban")
+    fun toggleBan(@PathVariable("id") profileId: Long) : Boolean {
+        val profile = profilesRepository.findById(profileId).orElseThrow {
+            NotFoundException("Profile not found")
+        }
+        val isBlocked : Boolean = profile.blocked ?: false
+        profile.blocked = !isBlocked
+        profilesRepository.save(profile)
+        return true
     }
 
     @PostMapping

@@ -33,8 +33,6 @@ class ModeratorFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.fetchUsers()
-
         return binding.root
     }
 }

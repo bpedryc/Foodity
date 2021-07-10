@@ -35,29 +35,19 @@ class SocialViewModel @Inject constructor(
     val searchListener = SearchListener()
 
     init {
-        profileService.getAll().enqueue(object : Callback<List<Profile>> {
-            override fun onResponse(call: Call<List<Profile>>, response: Response<List<Profile>>) {
-                val responseBody: List<Profile>? = response.body()
-                if (responseBody != null) {
-                    cachedProfiles.addAll(responseBody)
-                }
-            }
-            override fun onFailure(call: Call<List<Profile>>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-        })
-
         viewModelScope.launch {
-            val currentUserProfileId: Long? = currentUserInfo.profileId
-            if (currentUserProfileId != null) {
-                _logsLiveData.value = userLogService.getDisplayableLogs(currentUserProfileId)
+            currentUserInfo.profileId?.let {
+                _logsLiveData.value = userLogService.getDisplayableLogs(it)
+            }
+            val profilesResponse = profileService.getAll()
+            profilesResponse.body()?.let {
+                cachedProfiles.addAll(it)
             }
         }
-
     }
 
     inner class SearchListener : SearchView.OnQueryTextListener {
-        val handler: Handler = Handler(Looper.getMainLooper())
+        private val handler: Handler = Handler(Looper.getMainLooper())
         var runnable: Runnable? = null
 
         override fun onQueryTextSubmit(query: String): Boolean {

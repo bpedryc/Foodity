@@ -24,6 +24,9 @@ class UserSession @Inject constructor(
     override val isLoggedIn: Boolean
         get() = user != null
 
+    val isBlocked: Boolean
+        get() = user?.profile?.blocked ?: false
+
     override val userRoles: List<String>
         get() = user?.roles ?: emptyList()
 

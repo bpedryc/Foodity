@@ -7,12 +7,4 @@ class User (
     var password: String,
     var profile: Profile?,
     var roles: List<String>
-) {
-    fun redirectToEdit() {
-        println("Redirect to profile")
-    }
-
-    fun ban() {
-        println("Ban user")
-    }
-}
+)

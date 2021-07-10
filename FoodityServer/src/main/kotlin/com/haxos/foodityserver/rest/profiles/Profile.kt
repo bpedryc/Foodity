@@ -10,6 +10,7 @@ data class Profile (
     val username: String,
     val firstName: String,
     val lastName: String,
+    var blocked: Boolean? = false,
 
     @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
