@@ -7,5 +7,7 @@ data class Profile (
     var lastName: String,
     var blocked: Boolean = false,
     var followingIds: MutableList<Long> = emptyList<Long>().toMutableList(),
-    var followerIds: MutableList<Long> = emptyList<Long>().toMutableList()
+    var followerIds: MutableList<Long> = emptyList<Long>().toMutableList(),
+    var description: String = "",
+    val avatarSrc: String = ""
 )

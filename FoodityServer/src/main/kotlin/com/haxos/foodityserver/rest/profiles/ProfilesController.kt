@@ -1,8 +1,9 @@
 package com.haxos.foodityserver.rest.profiles
 
 import javassist.NotFoundException
+import org.hibernate.annotations.NotFound
 import org.springframework.web.bind.annotation.*
-import javax.ws.rs.PathParam
+import javax.ws.rs.BadRequestException
 
 @RestController
 @RequestMapping("/profiles")
@@ -36,9 +37,19 @@ class ProfilesController (
         return true
     }
 
-    @PostMapping
-    fun saveOrUpdate(@RequestBody profile: Profile) : Profile {
-        return profilesRepository.save(profile)
+    @PutMapping
+    fun update(@RequestBody profileRequest: Profile) : Profile {
+        val profileId = profileRequest.getId() ?: throw BadRequestException("No profile id when attempting update")
+        val existingProfile = profilesRepository.findById(profileId)
+            .orElseThrow { NotFoundException("Profile with id $profileId doesn't exist") }
+
+        existingProfile.apply {
+            firstName = profileRequest.firstName
+            lastName = profileRequest.lastName
+            description = profileRequest.description
+            avatarSrc = profileRequest.avatarSrc
+        }
+        return profilesRepository.save(existingProfile)
     }
 
     @DeleteMapping(params = ["id"])

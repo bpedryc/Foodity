@@ -8,9 +8,11 @@ import javax.persistence.*
 @Entity
 data class Profile (
     val username: String,
-    val firstName: String,
-    val lastName: String,
+    var firstName: String,
+    var lastName: String,
     var blocked: Boolean? = false,
+    var description: String? = "",
+    var avatarSrc: String? = "",
 
     @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "profile_id", referencedColumnName = "id")

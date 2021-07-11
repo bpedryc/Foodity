@@ -47,6 +47,11 @@ class ProfileViewModel @Inject constructor(
         return profile.followerIds.any { it == currentUserInfo.profileId }
     }
 
+    fun canEdit(profileId: Long): Boolean {
+        return currentUserInfo.profileId == profileId
+                || currentUserInfo.userRoles.any { it.contains("moderator") }
+    }
+
     inner class UnfollowClickListener : View.OnClickListener {
         override fun onClick(view: View) {
             val currentProfileId : Long = currentUserInfo.profileId ?: return

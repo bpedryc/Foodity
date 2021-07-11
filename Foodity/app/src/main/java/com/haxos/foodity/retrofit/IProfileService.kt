@@ -16,8 +16,8 @@ interface IProfileService {
     @GET("/profiles")
     suspend fun getByUsername(@Query("username") username: String): Response<Profile>
 
-    @POST("/profiles")
-    suspend fun post(@Body profile: Profile): Response<Profile>
+    @PUT("/profiles")
+    suspend fun saveOrUpdate(@Body profile: Profile): Response<Profile>
 
     @PUT("/profiles/{id}/ban")
     suspend fun toggleBan(@Path("id") id: Long) : Response<Boolean>

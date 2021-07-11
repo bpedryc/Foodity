@@ -2,17 +2,21 @@ package com.haxos.foodity.ui.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.haxos.foodity.R
 import com.haxos.foodity.databinding.FragmentProfileBinding
 import com.haxos.foodity.ui.main.notes.categories.CategoriesFragment
 import com.haxos.foodity.utils.replace
+import com.koushikdutta.ion.Ion
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     companion object {
         fun newInstance(profileId: Long): ProfileFragment{
@@ -27,28 +31,39 @@ class ProfileFragment : Fragment() {
     @Inject lateinit var profileViewModel: ProfileViewModel
     private lateinit var binding: FragmentProfileBinding
 
+    private var profileId: Long = 0
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentProfileBinding.inflate(inflater)
 
-        val profileId : Long = arguments?.getLong("profileId")
+        profileId = arguments?.getLong("profileId")
                 ?: return binding.root
 
         profileViewModel.profileLiveData.observe(viewLifecycleOwner, {
-            binding.fullName.text = it.firstName + " " + it.lastName
-            binding.username.text = it.username
+            binding.apply {
+                fullName.text = it.firstName + " " + it.lastName
+                username.text = it.username
+                description.text = it.description
 
-            binding.followersCount.text = it.followerIds.size.toString()
-            binding.followingCount.text = it.followingIds.size.toString()
+                Ion.with(avatar)
+                        .placeholder(R.drawable.foodity_logo)
+                        .error(R.drawable.foodity_logo)
+                        .load(it.avatarSrc)
 
-            val alreadyFollowed = profileViewModel.isFollowedByCurrentUser(it)
-            if (alreadyFollowed) {
-                binding.buttonFollow.text = "Unfollow"
-                binding.buttonFollow.setOnClickListener(profileViewModel.unfollowClickListener)
-            } else {
-                binding.buttonFollow.text = "Follow"
-                binding.buttonFollow.setOnClickListener(profileViewModel.followClickListener)
+                followersCount.text = it.followerIds.size.toString()
+                followingCount.text = it.followingIds.size.toString()
+
+                val alreadyFollowed = profileViewModel.isFollowedByCurrentUser(it)
+                if (alreadyFollowed) {
+                    buttonFollow.text = "Unfollow"
+                    buttonFollow.setOnClickListener(profileViewModel.unfollowClickListener)
+                } else {
+                    buttonFollow.text = "Follow"
+                    buttonFollow.setOnClickListener(profileViewModel.followClickListener)
+                }
             }
         })
+
 
         binding.toolbarProfile.setNavigationOnClickListener {
             requireActivity().onBackPressed()
@@ -63,7 +78,21 @@ class ProfileFragment : Fragment() {
         if (profileViewModel.isCurrentProfile(profileId)) {
             binding.root.removeView(binding.layoutActions)
         }
+        if (profileViewModel.canEdit(profileId)) {
+            binding.toolbarProfile.inflateMenu(R.menu.menu_profile)
+            binding.toolbarProfile.setOnMenuItemClickListener(this)
+            setHasOptionsMenu(true)
+        }
 
         return binding.root
+    }
+
+    override fun onMenuItemClick(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_profile_edit -> {
+                replace(ProfileEditFragment.newInstance(profileId))
+            }
+        }
+        return true
     }
 }

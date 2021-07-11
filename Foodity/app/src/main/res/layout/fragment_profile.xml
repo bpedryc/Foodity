@@ -48,11 +48,21 @@
             android:textColor="#AEADAD"
     />
 
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/username"
+        android:layout_centerInParent="true"
+        android:textSize="16dp"
+        android:textColor="#AEADAD"
+        />
+
     <LinearLayout
             android:id="@+id/follower_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/username"
+            android:layout_below="@id/description"
             android:layout_marginTop="16dp"
             android:orientation="horizontal">
 
