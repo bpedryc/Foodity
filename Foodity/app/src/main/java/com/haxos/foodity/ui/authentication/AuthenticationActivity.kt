@@ -64,8 +64,9 @@ class AuthenticationActivity : AppCompatActivity() {
     fun register(view: View) {
         val username: String = findViewById<EditText>(R.id.username).text.toString()
         val password: String = findViewById<EditText>(R.id.password).text.toString()
+        val email: String = findViewById<EditText>(R.id.email).text.toString()
 
-        userService.createUser(KeycloakUser(username, password))
+        userService.createUser(KeycloakUser(username, email, password))
                 .enqueue(object : Callback<KeycloakUser> {
                     override fun onResponse(call: Call<KeycloakUser>, response: Response<KeycloakUser>) {
 

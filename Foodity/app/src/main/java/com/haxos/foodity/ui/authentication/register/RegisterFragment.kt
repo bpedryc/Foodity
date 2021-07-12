@@ -20,9 +20,6 @@ class RegisterFragment : Fragment() {
                               savedInstanceState: Bundle?): View {
         binding = FragmentRegisterBinding.inflate(inflater)
 
-        val username = binding.username
-        val password = binding.password
-
         registerViewModel.registerResult.observe(viewLifecycleOwner, Observer {
             val registerResult = it ?: return@Observer
 
@@ -37,9 +34,12 @@ class RegisterFragment : Fragment() {
             }
         })
 
-        binding.registerButton.setOnClickListener {
-            binding.loading.visibility = View.VISIBLE
-            registerViewModel.register(username.text.toString(), password.text.toString())
+        binding.apply {
+            registerButton.setOnClickListener {
+                loading.visibility = View.VISIBLE
+                registerViewModel.register(
+                        username.text.toString(), email.text.toString(), password.text.toString())
+            }
         }
 
         return binding.root

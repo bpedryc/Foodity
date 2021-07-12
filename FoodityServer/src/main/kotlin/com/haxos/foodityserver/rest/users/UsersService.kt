@@ -3,16 +3,18 @@ package com.haxos.foodityserver.rest.users
 import org.keycloak.admin.client.Keycloak
 import org.keycloak.admin.client.resource.UserResource
 import org.keycloak.representations.idm.CredentialRepresentation
-import org.keycloak.representations.idm.RoleRepresentation
 import org.keycloak.representations.idm.UserRepresentation
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
+import org.springframework.web.reactive.function.client.WebClient
 import javax.ws.rs.core.Response
 
 @Service
 class UsersService (
     private val keycloak: Keycloak,
-    @Value("\${keycloak.realm}") private val realm: String
+    @Value("\${keycloak.realm}") private val realm: String,
+    @Qualifier("keycloakApi") private val client: WebClient
 ){
     private fun getUser(id: String): UserResource {
         return keycloak
@@ -21,13 +23,27 @@ class UsersService (
             .get(id)
     }
 
-    fun getUserId(username: String): String? {
+    private fun getUserId(username: String): String? {
         return keycloak
             .realm(realm)
             .users()
             .search(username)
             .firstOrNull()
             ?.id
+    }
+
+    private fun getUserByUsername(username: String) : UserResource? {
+        val userId = getUserId(username) ?: return null
+        return getUser(userId)
+    }
+
+    fun sendVerificationEmail(username: String) {
+        val userId = getUserId(username)
+        client.put()
+            .uri { uriBuilder -> uriBuilder
+                .path("/users/{id}/send-verify-email")
+                .build(userId) }
+            .retrieve()
     }
 
     fun getAllUsers() : List<User> {
@@ -41,8 +57,7 @@ class UsersService (
     }
 
     fun getUserRolesByUsername(username: String) : List<String> {
-        val userId = getUserId(username) ?: return emptyList()
-        val user = getUser(userId)
+        val user = getUserByUsername(username) ?: return emptyList()
         return user
             .roles()
             .realmLevel()
@@ -71,6 +86,7 @@ class UsersService (
     private fun prepareUserRepresentation(request: UserRequest, credRepresentation: CredentialRepresentation): UserRepresentation {
         val representation = UserRepresentation()
         representation.username = request.username
+        representation.email = request.email
         representation.credentials = listOf(credRepresentation)
         representation.isEnabled = true
         return representation

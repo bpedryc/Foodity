@@ -18,8 +18,8 @@ class RegisterViewModel @Inject constructor(
     private var _registerResult = MutableLiveData<RegisterResult>()
     val registerResult: LiveData<RegisterResult> = _registerResult
 
-    fun register(username: String, password: String) {
-        userService.createUser(KeycloakUser(username, password)).enqueue(
+    fun register(username: String, email: String, password: String) {
+        userService.createUser(KeycloakUser(username, email, password)).enqueue(
             object : Callback<KeycloakUser> {
                 override fun onResponse(call: Call<KeycloakUser>, response: Response<KeycloakUser>) {
                     if (response.body() != null) {

@@ -1,29 +1,40 @@
 package com.haxos.foodityserver.rest.users
 
+import com.haxos.foodityserver.rest.profiles.IProfilesRepository
+import com.haxos.foodityserver.rest.profiles.Profile
 import org.springframework.web.bind.annotation.*
 
 @RestController
 class UsersController (
-        val service: UsersService,
+    val usersService: UsersService,
+    val profileRepository: IProfilesRepository
 ){
 
     @GetMapping("/users/{username}/roles")
     fun getRole(@PathVariable("username") username: String): List<String> {
-        return service.getUserRolesByUsername(username)
+        return usersService.getUserRolesByUsername(username)
     }
 
     @RequestMapping(value = ["/users"], method = [RequestMethod.POST])
     fun createUser(@RequestBody user: UserRequest): UserRequest {
-        val response = service.createUser(user)
+        val response = usersService.createUser(user)
         if (response.status != 201) {
             throw RuntimeException("Error creating user")
         }
-        return user //TODO: create profile for created user and connect them
-        //return ResponseEntity.created(response.location).build()
+
+        val userProfile = Profile(user.username, "", "")
+        profileRepository.save(userProfile)
+
+        return user
     }
 
     @GetMapping("/users")
     fun getUsers() : List<User> {
-        return service.getAllUsers()
+        return usersService.getAllUsers()
+    }
+
+    @PutMapping("/users/{username}/email")
+    fun sendVerificationEmail(@PathVariable username: String) {
+        usersService.sendVerificationEmail(username)
     }
 }
