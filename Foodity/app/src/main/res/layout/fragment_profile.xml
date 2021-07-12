@@ -22,7 +22,7 @@
             android:id="@+id/avatar"
             android:layout_width="wrap_content"
             android:layout_height="128dp"
-            tools:srcCompat="@tools:sample/avatars"
+            android:src="@drawable/avatar"
             android:layout_below="@+id/profile_background"
             android:layout_marginTop="-64dp"
             android:layout_centerInParent="true"

@@ -1,6 +1,7 @@
 package com.haxos.foodity.ui.main.notes.categories
 
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.*
 import android.widget.EditText
@@ -74,6 +75,11 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
         val categoriesAdapter = CategoriesAdapter(clickListener = CategoryClickListener(profileId))
         categoriesRecyclerView.adapter = categoriesAdapter
         notesViewModel.categoriesLiveData.observe(viewLifecycleOwner, {
+            if (it.isEmpty()) {
+                binding.backgroundText.visibility = View.VISIBLE
+            } else {
+                binding.backgroundText.visibility = View.GONE
+            }
             categoriesAdapter.setCategories(it)
         })
 

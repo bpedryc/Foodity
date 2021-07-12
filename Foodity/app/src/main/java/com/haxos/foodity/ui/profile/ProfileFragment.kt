@@ -46,8 +46,8 @@ class ProfileFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 description.text = it.description
 
                 Ion.with(avatar)
-                        .placeholder(R.drawable.foodity_logo)
-                        .error(R.drawable.foodity_logo)
+                        .placeholder(R.drawable.avatar)
+                        .error(R.drawable.avatar)
                         .load(it.avatarSrc)
 
                 followersCount.text = it.followerIds.size.toString()
