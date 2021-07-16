@@ -15,7 +15,7 @@ import com.haxos.foodity.ui.main.notes.notesearch.NoteSearchListener
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class NotesViewModel @Inject constructor(
+class CategoriesViewModel @Inject constructor(
     private val currentUserInfo: ICurrentUserInfo,
     private val notesService: INotesService,
     private val categoriesService: INotesCategoriesService

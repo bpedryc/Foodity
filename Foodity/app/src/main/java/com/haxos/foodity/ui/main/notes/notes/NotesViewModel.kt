@@ -41,7 +41,7 @@ class NotesViewModel @Inject constructor(
         }
     }
 
-    fun addNote(name: String) {
+    fun createNote(name: String) {
         val categoryId : Long = categoryId ?: return
         val noteRequest = NoteRequest(
             name = name, thumbnail = 0, description = "", categoryId = categoryId)

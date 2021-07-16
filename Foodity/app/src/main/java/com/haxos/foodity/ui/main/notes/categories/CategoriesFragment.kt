@@ -1,13 +1,11 @@
 package com.haxos.foodity.ui.main.notes.categories
 
 import android.content.Intent
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.*
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,7 +34,7 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
         }
     }
 
-    @Inject lateinit var notesViewModel: NotesViewModel
+    @Inject lateinit var categoriesViewModel: CategoriesViewModel
     lateinit var binding: FragmentCategoriesBinding
     override lateinit var noteSearchRecyclerView: RecyclerView
 
@@ -53,10 +51,10 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
         val toolbar: Toolbar = binding.toolbarActivityMain
 
         val profileId : Long = arguments?.getLong("profileId")
-            ?: notesViewModel.currentProfileId
+            ?: categoriesViewModel.currentProfileId
             ?: return binding.root
 
-        if (!notesViewModel.isCurrentProfile(profileId)) {
+        if (!categoriesViewModel.isCurrentProfile(profileId)) {
             toolbar.setNavigationIcon(R.drawable.ic_back)
             toolbar.setNavigationOnClickListener {
                 requireActivity().onBackPressed()
@@ -74,7 +72,7 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
 
         val categoriesAdapter = CategoriesAdapter(clickListener = CategoryClickListener(profileId))
         categoriesRecyclerView.adapter = categoriesAdapter
-        notesViewModel.categoriesLiveData.observe(viewLifecycleOwner, {
+        categoriesViewModel.categoriesLiveData.observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
                 binding.backgroundText.visibility = View.VISIBLE
             } else {
@@ -83,7 +81,7 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
             categoriesAdapter.setCategories(it)
         })
 
-        if (notesViewModel.isCurrentProfile(profileId)) {
+        if (categoriesViewModel.isCurrentProfile(profileId)) {
             toolbar.inflateMenu(R.menu.menu_notes_categories)
             toolbar.setOnMenuItemClickListener {
                 val builder: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
@@ -99,7 +97,7 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
             registerForContextMenu(categoriesRecyclerView)
         }
 
-        notesViewModel.fetchCategories(profileId)
+        categoriesViewModel.fetchCategories(profileId)
 
         return binding.root
     }
@@ -107,7 +105,7 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
     private fun createCategory() {
         val editText = categoryCreationDialog?.findViewById<EditText>(R.id.category_name) ?: return
         val name = editText.text.toString()
-        notesViewModel.createCategory(name)
+        categoriesViewModel.createCategory(name)
     }
 
     inner class CategoryClickListener(val profileId: Long
@@ -119,7 +117,7 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
     }
 
     override val noteSearchingViewModel: INoteSearchingViewModel
-        get() = notesViewModel
+        get() = categoriesViewModel
 
     override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
         super.onCreateContextMenu(menu, v, menuInfo)
@@ -130,7 +128,7 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
     override fun onContextItemSelected(item: MenuItem) : Boolean {
         val categoryInfo = item.menuInfo as CategoriesRecyclerView.CategoryContextMenuInfo
         if (item.itemId == R.id.action_category_delete) {
-            notesViewModel.deleteCategory(categoryInfo.id)
+            categoriesViewModel.deleteCategory(categoryInfo.id)
         }
         return super.onContextItemSelected(item)
     }

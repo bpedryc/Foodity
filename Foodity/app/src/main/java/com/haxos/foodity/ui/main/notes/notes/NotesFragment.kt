@@ -91,7 +91,7 @@ class NotesFragment: Fragment(), INoteSearchingFragment {
     private fun createNote() {
         val nameEditText = noteCreationDialog?.findViewById<EditText>(R.id.note_name) ?: return
         val name = nameEditText.text.toString()
-        notesViewModel.addNote(name)
+        notesViewModel.createNote(name)
     }
 
     inner class NoteClickListener(val profileId: Long) : NotesAdapter.INoteClickListener {
