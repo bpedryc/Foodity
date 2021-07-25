@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.haxos.foodity.R
 import com.haxos.foodity.databinding.FragmentToolsBinding
 import com.haxos.foodity.ui.settings.SettingsActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,7 +29,7 @@ class ToolsFragment : Fragment() {
         binding = FragmentToolsBinding.inflate(inflater)
 
         val toolbar: Toolbar = binding.toolbarFragmentTools
-        toolbar.title = "Tools"
+        toolbar.title = getString(R.string.tools_title)
         toolbar.setNavigationOnClickListener {
             startActivity(Intent(activity, SettingsActivity::class.java))
         }

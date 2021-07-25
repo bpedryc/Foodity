@@ -54,7 +54,7 @@
             android:textAlignment="center"
             android:textSize="20sp"
             android:visibility="gone"
-            android:text="Your notes are empty. Create a new category!"
+            android:text="@string/categories_empty_info"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

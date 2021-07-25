@@ -59,14 +59,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@={viewModel.textElement.title}"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:hint="@string/textelement_title_hint"/>
 
             <EditText
                 android:id="@+id/element_text_contents"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@={viewModel.textElement.contents}"
-                app:layout_constraintTop_toBottomOf="@id/element_text_title" />
+                android:hint="@string/textelement_description_hint"
+                app:layout_constraintTop_toBottomOf="@id/element_text_title"/>
 
 
         </LinearLayout>

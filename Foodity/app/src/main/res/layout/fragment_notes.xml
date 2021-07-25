@@ -57,7 +57,7 @@
         android:textAlignment="center"
         android:textSize="20sp"
         android:visibility="gone"
-        android:text="There are no notes in this category"
+        android:text="@string/notes_empty_info"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

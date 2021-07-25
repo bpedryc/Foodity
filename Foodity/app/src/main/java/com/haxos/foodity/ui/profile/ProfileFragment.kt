@@ -55,10 +55,10 @@ class ProfileFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
                 val alreadyFollowed = profileViewModel.isFollowedByCurrentUser(it)
                 if (alreadyFollowed) {
-                    buttonFollow.text = "Unfollow"
+                    buttonFollow.text = getString(R.string.profile_button_unfollow)
                     buttonFollow.setOnClickListener(profileViewModel.unfollowClickListener)
                 } else {
-                    buttonFollow.text = "Follow"
+                    buttonFollow.text = getString(R.string.profile_button_follow)
                     buttonFollow.setOnClickListener(profileViewModel.followClickListener)
                 }
             }

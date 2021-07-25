@@ -69,10 +69,10 @@ class NoteViewModel @Inject constructor(
 
     private fun constructElement(type: Int, position: Int) : NoteElement {
         return when (type) {
-            0 -> TextNoteElement(orderNumber = position, title = "Title", contents = "Description")
-            1 -> ListNoteElement(orderNumber = position, title = "Title",
+            0 -> TextNoteElement(orderNumber = position, title = "", contents = "")
+            1 -> ListNoteElement(orderNumber = position, title = "",
                     entries = emptyList<ListNoteElementEntry>().toMutableList())
-            2 -> ImageNoteElement(orderNumber = position, title = "Title", sourcePath = "")
+            2 -> ImageNoteElement(orderNumber = position, title = "", sourcePath = "")
             else -> TODO()
         }
     }

@@ -81,7 +81,8 @@
                 android:layout_gravity="center_horizontal"/>
             <TextView
                     android:id="@+id/followers_title"
-                    android:text="FOLLOWERS"
+                    android:text="@string/profile_followers"
+                    android:textAllCaps="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"/>
@@ -103,7 +104,8 @@
                     android:layout_gravity="center_horizontal"/>
             <TextView
                     android:id="@+id/following_title"
-                    android:text="FOLLOWING"
+                    android:text="@string/profile_following"
+                    android:textAllCaps="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"/>
@@ -121,7 +123,7 @@
         <Button
                 android:id="@+id/button_view_notes"
                 android:layout_width="0dp"
-                android:text="View Notes"
+                android:text="@string/profile_button_notes"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="16dp"
@@ -129,7 +131,7 @@
         <Button
                 android:id="@+id/button_follow"
                 android:layout_width="0dp"
-                android:text="Follow"
+                android:text="@string/profile_button_follow"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_marginHorizontal="16dp"

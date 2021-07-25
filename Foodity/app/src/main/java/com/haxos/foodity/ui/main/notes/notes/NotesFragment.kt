@@ -75,8 +75,8 @@ class NotesFragment: Fragment(), INoteSearchingFragment {
             toolbar.setOnMenuItemClickListener {
                 val builder: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
                         .setView(R.layout.dialog_note)
-                        .setTitle("New note")
-                        .setMessage("Create a note")
+                        .setTitle(getString(R.string.dialog_note_title))
+                        .setMessage(getString(R.string.dialog_note_message))
                         .setPositiveButton(android.R.string.yes) {_, _ -> createNote()}
                         .setNegativeButton(android.R.string.no) {_, _ -> }
                 noteCreationDialog = builder.show()

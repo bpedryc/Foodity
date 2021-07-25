@@ -17,7 +17,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 android:text="@={note.name}"
-                android:hint="Name"
+                android:hint="@string/note_name_placeholder"
         />
 
         <EditText
@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/note_name"
                 android:text="@={note.description}"
-                android:hint="Description"
+                android:hint="@string/note_description_placeholder"
         />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

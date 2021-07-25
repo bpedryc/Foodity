@@ -60,7 +60,6 @@
 
         <activity
             android:name=".ui.settings.SettingsActivity"
-            android:label="Settings"
             android:parentActivityName=".ui.main.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

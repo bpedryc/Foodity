@@ -92,9 +92,14 @@ class NoteEditFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     }
 
     private fun onElementAdd() {
+        val choiceItems = arrayOf(
+                getString(R.string.dialog_noteelement_texttype),
+                getString(R.string.dialog_noteelement_listtype),
+                getString(R.string.dialog_noteelement_imagetype)
+        )
         AlertDialog.Builder(requireActivity())
-            .setTitle("Create new element")
-            .setSingleChoiceItems(arrayOf("Text", "List", "Image"), 0) {
+            .setTitle(getString(R.string.dialog_notelement_title))
+            .setSingleChoiceItems(choiceItems, 0) {
                     _, checked  -> selectedNewElement = checked }
             .setPositiveButton(android.R.string.yes) {_, _ -> noteViewModel.addElement(selectedNewElement) }
             .setNegativeButton(android.R.string.no) {_, _ -> }

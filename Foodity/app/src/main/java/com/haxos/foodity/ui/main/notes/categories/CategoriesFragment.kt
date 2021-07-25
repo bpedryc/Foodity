@@ -86,8 +86,8 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
             toolbar.setOnMenuItemClickListener {
                 val builder: AlertDialog.Builder = AlertDialog.Builder(requireActivity())
                         .setView(R.layout.dialog_category)
-                        .setTitle("New category")
-                        .setMessage("Create a category")
+                        .setTitle(getString(R.string.dialog_category_title))
+                        .setMessage(getString(R.string.dialog_category_message))
                         .setPositiveButton(android.R.string.yes) {_, _ -> createCategory() }
                         .setNegativeButton(android.R.string.no) {_, _ -> }
                 categoryCreationDialog = builder.show()
