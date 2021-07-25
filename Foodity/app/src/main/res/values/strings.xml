@@ -61,4 +61,7 @@
     <string name="action_note_delete">Delete</string>
     <string name="action_category_delete">Delete</string>
     <string name="tools_title">Tools</string>
+    <string name="tools_button_timer">Timer</string>
+    <string name="tools_button_unitconverter">Unit Converter</string>
+    <string name="tools_button_massconverter">Mass Converter</string>
 </resources>

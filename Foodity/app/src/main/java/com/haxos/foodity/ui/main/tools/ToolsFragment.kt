@@ -28,16 +28,11 @@ class ToolsFragment : Fragment() {
     ): View {
         binding = FragmentToolsBinding.inflate(inflater)
 
-        val toolbar: Toolbar = binding.toolbarFragmentTools
+        val toolbar: Toolbar = binding.toolbarTools
         toolbar.title = getString(R.string.tools_title)
         toolbar.setNavigationOnClickListener {
             startActivity(Intent(activity, SettingsActivity::class.java))
         }
-
-        val textView: TextView = binding.textNotifications
-        toolsViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
 
         return binding.root
     }

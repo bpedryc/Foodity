@@ -7,8 +7,4 @@ import javax.inject.Inject
 
 class ToolsViewModel @Inject constructor(): ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is the Tools Fragment"
-    }
-    val text: LiveData<String> = _text
 }

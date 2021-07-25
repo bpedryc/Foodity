@@ -62,4 +62,7 @@
     <string name="action_note_delete">Usuń</string>
     <string name="action_category_delete">Usuń</string>
     <string name="tools_title">Narzędzia</string>
+    <string name="tools_button_timer">Minutnik</string>
+    <string name="tools_button_unitconverter">Przelicznik jednostek</string>
+    <string name="tools_button_massconverter">Przelicznik masy</string>
 </resources>
