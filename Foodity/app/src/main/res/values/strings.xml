@@ -64,4 +64,9 @@
     <string name="tools_button_timer">Timer</string>
     <string name="tools_button_unitconverter">Unit Converter</string>
     <string name="tools_button_massconverter">Mass Converter</string>
+    <string name="massconverter_title">Mass Converter</string>
+    <string name="product_white_long_rice">White long rice</string>
+    <string name="volumeunit_cup">Cup</string>
+    <string name="volumeunit_mililiters">Mililiters</string>
+    <string name="product_white_short_rice">White short rice</string>
 </resources>

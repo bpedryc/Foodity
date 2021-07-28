@@ -5,13 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.haxos.foodity.R
 import com.haxos.foodity.databinding.FragmentToolsBinding
 import com.haxos.foodity.ui.settings.SettingsActivity
+import com.haxos.foodity.utils.replace
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -32,6 +31,10 @@ class ToolsFragment : Fragment() {
         toolbar.title = getString(R.string.tools_title)
         toolbar.setNavigationOnClickListener {
             startActivity(Intent(activity, SettingsActivity::class.java))
+        }
+
+        binding.toolsButtonMassconverter.setOnClickListener {
+            replace(MassConverterFragment())
         }
 
         return binding.root
