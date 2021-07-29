@@ -34,7 +34,7 @@ class ToolsFragment : Fragment() {
         }
 
         binding.toolsButtonMassconverter.setOnClickListener {
-            replace(MassConverterFragment())
+            replace(WeightConverterFragment())
         }
 
         return binding.root

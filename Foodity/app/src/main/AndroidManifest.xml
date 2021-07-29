@@ -46,11 +46,12 @@
         <activity
             android:name=".ui.authentication.AuthenticationActivity"
             android:noHistory="true"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
         <activity
             android:name=".ui.main.MainActivity"
-            android:label="">
+            android:label=""
+            android:windowSoftInputMode="stateHidden|adjustResize">
         <intent-filter>
             <action android:name="android.intent.action.SEARCH" />
         </intent-filter>
