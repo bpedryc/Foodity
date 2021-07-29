@@ -1,6 +1,7 @@
 package com.haxos.foodity
 
 import com.haxos.foodity.data.model.Volume
+import com.haxos.foodity.data.model.VolumeUnit
 import org.junit.Test
 
 class VolumeUnitTest {

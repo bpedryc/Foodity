@@ -1,7 +1,5 @@
 package com.haxos.foodity.data.model
 
-import com.haxos.foodity.VolumeUnit
-
 class Volume(volume: Double, volumeUnit: VolumeUnit) {
 
     private val volumeInMilliliters = volume / getMultiplierFor(volumeUnit)

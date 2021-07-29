@@ -1,4 +1,4 @@
-package com.haxos.foodity
+package com.haxos.foodity.data.model
 
 enum class VolumeUnit {
     Milliliters,

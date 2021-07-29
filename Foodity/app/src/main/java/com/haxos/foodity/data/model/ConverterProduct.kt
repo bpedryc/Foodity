@@ -1,7 +1,6 @@
 package com.haxos.foodity.data.model
 
 import androidx.annotation.StringRes
-import com.haxos.foodity.VolumeUnit
 
 class ConverterProduct (
     @StringRes val name: Int,

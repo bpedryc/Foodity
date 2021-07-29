@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import com.haxos.foodity.VolumeUnit
+import com.haxos.foodity.data.model.VolumeUnit
 import com.haxos.foodity.data.model.*
 import com.haxos.foodity.databinding.FragmentWeightconverterBinding
 import com.haxos.foodity.utils.enableBackButton
