@@ -9,6 +9,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.haxos.foodity.R
 import com.haxos.foodity.databinding.FragmentToolsBinding
+import com.haxos.foodity.ui.main.tools.unitconverter.UnitConverterFragment
+import com.haxos.foodity.ui.main.tools.weightconverter.WeightConverterFragment
 import com.haxos.foodity.ui.settings.SettingsActivity
 import com.haxos.foodity.utils.replace
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +37,9 @@ class ToolsFragment : Fragment() {
 
         binding.toolsButtonMassconverter.setOnClickListener {
             replace(WeightConverterFragment())
+        }
+        binding.toolsButtonUnitconverter.setOnClickListener {
+            replace(UnitConverterFragment())
         }
 
         return binding.root

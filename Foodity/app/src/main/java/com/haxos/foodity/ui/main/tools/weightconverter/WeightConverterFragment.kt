@@ -1,4 +1,4 @@
-package com.haxos.foodity.ui.main.tools
+package com.haxos.foodity.ui.main.tools.weightconverter
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,7 +19,7 @@ import javax.inject.Inject
 class WeightConverterFragment : Fragment()
 {
     private lateinit var binding: FragmentWeightconverterBinding
-    @Inject lateinit var converterViewModel: MassConverterViewModel
+    @Inject lateinit var converterViewModel: WeightConverterViewModel
 
     private lateinit var selectedProduct: ConverterProduct
     private var lastProcessedVolume: Volume = Volume(0.0, VolumeUnit.Milliliters)

@@ -11,13 +11,13 @@
         android:layout_height="?attr/actionBarSize"
         android:elevation="4dp"
         app:navigationIcon="@drawable/ic_back"
-        app:title="@string/weightconverter_title"
+        app:title="@string/unitconverter_title"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/white" />
 
 
         <Spinner
-            android:id="@+id/spinner_product"
+            android:id="@+id/spinner_unittype"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_marginTop="16dp"
@@ -25,14 +25,14 @@
             app:layout_constraintTop_toBottomOf="@id/tools_toolbar" />
 
         <LinearLayout
-            android:id="@+id/layout_volume"
+            android:id="@+id/layout_firstunit"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_marginHorizontal="32dp"
             android:layout_gravity="center"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/spinner_product"
-            app:layout_constraintBottom_toTopOf="@id/layout_weight"
+            app:layout_constraintTop_toBottomOf="@id/spinner_unittype"
+            app:layout_constraintBottom_toTopOf="@id/layout_secondunit"
             android:background="@color/grey">
 
             <Spinner
@@ -40,20 +40,20 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2" />
             <EditText
-                android:id="@+id/edit_volume"
+                android:id="@+id/edit_firstunit"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="5"/>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layout_weight"
+            android:id="@+id/layout_secondunit"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_marginHorizontal="32dp"
             android:layout_gravity="center"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/layout_volume"
+            app:layout_constraintTop_toBottomOf="@id/layout_firstunit"
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="@color/grey">
 
@@ -62,7 +62,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="2"/>
             <EditText
-                android:id="@+id/edit_weight"
+                android:id="@+id/edit_secondunit"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="5"/>

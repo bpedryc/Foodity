@@ -1,4 +1,4 @@
-package com.haxos.foodity.ui.main.tools
+package com.haxos.foodity.ui.main.tools.weightconverter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -26,9 +26,9 @@ class ProductsAdapter(
         val product = products[position]
 
         val view: View = recycledView ?: LayoutInflater.from(context)
-                .inflate(R.layout.item_product, parent, false)
+                .inflate(R.layout.item_generic, parent, false)
 
-        val productName = view.findViewById<TextView>(R.id.product_name)
+        val productName = view.findViewById<TextView>(R.id.name)
         productName.text = context.getString(product.name)
         return view
     }
