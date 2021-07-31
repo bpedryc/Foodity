@@ -9,20 +9,20 @@ class ConverterProduct (
     var weightInGrams : Double = 0.0
 
     fun setWeight(weight: Weight) {
-        weightInGrams = weight.getIn(WeightUnit.Grams)
+        weightInGrams = weight.getIn(MetricUnit.Grams)
     }
     fun getWeight(): Weight {
-        return Weight(weightInGrams, WeightUnit.Grams)
+        return Weight(weightInGrams, MetricUnit.Grams)
     }
 
     fun setVolume(volume: Volume) {
-        val milliliters = volume.getIn(VolumeUnit.Milliliters)
+        val milliliters = volume.getIn(MetricUnit.Milliliters)
         val grams = toGrams(milliliters)
         weightInGrams = grams
     }
     fun getVolume(): Volume {
         val milliliters = toMilliliters(weightInGrams)
-        return Volume(milliliters, VolumeUnit.Milliliters)
+        return Volume(milliliters, MetricUnit.Milliliters)
     }
 
     private fun toGrams(milliliters: Double) : Double {

@@ -4,7 +4,7 @@ import com.haxos.foodity.data.model.Weight
 import com.haxos.foodity.data.model.WeightUnit
 import org.junit.Test
 
-class WeightUnitTest {
+class WeightMetricUnitTest {
 
     @Test
     fun convertGramsToPounds() {

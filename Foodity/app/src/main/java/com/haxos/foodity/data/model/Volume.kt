@@ -1,19 +1,22 @@
 package com.haxos.foodity.data.model
 
-class Volume(volume: Double, volumeUnit: VolumeUnit) {
+import com.haxos.foodity.ui.main.tools.unitconverter.IUnit
 
-    private val volumeInMilliliters = volume / getMultiplierFor(volumeUnit)
+class Volume(volume: Double, metricUnit: MetricUnit) : IUnit {
 
-    fun getIn(unit: VolumeUnit) : Double {
-        val multiplier = getMultiplierFor(unit)
+    private val volumeInMilliliters = volume / getMultiplierFor(metricUnit)
+
+    override fun getIn(metricUnit: MetricUnit) : Double {
+        val multiplier = getMultiplierFor(metricUnit)
         return volumeInMilliliters * multiplier
     }
 
-    private fun getMultiplierFor(unit: VolumeUnit) : Double {
-        return when (unit) {
-            VolumeUnit.Milliliters -> 1.0
-            VolumeUnit.Liters -> 1.0 / 1000
-            VolumeUnit.Cups -> 1.0 / 250
+    private fun getMultiplierFor(metricUnit: MetricUnit) : Double {
+        return when (metricUnit) {
+            MetricUnit.Milliliters -> 1.0
+            MetricUnit.Liters -> 1.0 / 1000
+            MetricUnit.Cups -> 1.0 / 250
+            else -> 1.0 //TODO: handle as error
         }
     }
 }

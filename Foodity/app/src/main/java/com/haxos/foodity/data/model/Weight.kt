@@ -1,18 +1,21 @@
 package com.haxos.foodity.data.model
 
-class Weight(weight: Double, weightUnit: WeightUnit) {
-    private val weightInGrams = weight / getMultiplierFor(weightUnit)
+import com.haxos.foodity.ui.main.tools.unitconverter.IUnit
 
-    fun getIn(unit: WeightUnit) : Double {
-        val multiplier = getMultiplierFor(unit)
+class Weight(weight: Double, metricUnit: MetricUnit) : IUnit {
+    private val weightInGrams = weight / getMultiplierFor(metricUnit)
+
+    override fun getIn(metricUnit: MetricUnit) : Double {
+        val multiplier = getMultiplierFor(metricUnit)
         return weightInGrams * multiplier
     }
 
-    private fun getMultiplierFor(unit: WeightUnit) : Double {
-        return when (unit) {
-            WeightUnit.Grams -> 1.0
-            WeightUnit.Kilograms -> 1.0 / 1000
-            WeightUnit.Pounds -> 1.0 / 453.59237
+    private fun getMultiplierFor(metricUnit: MetricUnit) : Double {
+        return when (metricUnit) {
+            MetricUnit.Grams -> 1.0
+            MetricUnit.Kilograms -> 1.0 / 1000
+            MetricUnit.Pounds -> 1.0 / 453.59237
+            else -> 1.0 //TODO: handle as error?
         }
     }
 }
