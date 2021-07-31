@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.haxos.foodity.data.model.*
 import com.haxos.foodity.databinding.FragmentWeightconverterBinding
+import com.haxos.foodity.ui.main.tools.unitconverter.UnitAdapter
 import com.haxos.foodity.utils.enableBackButton
 import com.haxos.foodity.utils.toPrettyString
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,15 +32,13 @@ class WeightConverterFragment : Fragment()
         binding.apply {
             toolsToolbar.enableBackButton(requireActivity())
 
-            spinnerVolumeunit.adapter = ArrayAdapter(
-                    requireContext(), android.R.layout.simple_list_item_1,
+            spinnerVolumeunit.adapter = UnitAdapter(requireContext(),
                     listOf(MetricUnit.Milliliters, MetricUnit.Liters, MetricUnit.Cups))
             spinnerVolumeunit.onItemSelectedListener = OnUnitSelectedListener(ConverterField.Volume)
 
-            spinnerWeightunit.adapter = ArrayAdapter(
-                    requireContext(), android.R.layout.simple_list_item_1,
+            spinnerWeightunit.adapter = UnitAdapter(requireContext(),
                     listOf(MetricUnit.Grams, MetricUnit.Kilograms, MetricUnit.Pounds))
-            spinnerVolumeunit.onItemSelectedListener = OnUnitSelectedListener(ConverterField.Weight)
+            spinnerWeightunit.onItemSelectedListener = OnUnitSelectedListener(ConverterField.Weight)
 
             editWeight.addTextChangedListener(ConverterFieldTextListener(ConverterField.Weight))
             editVolume.addTextChangedListener(ConverterFieldTextListener(ConverterField.Volume))

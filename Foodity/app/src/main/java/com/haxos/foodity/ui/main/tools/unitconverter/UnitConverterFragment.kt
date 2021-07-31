@@ -92,17 +92,17 @@ class UnitConverterFragment : Fragment() {
         override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
             selectedUnitCategory = parent.selectedItem as String
 
-            val availableMetricUnits : Array<MetricUnit> = when (selectedUnitCategory) {
-                getString(R.string.unittype_weight) -> arrayOf(
+            val availableMetricUnits : List<MetricUnit> = when (selectedUnitCategory) {
+                getString(R.string.unittype_weight) -> listOf(
                         MetricUnit.Grams, MetricUnit.Kilograms, MetricUnit.Pounds)
-                getString(R.string.unittype_volume) -> arrayOf(
+                getString(R.string.unittype_volume) -> listOf(
                         MetricUnit.Milliliters, MetricUnit.Liters, MetricUnit.Cups)
-                getString(R.string.unittype_temperature) -> arrayOf(
+                getString(R.string.unittype_temperature) -> listOf(
                         MetricUnit.Celsius, MetricUnit.Fahrenheit)
                 else -> TODO()
             }
-            val adapter = ArrayAdapter(this@UnitConverterFragment.requireContext(),
-                    android.R.layout.simple_list_item_1, availableMetricUnits)
+            val adapter = UnitAdapter(
+                    this@UnitConverterFragment.requireContext(), availableMetricUnits)
 
             binding.spinnerFirstunitType.adapter = adapter
             binding.spinnerSecondunitType.adapter = adapter
