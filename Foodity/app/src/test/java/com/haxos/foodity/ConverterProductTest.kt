@@ -8,9 +8,9 @@ class ConverterProductTest {
     @Test
     fun convertGramsOfRiceToCup() {
         val shortWhiteRice = getShortWhiteRice()
-        val weightInGrams = Weight(200.0, WeightUnit.Grams)
+        val weightInGrams = Weight(200.0, MetricUnit.Grams)
         shortWhiteRice.setWeight(weightInGrams)
-        val volumeInCups = shortWhiteRice.getVolume().getIn(VolumeUnit.Cups)
+        val volumeInCups = shortWhiteRice.getVolume().getIn(MetricUnit.Cups)
 
         assert(volumeInCups == 1.0)
     }
@@ -18,9 +18,9 @@ class ConverterProductTest {
     @Test
     fun convertRiceCupToGrams() {
         val shortWhiteRice = getShortWhiteRice()
-        val volumeInCups = Volume(1.0, VolumeUnit.Cups)
+        val volumeInCups = Volume(1.0, MetricUnit.Cups)
         shortWhiteRice.setVolume(volumeInCups)
-        val gramsOfRice = shortWhiteRice.getWeight().getIn(WeightUnit.Grams)
+        val gramsOfRice = shortWhiteRice.getWeight().getIn(MetricUnit.Grams)
 
         assert(gramsOfRice == 200.0)
     }

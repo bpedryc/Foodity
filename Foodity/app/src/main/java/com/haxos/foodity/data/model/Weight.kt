@@ -1,8 +1,8 @@
 package com.haxos.foodity.data.model
 
-import com.haxos.foodity.ui.main.tools.unitconverter.IUnit
+import com.haxos.foodity.ui.main.tools.unitconverter.IMetricUnit
 
-class Weight(weight: Double, metricUnit: MetricUnit) : IUnit {
+class Weight(weight: Double, metricUnit: MetricUnit) : IMetricUnit {
     private val weightInGrams = weight / getMultiplierFor(metricUnit)
 
     override fun getIn(metricUnit: MetricUnit) : Double {

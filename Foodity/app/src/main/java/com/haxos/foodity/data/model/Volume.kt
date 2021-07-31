@@ -1,8 +1,8 @@
 package com.haxos.foodity.data.model
 
-import com.haxos.foodity.ui.main.tools.unitconverter.IUnit
+import com.haxos.foodity.ui.main.tools.unitconverter.IMetricUnit
 
-class Volume(volume: Double, metricUnit: MetricUnit) : IUnit {
+class Volume(volume: Double, metricUnit: MetricUnit) : IMetricUnit {
 
     private val volumeInMilliliters = volume / getMultiplierFor(metricUnit)
 
