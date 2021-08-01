@@ -17,7 +17,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ToolsFragment : Fragment() {
+class
+ToolsFragment : Fragment() {
 
     @Inject lateinit var toolsViewModel: ToolsViewModel
     private lateinit var binding: FragmentToolsBinding

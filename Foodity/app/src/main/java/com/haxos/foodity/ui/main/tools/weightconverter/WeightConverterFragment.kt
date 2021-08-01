@@ -30,7 +30,7 @@ class WeightConverterFragment : Fragment()
         binding = FragmentWeightconverterBinding.inflate(inflater)
 
         binding.apply {
-            toolsToolbar.enableBackButton(requireActivity())
+            toolsToolbar.enableBackButton(this@WeightConverterFragment)
 
             spinnerVolumeunit.adapter = UnitAdapter(requireContext(),
                     listOf(MetricUnit.Milliliters, MetricUnit.Liters, MetricUnit.Cups))

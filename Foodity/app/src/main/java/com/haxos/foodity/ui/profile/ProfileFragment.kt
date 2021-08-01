@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.haxos.foodity.R
 import com.haxos.foodity.databinding.FragmentProfileBinding
 import com.haxos.foodity.ui.main.notes.categories.CategoriesFragment
+import com.haxos.foodity.utils.enableBackButton
 import com.haxos.foodity.utils.replace
 import com.koushikdutta.ion.Ion
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +36,8 @@ class ProfileFragment : Fragment(), Toolbar.OnMenuItemClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentProfileBinding.inflate(inflater)
+
+        binding.toolbarProfile.enableBackButton(this)
 
         profileId = arguments?.getLong("profileId")
                 ?: return binding.root
@@ -63,11 +66,6 @@ class ProfileFragment : Fragment(), Toolbar.OnMenuItemClickListener {
                 }
             }
         })
-
-
-        binding.toolbarProfile.setNavigationOnClickListener {
-            requireActivity().onBackPressed()
-        }
 
         binding.buttonViewNotes.setOnClickListener {
             replace(CategoriesFragment.newInstance(profileId))

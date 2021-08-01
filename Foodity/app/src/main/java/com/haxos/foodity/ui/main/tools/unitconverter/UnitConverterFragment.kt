@@ -33,7 +33,7 @@ class UnitConverterFragment : Fragment() {
         unitFactory = UnitFactory(requireContext())
 
         binding.apply {
-            toolsToolbar.enableBackButton(requireActivity())
+            toolsToolbar.enableBackButton(this@UnitConverterFragment)
 
             spinnerFirstunitType.onItemSelectedListener = OnUnitSelectedListener(
                     fieldToRefresh = ConverterField.First)
@@ -44,7 +44,7 @@ class UnitConverterFragment : Fragment() {
                     ConverterFieldTextListener(ConverterField.First))
 
             editSecondunit.addTextChangedListener(
-                            ConverterFieldTextListener(ConverterField.Second))
+                    ConverterFieldTextListener(ConverterField.Second))
 
             spinnerUnitcategory.adapter = ArrayAdapter.createFromResource(
                 requireContext(),
