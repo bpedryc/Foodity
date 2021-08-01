@@ -70,7 +70,7 @@
     <string name="volumeunit_cups">Szklanki</string>
     <string name="volumeunit_mililiters">Mililitry</string>
     <string name="product_white_short_rice">Biały ryż krótki</string>
-    <string name="unitconverter_title">Przelicznik masy</string>
+    <string name="unitconverter_title">Przelicznik jednostek</string>
     <string name="unittype_weight">Masa</string>
     <string name="unittype_volume">Objętość</string>
     <string name="unittype_temperature">Temperatura</string>
@@ -80,4 +80,5 @@
     <string name="weightunit_pounds">Funty</string>
     <string name="tempunit_celsius">Celsjusz</string>
     <string name="tempunit_fahrenheit">Fahrenheit</string>
+    <string name="timer_title">Minutnik</string>
 </resources>

@@ -64,12 +64,12 @@
     <string name="tools_button_timer">Timer</string>
     <string name="tools_button_unitconverter">Unit Converter</string>
     <string name="tools_button_massconverter">Mass Converter</string>
-    <string name="weightconverter_title">Mass Converter</string>
+    <string name="weightconverter_title">Weight Converter</string>
     <string name="product_white_long_rice">White long rice</string>
     <string name="volumeunit_cups">Cups</string>
     <string name="volumeunit_mililiters">Mililiters</string>
     <string name="product_white_short_rice">White short rice</string>
-    <string name="unitconverter_title">Weight Converter</string>
+    <string name="unitconverter_title">Unit Converter</string>
     <string name="unittype_weight">Weight</string>
     <string name="unittype_volume">Volume</string>
     <string name="unittype_temperature">Temperature</string>
@@ -79,4 +79,5 @@
     <string name="weightunit_pounds">Pounds</string>
     <string name="tempunit_celsius">Celsius</string>
     <string name="tempunit_fahrenheit">Fahrenheit</string>
+    <string name="timer_title">Timer</string>
 </resources>

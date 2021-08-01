@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.haxos.foodity.R
 import com.haxos.foodity.databinding.FragmentToolsBinding
+import com.haxos.foodity.ui.main.tools.timer.TimerFragment
 import com.haxos.foodity.ui.main.tools.unitconverter.UnitConverterFragment
 import com.haxos.foodity.ui.main.tools.weightconverter.WeightConverterFragment
 import com.haxos.foodity.ui.settings.SettingsActivity
@@ -41,6 +42,9 @@ ToolsFragment : Fragment() {
         }
         binding.toolsButtonUnitconverter.setOnClickListener {
             replace(UnitConverterFragment())
+        }
+        binding.toolsButtonTimer.setOnClickListener {
+            replace(TimerFragment())
         }
 
         return binding.root
