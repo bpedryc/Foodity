@@ -37,7 +37,7 @@ class ProfileFragment : Fragment(), Toolbar.OnMenuItemClickListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentProfileBinding.inflate(inflater)
 
-        binding.toolbarProfile.enableBackButton(this)
+        binding.toolbarProfile.enableBackButton(requireActivity())
 
         profileId = arguments?.getLong("profileId")
                 ?: return binding.root

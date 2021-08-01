@@ -33,7 +33,7 @@ class UnitConverterFragment : Fragment() {
         unitFactory = UnitFactory(requireContext())
 
         binding.apply {
-            toolsToolbar.enableBackButton(this@UnitConverterFragment)
+            toolsToolbar.enableBackButton(requireActivity())
 
             spinnerFirstunitType.onItemSelectedListener = OnUnitSelectedListener(
                     fieldToRefresh = ConverterField.First)

@@ -24,4 +24,15 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         navView.setupWithNavController(navController)
     }
+
+    override fun onBackPressed() {
+        val fragment = supportFragmentManager.fragments[0]
+        val fragmentManager = fragment.childFragmentManager
+
+        if (fragmentManager.backStackEntryCount <= 1) {
+            super.onBackPressed()
+        } else {
+            fragmentManager.popBackStack()
+        }
+    }
 }

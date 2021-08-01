@@ -135,5 +135,4 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
         }
         return super.onContextItemSelected(item)
     }
-
 }
