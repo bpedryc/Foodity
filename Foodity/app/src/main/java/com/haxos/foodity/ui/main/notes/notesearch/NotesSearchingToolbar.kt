@@ -41,9 +41,8 @@ class NotesSearchingToolbar(
     inner class NoteSearchClickListener : SearchResultAdapter.IItemClickListener {
         override fun onItemClick(item: Any) {
             val note = item as Note
-            val fragment = searchingFragment as Fragment
-            val profileId = fragment.arguments?.getLong("profileId")
-                ?: return
+            val fragment = searchingFragment as INoteSearchingFragment
+            val profileId = fragment.profileId ?: return
             (searchingFragment as Fragment).replace(NoteFragment.newInstance(note.id, profileId))
         }
     }

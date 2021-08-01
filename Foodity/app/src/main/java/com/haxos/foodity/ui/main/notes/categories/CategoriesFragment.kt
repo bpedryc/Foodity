@@ -38,6 +38,8 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
     lateinit var binding: FragmentCategoriesBinding
     override lateinit var noteSearchRecyclerView: RecyclerView
 
+    override var profileId: Long? = null
+
     private var categoryCreationDialog: AlertDialog? = null
 
     override fun onCreateView(
@@ -50,9 +52,10 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
 
         val toolbar: Toolbar = binding.toolbarActivityMain
 
-        val profileId : Long = arguments?.getLong("profileId")
-            ?: categoriesViewModel.currentProfileId
-            ?: return binding.root
+        profileId = arguments?.getLong("profileId")
+                ?: categoriesViewModel.currentProfileId
+
+        val profileId = profileId ?: return binding.root
 
         if (!categoriesViewModel.isCurrentProfile(profileId)) {
             toolbar.setNavigationIcon(R.drawable.ic_back)

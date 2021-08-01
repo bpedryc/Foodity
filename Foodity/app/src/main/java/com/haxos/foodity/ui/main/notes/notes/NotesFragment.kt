@@ -40,6 +40,8 @@ class NotesFragment: Fragment(), INoteSearchingFragment {
 
     var noteCreationDialog: AlertDialog? = null
 
+    override var profileId: Long? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentNotesBinding.inflate(inflater)
 
@@ -54,8 +56,9 @@ class NotesFragment: Fragment(), INoteSearchingFragment {
 
         val categoryId: Long = arguments?.getLong("categoryId")
                 ?: return binding.root
-        val profileId: Long = arguments?.getLong("profileId")
-                ?: return binding.root
+
+        profileId = arguments?.getLong("profileId")
+        val profileId = profileId ?: return binding.root
 
         val notesAdapter = NotesAdapter(clickListener = NoteClickListener(profileId))
         notesRecyclerView.adapter = notesAdapter
