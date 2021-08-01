@@ -96,13 +96,11 @@ class WeightConverterFragment : Fragment()
                         .getVolume()
                         .getIn(parent.selectedItem as MetricUnit)
                 binding.editVolume.setText(volume.toPrettyString())
-                refreshWeightField()
             } else {
                 val weight = selectedProduct
                         .getWeight()
                         .getIn(parent.selectedItem as MetricUnit)
                 binding.editWeight.setText(weight.toPrettyString())
-                refreshVolumeField()
             }
         }
         override fun onNothingSelected(p0: AdapterView<*>?) {}
