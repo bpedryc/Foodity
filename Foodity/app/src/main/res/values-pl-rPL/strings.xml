@@ -81,4 +81,8 @@
     <string name="tempunit_celsius">Celsjusz</string>
     <string name="tempunit_fahrenheit">Fahrenheit</string>
     <string name="timer_title">Minutnik</string>
+    <string name="timepicker_hours">g</string>
+    <string name="timepicker_minutes">m</string>
+    <string name="timepicker_seconds">s</string>
+    <string name="timer_button_set">Ustaw</string>
 </resources>

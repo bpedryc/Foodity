@@ -80,4 +80,8 @@
     <string name="tempunit_celsius">Celsius</string>
     <string name="tempunit_fahrenheit">Fahrenheit</string>
     <string name="timer_title">Timer</string>
+    <string name="timepicker_hours">h</string>
+    <string name="timepicker_minutes">m</string>
+    <string name="timepicker_seconds">s</string>
+    <string name="timer_button_set">Set</string>
 </resources>

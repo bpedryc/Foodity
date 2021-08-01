@@ -21,7 +21,18 @@ class TimerFragment : Fragment() {
     ): View {
         binding = FragmentTimerBinding.inflate(inflater)
 
-        binding.toolsToolbar.enableBackButton(requireActivity())
+        binding.apply {
+            toolsToolbar.enableBackButton(requireActivity())
+
+            pickerHours.maxValue = 99
+            pickerHours.minValue = 0
+
+            pickerMinutes.maxValue = 59
+            pickerMinutes.minValue = 0
+
+            pickerSeconds.maxValue = 59
+            pickerSeconds.minValue = 0
+        }
 
         return binding.root
     }
