@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.haxos.foodity.databinding.FragmentTimerBinding
+import com.haxos.foodity.ui.main.MainActivity
 import com.haxos.foodity.utils.enableBackButton
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,6 +33,14 @@ class TimerFragment : Fragment() {
 
             pickerSeconds.maxValue = 59
             pickerSeconds.minValue = 0
+
+            timerButtonSet.setOnClickListener {
+                val activity = requireActivity() as MainActivity
+                val timerTitle = editTitle.text.toString()
+                val timerSeconds : Long = pickerHours.value * 3600L + pickerMinutes.value * 60L +
+                        pickerSeconds.value
+                activity.addTimer(timerTitle, timerSeconds)
+            }
         }
 
         return binding.root

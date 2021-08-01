@@ -85,4 +85,5 @@
     <string name="timepicker_minutes">m</string>
     <string name="timepicker_seconds">s</string>
     <string name="timer_button_set">Ustaw</string>
+    <string name="timer_title_placeholder">Tytuł</string>
 </resources>

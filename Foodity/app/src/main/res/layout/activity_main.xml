@@ -6,21 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_activity_main"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:navigationIcon="@drawable/ic_settings"
-        android:title=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-    </androidx.appcompat.widget.Toolbar>-->
-
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
@@ -42,5 +27,15 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/mobile_navigation" />
+
+    <ListView
+        android:id="@+id/listview_timers"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="54dp"
+        android:padding="0dp"
+        android:divider="@null" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
