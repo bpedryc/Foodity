@@ -1,4 +1,4 @@
-package com.haxos.foodity
+package com.haxos.foodity.toolsTests
 
 import com.haxos.foodity.utils.round
 import com.haxos.foodity.utils.toPrettyString
