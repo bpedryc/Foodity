@@ -2,7 +2,6 @@ package com.haxos.foodity.retrofit
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.TypeAdapterFactory
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory
 import com.haxos.foodity.data.model.ImageNoteElement
 import com.haxos.foodity.data.model.ListNoteElement
@@ -12,7 +11,7 @@ import com.haxos.foodity.ui.main.notes.content.IFileService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -20,8 +19,8 @@ import java.time.LocalDateTime
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ApplicationComponent::class)
-class RetrofitModule {
+@InstallIn(SingletonComponent::class)
+object RetrofitModule {
 
     @Provides
     fun provideGson(): Gson {
