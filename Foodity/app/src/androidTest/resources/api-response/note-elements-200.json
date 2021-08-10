@@ -1,0 +1,70 @@
+[
+  {
+    "@type": "ImageNoteElement",
+    "id": 245,
+    "title": "Beautiful photo",
+    "orderNumber": 1,
+    "note": {
+      "id": 22,
+      "name": "Panna cotta",
+      "description": "Panna cotta is delicious",
+      "thumbnail": 0
+    },
+    "sourcePath": "http://link.to.photo.com"
+  },
+  {
+    "@type": "ListNoteElement",
+    "id": 258,
+    "title": "Ingredients",
+    "orderNumber": 2,
+    "note": {
+      "id": 22,
+      "name": "Panna cotta",
+      "description": "Panna cotta is delicious",
+      "thumbnail": 0
+    },
+    "entries": [
+      {
+        "id": 259,
+        "orderNumber": 1,
+        "contents": "Cream"
+      },
+      {
+        "id": 264,
+        "orderNumber": 2,
+        "contents": "Sugar"
+      },
+      {
+        "id": 265,
+        "orderNumber": 3,
+        "contents": "Vanilla extract"
+      }
+    ]
+  },
+  {
+    "@type": "TextNoteElement",
+    "id": 243,
+    "title": "Good to know",
+    "orderNumber": 3,
+    "note": {
+      "id": 22,
+      "name": "Panna cotta",
+      "description": "Panna cotta is delicious",
+      "thumbnail": 0
+    },
+    "contents": "Some interesting facts here"
+  },
+  {
+    "@type": "TextNoteElement",
+    "id": 242,
+    "title": "Preparation",
+    "orderNumber": 4,
+    "note": {
+      "id": 22,
+      "name": "Panna cotta",
+      "description": "Panna cotta is delicious",
+      "thumbnail": 0
+    },
+    "contents": "How to prepare"
+  }
+]

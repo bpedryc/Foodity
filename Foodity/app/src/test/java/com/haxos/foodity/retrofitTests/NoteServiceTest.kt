@@ -4,20 +4,17 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory
 import com.haxos.foodity.data.model.*
+import com.haxos.foodity.enqueueResponse
 import com.haxos.foodity.retrofit.INoteElementService
 import com.haxos.foodity.retrofit.LocalDateTimeAdapter
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
-import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import okio.buffer
-import okio.source
 import org.junit.After
 import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.nio.charset.StandardCharsets
 import java.time.LocalDateTime
 import java.util.concurrent.TimeUnit
 
@@ -75,19 +72,6 @@ class NoteServiceTest {
             )
 
             assertEquals(expected, actual)
-        }
-    }
-
-    private fun MockWebServer.enqueueResponse(fileName: String, code: Int) {
-        val inputStream = javaClass.classLoader?.getResourceAsStream("api-response/$fileName")
-
-        val source = inputStream?.let { inputStream.source().buffer() }
-        source?.let {
-            enqueue(
-                    MockResponse()
-                            .setResponseCode(code)
-                            .setBody(source.readString(StandardCharsets.UTF_8))
-            )
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.haxos.foodity.retrofit
+package com.haxos.foodity
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -7,24 +7,39 @@ import com.haxos.foodity.data.model.ImageNoteElement
 import com.haxos.foodity.data.model.ListNoteElement
 import com.haxos.foodity.data.model.NoteElement
 import com.haxos.foodity.data.model.TextNoteElement
+import com.haxos.foodity.retrofit.*
 import com.haxos.foodity.ui.main.notes.content.IFileService
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dagger.hilt.testing.TestInstallIn
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDateTime
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
-object RetrofitModule {
+@TestInstallIn(
+    components = [SingletonComponent::class],
+    replaces = [RetrofitModule::class]
+)
+object RetrofitModuleTesting {
+
+    @Provides
+    fun provideClient() : OkHttpClient {
+        return OkHttpClient.Builder()
+            .connectTimeout(1, TimeUnit.SECONDS)
+            .readTimeout(1, TimeUnit.SECONDS)
+            .writeTimeout(1, TimeUnit.SECONDS)
+            .build()
+    }
 
     @Provides
     fun provideGson(): Gson {
-        val adapterFactory = RuntimeTypeAdapterFactory.of(NoteElement::class.java, "@type")
+        val adapterFactory = RuntimeTypeAdapterFactory
+            .of(NoteElement::class.java, "@type")
             .registerSubtype(TextNoteElement::class.java)
             .registerSubtype(ListNoteElement::class.java)
             .registerSubtype(ImageNoteElement::class.java)
@@ -37,11 +52,11 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideResourceRetrofit(gsonConfig: Gson): Retrofit {
+    fun provideResourceRetrofit(gsonConfig: Gson, client: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-                .baseUrl("http://192.168.1.4:8080/")
+                .baseUrl("http://localhost:8080/")
                 .addConverterFactory(GsonConverterFactory.create(gsonConfig))
-                .client(OkHttpClient.Builder().build())
+                .client(client)
                 .build()
     }
 
