@@ -2,8 +2,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    android:background="@drawable/bg_grey_rounded">
-
+    android:background="@color/grey">
 
     <TextView
         android:id="@+id/text_search_item"

@@ -45,7 +45,7 @@ class NoteFragment: Fragment(), Toolbar.OnMenuItemClickListener {
         }
 
         noteViewModel.noteLiveData.observe(viewLifecycleOwner) {
-            if (it == null) {
+            if (it.isEmpty()) {
                 requireActivity().onBackPressed()
             }
         }
@@ -86,8 +86,8 @@ class NoteFragment: Fragment(), Toolbar.OnMenuItemClickListener {
 
     private fun onNoteDelete() {
         AlertDialog.Builder(activity)
-            .setTitle("Deleting the note")
-            .setMessage("Are you sure you want to delete the note?")
+            .setTitle(getString(R.string.dialog_deletenote_title))
+            .setMessage(getString(R.string.dialog_deletenote_message))
             .setPositiveButton(android.R.string.yes) {_, _ -> noteViewModel.deleteNote()}
             .setNegativeButton(android.R.string.no) {_, _ -> }
             .show()

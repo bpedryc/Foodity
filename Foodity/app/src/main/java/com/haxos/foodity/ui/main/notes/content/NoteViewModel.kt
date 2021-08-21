@@ -32,10 +32,15 @@ class NoteViewModel @Inject constructor(
 
     var editable: Boolean = false
 
-    var noteId: Long? = null
+    private var noteId: Long? = null
     set(id) {
         field = id
         field?.let { fetchNote(it) }
+    }
+    get() {
+        val recyclerItems : MutableList<RecyclerItem> = _noteLiveData.value ?: return null
+        val note : Note = (recyclerItems[0].data as Note)
+        return note.id
     }
 
     private val deletedElements = emptyList<NoteElement>().toMutableList()
@@ -207,7 +212,7 @@ class NoteViewModel @Inject constructor(
         noteId?.let {
             val response = notesService.delete(it)
             if (response.isSuccessful && response.body() == true) {
-                _noteLiveData.value = null
+                _noteLiveData.value = emptyList<RecyclerItem>().toMutableList()
             }
         }
     }

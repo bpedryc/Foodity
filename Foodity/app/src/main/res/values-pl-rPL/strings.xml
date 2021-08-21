@@ -86,4 +86,7 @@
     <string name="timepicker_seconds">s</string>
     <string name="timer_button_set">Ustaw</string>
     <string name="timer_title_placeholder">Tytuł</string>
+    <string name="dialog_deletenote_message">Wpis zostanie skasowany, czy jesteś pewien?</string>
+    <string name="dialog_deletenote_title">Usuwanie wpisu</string>
+    <string name="activity_empty_info">Brak aktywności do wyświetlenia</string>
 </resources>

@@ -29,8 +29,8 @@ fun setImageViewResource(
     url: String
 ) {
     Ion.with(imageView)
-        .placeholder(R.drawable.foodity_logo)
-        .error(R.drawable.foodity_logo)
+        .placeholder(android.R.drawable.stat_sys_upload)
+        .error(android.R.drawable.stat_sys_upload)
         .load(url)
 }
 

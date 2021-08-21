@@ -36,11 +36,6 @@ class NoteFragmentTests {
         ))
     }
 
-    @After
-    fun shutdown() {
-        mockWebServer.shutdown()
-    }
-
     @Test
     fun loadNoteFragmentTest() {
         launchFragmentInHiltContainer<NoteFragment>(Bundle())
@@ -49,5 +44,10 @@ class NoteFragmentTests {
         onView(withId(R.id.recyclerview_noteelements))
             .check(itemViewMatches(0, R.id.note_name, withText("Panna cotta")))
             .check(itemViewMatches(3, R.id.element_text_title, withText("Good to know")))
+    }
+
+    @After
+    fun shutdown() {
+        mockWebServer.shutdown()
     }
 }
