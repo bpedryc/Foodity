@@ -89,4 +89,7 @@
     <string name="dialog_deletenote_message">Wpis zostanie skasowany, czy jesteś pewien?</string>
     <string name="dialog_deletenote_title">Usuwanie wpisu</string>
     <string name="activity_empty_info">Brak aktywności do wyświetlenia</string>
+    <string name="dialog_renamecategory_title">Zmiana nazwy</string>
+    <string name="dialog_renamecategory_message">Zmień nazwę kategorii</string>
+    <string name="action_category_rename">Zmień nazwę</string>
 </resources>

@@ -47,6 +47,18 @@ class CategoriesViewModel @Inject constructor(
         }
     }
 
+    fun renameCategory(id: Long, newCategoryName: String) = viewModelScope.launch {
+        val categoryRequest = NotesCategoryRequest(
+            id = id, name = newCategoryName, profileId = currentUserInfo.profileId!!)
+        val response = categoriesService.edit(categoryRequest)
+        response.body()?.let { renamedCategory ->
+            val existingCategoryToRename = _categoriesLiveData.value
+                ?.find { it.id == id } ?: return@launch
+            existingCategoryToRename.name = renamedCategory.name
+            _categoriesLiveData.value = _categoriesLiveData.value
+        }
+    }
+
     fun deleteCategory(id: Long) = viewModelScope.launch {
         val response = categoriesService.delete(id)
         if (response.body() == true) {

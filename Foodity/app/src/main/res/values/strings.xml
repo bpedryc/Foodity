@@ -88,4 +88,7 @@
     <string name="dialog_deletenote_message">Are you sure you want to delete the note?</string>
     <string name="dialog_deletenote_title">Deleting the note</string>
     <string name="activity_empty_info">No activity to show</string>
+    <string name="dialog_renamecategory_title">Renaming</string>
+    <string name="dialog_renamecategory_message">Rename selected category</string>
+    <string name="action_category_rename">Rename</string>
 </resources>

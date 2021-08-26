@@ -58,18 +58,15 @@ class NotesService (
     }
 
     fun deleteNote(noteId: Long) {
-        val note = notesRepository.findById(noteId)
+        var note = notesRepository.findById(noteId)
             .orElseThrow { NotFoundException("Can't find a note with id $noteId to delete") }
         val noteOwner = note.category?.profile
             ?: throw NotFoundException("Note with $noteId has no owner")
-        val noteName = note.name
 
-        notesRepository.deleteById(noteId)
+        note.category = null
+        note = notesRepository.save(note)
 
-        val noteGhost = Note(name = noteName)
-        notesRepository.save(noteGhost)
-
-        val noteLog = NoteLog(NoteLog.Type.DELETE, noteOwner, noteGhost, LocalDateTime.now())
+        val noteLog = NoteLog(NoteLog.Type.DELETE, noteOwner, note, LocalDateTime.now())
         noteLogsRepository.save(noteLog)
     }
 }

@@ -20,6 +20,9 @@ interface INotesCategoriesService {
     @POST("/categories")
     suspend fun createCategory(@Body categoryRequest: NotesCategoryRequest) : Response<NotesCategory>
 
+    @PUT("/categories")
+    suspend fun edit(@Body request: NotesCategoryRequest): Response<NotesCategory>
+
     @DELETE("/categories")
     suspend fun delete(@Query("id") id: Long) : Response<Boolean>
 

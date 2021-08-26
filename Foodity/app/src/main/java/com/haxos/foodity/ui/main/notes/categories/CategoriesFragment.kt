@@ -41,6 +41,7 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
     override var profileId: Long? = null
 
     private var categoryCreationDialog: AlertDialog? = null
+    private lateinit var categoryRenameInput: EditText
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -97,6 +98,8 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
                 true
             }
 
+            categoryRenameInput = EditText(activity)
+
             registerForContextMenu(categoriesRecyclerView)
         }
 
@@ -132,6 +135,16 @@ class CategoriesFragment : Fragment(), INoteSearchingFragment {
         val categoryInfo = item.menuInfo as CategoriesRecyclerView.CategoryContextMenuInfo
         if (item.itemId == R.id.action_category_delete) {
             categoriesViewModel.deleteCategory(categoryInfo.id)
+        }
+        if (item.itemId == R.id.action_category_rename) {
+            AlertDialog.Builder(requireActivity())
+                .setView(categoryRenameInput)
+                .setTitle(getString(R.string.dialog_renamecategory_title))
+                .setMessage(getString(R.string.dialog_renamecategory_message))
+                .setPositiveButton(android.R.string.yes) {_, _ -> categoriesViewModel
+                    .renameCategory(categoryInfo.id, categoryRenameInput.text.toString()) }
+                .setNegativeButton(android.R.string.no) {_, _ -> }
+                .show()
         }
         return super.onContextItemSelected(item)
     }
