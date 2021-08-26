@@ -27,4 +27,7 @@ interface INotesService {
 
     @DELETE("/notes")
     suspend fun delete(@Query("id") id: Long) : Response<Boolean>
+
+    @POST("/notes/{id}/duplicate")
+    suspend fun duplicate(@Path("id") id: Long): Response<Note>
 }

@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne
 
 @Entity
 data class NotesCategory (
-    val name: String,
+    var name: String,
     val thumbnail: Int,
 
     @JsonBackReference

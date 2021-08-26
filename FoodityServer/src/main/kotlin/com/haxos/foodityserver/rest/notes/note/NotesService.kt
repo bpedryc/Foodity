@@ -2,11 +2,9 @@ package com.haxos.foodityserver.rest.notes.note
 
 import com.haxos.foodityserver.rest.logs.note.INoteLogsRepository
 import com.haxos.foodityserver.rest.logs.note.NoteLog
-import com.haxos.foodityserver.rest.logs.note.NoteLogsService
 import com.haxos.foodityserver.rest.notes.category.INotesCategoriesRepository
-import com.haxos.foodityserver.rest.notes.noteelement.NoteElementService
+import com.haxos.foodityserver.rest.notes.noteelement.*
 import javassist.NotFoundException
-import org.hibernate.annotations.NotFound
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import java.util.*
@@ -69,4 +67,17 @@ class NotesService (
         val noteLog = NoteLog(NoteLog.Type.DELETE, noteOwner, note, LocalDateTime.now())
         noteLogsRepository.save(noteLog)
     }
+
+    fun duplicateNote(noteId: Long): Note {
+        val existingNote = notesRepository.findById(noteId)
+            .orElseThrow { NotFoundException("Can't find a note with id $noteId to duplicate") }
+        var duplicateNote = Note(existingNote.name, existingNote.description, existingNote.thumbnail, existingNote.category)
+        duplicateNote = notesRepository.save(duplicateNote)
+
+        noteElementService.duplicateElements(noteId, duplicateNote)
+
+        return duplicateNote
+    }
+
+
 }

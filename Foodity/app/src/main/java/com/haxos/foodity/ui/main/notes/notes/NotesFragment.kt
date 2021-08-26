@@ -1,9 +1,7 @@
 package com.haxos.foodity.ui.main.notes.notes
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
@@ -13,16 +11,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.haxos.foodity.R
 import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.databinding.FragmentNotesBinding
-import com.haxos.foodity.ui.main.notes.notesearch.NotesSearchingToolbar
 import com.haxos.foodity.ui.main.notes.content.NoteFragment
 import com.haxos.foodity.ui.main.notes.notesearch.INoteSearchingFragment
 import com.haxos.foodity.ui.main.notes.notesearch.INoteSearchingViewModel
+import com.haxos.foodity.ui.main.notes.notesearch.NotesSearchingToolbar
 import com.haxos.foodity.utils.replace
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class NotesFragment: Fragment(), INoteSearchingFragment {
+class NotesFragment: Fragment(), INoteSearchingFragment, NotesAdapter.INoteContextListener {
 
     companion object {
         fun newInstance(categoryId: Long, profileId: Long): NotesFragment {
@@ -39,6 +37,7 @@ class NotesFragment: Fragment(), INoteSearchingFragment {
     @Inject lateinit var notesViewModel: NotesViewModel
 
     var noteCreationDialog: AlertDialog? = null
+    private var selectedNoteId: Int = -1
 
     override var profileId: Long? = null
 
@@ -60,7 +59,8 @@ class NotesFragment: Fragment(), INoteSearchingFragment {
         profileId = arguments?.getLong("profileId")
         val profileId = profileId ?: return binding.root
 
-        val notesAdapter = NotesAdapter(clickListener = NoteClickListener(profileId))
+        val notesAdapter = NotesAdapter(
+            clickListener = NoteClickListener(profileId), contextListener = this)
         notesRecyclerView.adapter = notesAdapter
         notesViewModel.notesLiveData.observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
@@ -85,6 +85,8 @@ class NotesFragment: Fragment(), INoteSearchingFragment {
                 noteCreationDialog = builder.show()
                 true
             }
+
+            registerForContextMenu(binding.recyclerviewNotes)
         }
 
 
@@ -108,4 +110,29 @@ class NotesFragment: Fragment(), INoteSearchingFragment {
         get() = notesViewModel
     override val noteSearchRecyclerView: RecyclerView
         get() = binding.recyclerviewSearch
+
+    override fun onCreateContextMenu(
+        menu: ContextMenu,
+        v: View,
+        menuInfo: ContextMenu.ContextMenuInfo?
+    ) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        val inflater: MenuInflater = requireActivity().menuInflater
+        inflater.inflate(R.menu.contextmenu_note, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_note_duplicate -> {
+                notesViewModel.duplicateNote(selectedNoteId.toLong())
+                true
+            }
+            else -> super.onContextItemSelected(item)
+        }
+    }
+
+    override fun onNoteContextClick(view: View, id: Int) {
+        selectedNoteId = id
+        view.showContextMenu()
+    }
 }

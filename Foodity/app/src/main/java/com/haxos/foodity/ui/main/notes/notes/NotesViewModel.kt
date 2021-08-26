@@ -54,6 +54,13 @@ class NotesViewModel @Inject constructor(
         }
     }
 
+    fun duplicateNote(selectedNoteId: Long) = viewModelScope.launch {
+        val response = notesService.duplicate(selectedNoteId)
+        val duplicate = response.body() ?: return@launch
+        _notesLiveData.value?.add(duplicate)
+        _notesLiveData.value = _notesLiveData.value
+    }
+
     fun isCurrentProfile(profileId: Long): Boolean {
         return currentUserInfo.profileId == profileId
     }

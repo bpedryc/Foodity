@@ -92,4 +92,5 @@
     <string name="dialog_renamecategory_title">Zmiana nazwy</string>
     <string name="dialog_renamecategory_message">Zmień nazwę kategorii</string>
     <string name="action_category_rename">Zmień nazwę</string>
+    <string name="action_note_duplicate">Klonuj</string>
 </resources>

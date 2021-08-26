@@ -3,6 +3,7 @@ package com.haxos.foodityserver.rest.notes.category
 import com.haxos.foodityserver.rest.profiles.IProfilesRepository
 import javassist.NotFoundException
 import org.springframework.stereotype.Service
+import javax.ws.rs.BadRequestException
 
 @Service
 class NotesCategoriesService (
@@ -39,6 +40,14 @@ class NotesCategoriesService (
             .orElseThrow { NotFoundException("No category with id $categoryId found") }
         val ownerProfile = category.profile
         return ownerProfile.getId()!!
+    }
+
+    fun editCategory(categoryRequest: NotesCategoryRequest): NotesCategory {
+        val categoryId = categoryRequest.id ?: throw BadRequestException("Cannot edit category with no id")
+        val existingCategory = categoriesRepository.findById(categoryId)
+            .orElseThrow { NotFoundException("No category with id $categoryId found") }
+        existingCategory.name = categoryRequest.name
+        return categoriesRepository.save(existingCategory)
     }
 
 }

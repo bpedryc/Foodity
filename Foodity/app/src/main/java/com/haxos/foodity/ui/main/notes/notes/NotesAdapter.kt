@@ -1,8 +1,6 @@
 package com.haxos.foodity.ui.main.notes.notes
 
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.haxos.foodity.R
@@ -10,7 +8,8 @@ import com.haxos.foodity.data.model.Note
 
 class NotesAdapter (
     private var notes: List<Note> = ArrayList(),
-    private var clickListener: INoteClickListener
+    private var clickListener: INoteClickListener,
+    private val contextListener: INoteContextListener
 ) : RecyclerView.Adapter<NotesAdapter.ViewHolder>() {
 
     inner class ViewHolder(categoryView: View) : RecyclerView.ViewHolder(categoryView) {
@@ -30,6 +29,10 @@ class NotesAdapter (
         holder.itemView.setOnClickListener {
             clickListener.onClick(note)
         }
+        holder.itemView.setOnLongClickListener {
+            contextListener.onNoteContextClick(holder.itemView, notes[position].id.toInt())
+            true
+        }
     }
 
     override fun getItemCount(): Int = notes.size
@@ -41,5 +44,9 @@ class NotesAdapter (
 
     interface INoteClickListener {
         fun onClick(note: Note)
+    }
+
+    interface INoteContextListener {
+        fun onNoteContextClick(view: View, id: Int)
     }
 }
