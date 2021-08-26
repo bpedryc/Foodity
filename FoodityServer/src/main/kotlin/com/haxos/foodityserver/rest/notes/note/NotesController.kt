@@ -39,4 +39,9 @@ class NotesController (
         notesService.deleteNote(id)
         return true
     }
+
+    @PostMapping("/{id}/duplicate")
+    fun duplicateCategory(@PathVariable("id") id: Long) : Note {
+        return notesService.duplicateNote(id)
+    }
 }
