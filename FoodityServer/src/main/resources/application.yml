@@ -11,13 +11,6 @@ spring:
     username: admin
     password: admin
 
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:8083
-          jwk-set-uri: http://localhost:8083/protocol/openid-connect/certs
-
   servlet:
     multipart:
       enabled: true
@@ -29,8 +22,14 @@ keycloak:
   auth-server-url: http://localhost:8180/auth
   realm: FoodityKeycloak
   resource: login-app
+  public-client: true
   credentials:
     secret: 82ccfbb6-26d2-45a4-a202-24c8d09f90af
+  security-constraints[0]:
+    authRoles:
+      - regular
+    securityCollections[0]:
+      patterns: /profiles
 
 file:
   upload-dir: /uploads

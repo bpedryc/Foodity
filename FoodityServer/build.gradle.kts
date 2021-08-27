@@ -43,6 +43,12 @@ dependencies {
 	implementation("org.danilopianini:gson-extras:0.2.1")
 }
 
+configure<io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension> {
+	imports {
+		mavenBom("org.keycloak.bom:keycloak-adapter-bom:11.0.3")
+	}
+}
+
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
