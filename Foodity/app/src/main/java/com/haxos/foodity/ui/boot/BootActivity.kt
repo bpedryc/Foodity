@@ -9,6 +9,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.lifecycleScope
+import com.haxos.foodity.R
 import com.haxos.foodity.data.UserSession
 import com.haxos.foodity.data.model.User
 import com.haxos.foodity.ui.authentication.AuthenticationActivity
@@ -71,8 +72,8 @@ class BootActivity : ComponentActivity()
 
                 if (loggedInUser == null) {
                     AlertDialog.Builder(this@BootActivity)
-                            .setTitle("Warning")
-                            .setMessage("This app requires an active internet connection")
+                            .setTitle(getString(R.string.dialog_title_warning))
+                            .setMessage(getString(R.string.dialog_message_missinginternet))
                             .setPositiveButton(android.R.string.yes) { _, _ ->
                                 finish()
                             }

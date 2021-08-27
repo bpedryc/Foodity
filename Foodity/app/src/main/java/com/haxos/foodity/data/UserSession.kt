@@ -18,6 +18,7 @@ class UserSession @Inject constructor(
         private val profileService: IProfileService,
         private val userService: IUserService
 ) : ICurrentUserInfo {
+
     override var user: User? = null
         private set
 
@@ -32,6 +33,11 @@ class UserSession @Inject constructor(
 
     override val profileId: Long?
         get() = user?.profile?.id
+
+    override val authorization: String
+        get() = "Bearer ${token?.accessToken}"
+
+    private var token: Token? = null
 
     fun logout(accountManagerActivity: Activity): User? {
         var loggedOutUser : User? = null
@@ -49,8 +55,9 @@ class UserSession @Inject constructor(
     }
 
     suspend fun login(username: String, password: String) : User? {
-        val tokenResponse: Token = authService.getToken(username, password).body() ?: return null
-        val userProfile: Profile? = profileService.getByUsername(username).body()
+        token = authService.getToken(username, password).body() ?: return null
+
+        val userProfile: Profile? = profileService.getByUsername(username, authorization).body()
         val userRoles: List<String> = userService.getUserRoles(username).body() ?: emptyList()
 
         user = User("ABCD", username, "", "", userProfile, userRoles)

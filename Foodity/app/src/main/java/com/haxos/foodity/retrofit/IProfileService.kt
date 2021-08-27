@@ -8,13 +8,19 @@ import retrofit2.http.*
 interface IProfileService {
 
     @GET("/profiles")
-    suspend fun getAll(): Response<List<Profile>>
+    suspend fun getAll(@Header("Authorization") authorization: String): Response<List<Profile>>
 
     @GET("/profiles")
-    suspend fun getById(@Query("id") id: Long): Response<Profile>
+    suspend fun getById(
+        @Query("id") id: Long,
+        @Header("Authorization") authorization: String
+    ): Response<Profile>
 
     @GET("/profiles")
-    suspend fun getByUsername(@Query("username") username: String): Response<Profile>
+    suspend fun getByUsername(
+        @Query("username") username: String,
+        @Header("Authorization") authorization: String
+    ): Response<Profile>
 
     @PUT("/profiles")
     suspend fun saveOrUpdate(@Body profile: Profile): Response<Profile>

@@ -31,7 +31,7 @@ class ModeratorViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val usersResponse = userService.getUsers()
-            val profilesResponse = profileService.getAll()
+            val profilesResponse = profileService.getAll(userSession.authorization)
 
             if (!usersResponse.isSuccessful || !profilesResponse.isSuccessful) {
                 _usersLiveData.value = listOf(createErrorRecyclerItem(

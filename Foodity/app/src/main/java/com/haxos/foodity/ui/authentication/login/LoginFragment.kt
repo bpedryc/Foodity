@@ -55,7 +55,6 @@ class LoginFragment : Fragment() {
             }
             if (loginResult.success != null) {
                 val accountManager: AccountManager = AccountManager.get(activity)
-                //TODO: Delete existing accounts
                 Account(username.text.toString(), "com.haxos.foodity").also { account ->
                     accountManager.addAccountExplicitly(account, password.text.toString(), null)
                 }
@@ -103,9 +102,6 @@ class LoginFragment : Fragment() {
     }
 }
 
-/**
- * Extension function to simplify setting an afterTextChanged action to EditText components.
- */
 fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
     this.addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(editable: Editable?) {

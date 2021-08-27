@@ -30,6 +30,8 @@ keycloak:
       - regular
     securityCollections[0]:
       patterns: /profiles
+      methods:
+        - GET
 
 file:
   upload-dir: /uploads

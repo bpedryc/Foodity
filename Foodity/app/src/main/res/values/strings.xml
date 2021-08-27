@@ -92,4 +92,6 @@
     <string name="dialog_renamecategory_message">Rename selected category</string>
     <string name="action_category_rename">Rename</string>
     <string name="action_note_duplicate">Duplicate</string>
+    <string name="dialog_title_warning">Warning</string>
+    <string name="dialog_message_missinginternet">This app requires an active internet connection</string>
 </resources>

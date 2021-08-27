@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.haxos.foodity.data.ICurrentUserInfo
 import com.haxos.foodity.data.model.GenericResult
 import com.haxos.foodity.data.model.Profile
 import com.haxos.foodity.retrofit.IProfileService
@@ -12,7 +13,8 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class ProfileEditViewModel @Inject constructor(
-        private val profileService: IProfileService
+        private val profileService: IProfileService,
+        private val currentUserInfo: ICurrentUserInfo
 ): ViewModel() {
 
     private val _profileLiveData = MutableLiveData<Profile>()
@@ -23,7 +25,7 @@ class ProfileEditViewModel @Inject constructor(
 
     fun fetchProfile(profileId: Long) {
         viewModelScope.launch {
-            val profileResponse : Response<Profile> = profileService.getById(profileId)
+            val profileResponse : Response<Profile> = profileService.getById(profileId, currentUserInfo.authorization)
             val followersResponse : Response<List<Long>> = profileService.getFollowers(profileId)
             val followingResponse : Response<List<Long>> = profileService.getFollowing(profileId)
 

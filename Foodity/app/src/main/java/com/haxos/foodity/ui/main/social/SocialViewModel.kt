@@ -39,7 +39,7 @@ class SocialViewModel @Inject constructor(
             currentUserInfo.profileId?.let {
                 _logsLiveData.value = userLogService.getDisplayableLogs(it)
             }
-            val profilesResponse = profileService.getAll()
+            val profilesResponse = profileService.getAll(currentUserInfo.authorization)
             profilesResponse.body()?.let {
                 cachedProfiles.addAll(it)
             }

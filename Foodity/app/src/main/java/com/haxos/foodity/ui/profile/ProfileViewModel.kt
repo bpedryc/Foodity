@@ -24,7 +24,7 @@ class ProfileViewModel @Inject constructor(
 
     fun fetchProfile(profileId: Long) {
         viewModelScope.launch {
-            val profileResponse : Response<Profile> = profileService.getById(profileId)
+            val profileResponse : Response<Profile> = profileService.getById(profileId, currentUserInfo.authorization)
             val followersResponse : Response<List<Long>> = profileService.getFollowers(profileId)
             val followingResponse : Response<List<Long>> = profileService.getFollowing(profileId)
 
