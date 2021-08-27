@@ -1,11 +1,13 @@
 package com.haxos.foodity.ui.authentication.register
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.lifecycle.Observer
+import com.haxos.foodity.R
 import com.haxos.foodity.databinding.FragmentRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -35,10 +37,18 @@ class RegisterFragment : Fragment() {
         })
 
         binding.apply {
+
             registerButton.setOnClickListener {
-                loading.visibility = View.VISIBLE
-                registerViewModel.register(
-                        username.text.toString(), email.text.toString(), password.text.toString())
+                AlertDialog.Builder(requireActivity())
+                    .setTitle(getString(R.string.dialog_title_register))
+                    .setMessage(getString(R.string.dialog_message_register))
+                    .setPositiveButton(android.R.string.yes) {_, _ ->
+                        loading.visibility = View.VISIBLE
+                        registerViewModel.register(
+                            username.text.toString(), email.text.toString(), password.text.toString())
+                    }
+                    .setNegativeButton(android.R.string.no) {_, _ -> }
+                    .show()
             }
         }
 

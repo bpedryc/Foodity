@@ -94,4 +94,6 @@
     <string name="action_note_duplicate">Duplicate</string>
     <string name="dialog_title_warning">Warning</string>
     <string name="dialog_message_missinginternet">This app requires an active internet connection</string>
+    <string name="dialog_title_register">Privacy policy</string>
+    <string name="dialog_message_register">"By continuing, you consent to your username, email, password (optionally first name and last name) being processed for the purpose of the app working correctly. The app accesses account authentication info saved on your device and available under Settings>Accounts  "</string>
 </resources>

@@ -93,4 +93,8 @@
     <string name="dialog_renamecategory_message">Zmień nazwę kategorii</string>
     <string name="action_category_rename">Zmień nazwę</string>
     <string name="action_note_duplicate">Klonuj</string>
+    <string name="dialog_title_warning">Uwaga</string>
+    <string name="dialog_message_missinginternet">Ta aplikacja potrzebuje aktywnego połączenia z internetem do prawidłowego działania</string>
+    <string name="dialog_title_register">Polityka prywatności</string>
+    <string name="dialog_message_register">Kontynuując, zgadzasz się na wykorzystywanie i przetwarzanie przez aplikację twoich danych osobistych, w tym podaną nazwę użytkownika, email i hasło, a także opcjonalnie imię i nazwisko. Aplikacja korzysta z zapisanych na twoim urządzeniu danych uwierzytelniających dostępnych w ustawieniach systemu w zakładce \"Konta\".</string>
 </resources>
