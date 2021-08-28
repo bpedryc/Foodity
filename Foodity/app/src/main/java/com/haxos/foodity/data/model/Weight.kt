@@ -15,6 +15,7 @@ class Weight(weight: Double, metricUnit: MetricUnit) : IMetricUnit {
             MetricUnit.Grams -> 1.0
             MetricUnit.Kilograms -> 1.0 / 1000
             MetricUnit.Pounds -> 1.0 / 453.59237
+            MetricUnit.Ounces -> 1.0 / 28.34952
             else -> 1.0 //TODO: handle as error?
         }
     }

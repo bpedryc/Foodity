@@ -33,11 +33,13 @@ class WeightConverterFragment : Fragment()
             toolsToolbar.enableBackButton(requireActivity())
 
             spinnerVolumeunit.adapter = UnitAdapter(requireContext(),
-                    listOf(MetricUnit.Milliliters, MetricUnit.Liters, MetricUnit.Cups))
+                    listOf(MetricUnit.Milliliters, MetricUnit.Liters, MetricUnit.Cups,
+                        MetricUnit.USTeaspoon, MetricUnit.UKTeaspoon, MetricUnit.USTablespoon,
+                        MetricUnit.UKTablespoon, MetricUnit.USFluidOunce, MetricUnit.UKFluidOunce))
             spinnerVolumeunit.onItemSelectedListener = OnUnitSelectedListener(ConverterField.Volume)
 
             spinnerWeightunit.adapter = UnitAdapter(requireContext(),
-                    listOf(MetricUnit.Grams, MetricUnit.Kilograms, MetricUnit.Pounds))
+                    listOf(MetricUnit.Grams, MetricUnit.Kilograms, MetricUnit.Pounds, MetricUnit.Ounces))
             spinnerWeightunit.onItemSelectedListener = OnUnitSelectedListener(ConverterField.Weight)
 
             editWeight.addTextChangedListener(ConverterFieldTextListener(ConverterField.Weight))

@@ -16,6 +16,12 @@ class Volume(volume: Double, metricUnit: MetricUnit) : IMetricUnit {
             MetricUnit.Milliliters -> 1.0
             MetricUnit.Liters -> 1.0 / 1000
             MetricUnit.Cups -> 1.0 / 250
+            MetricUnit.UKFluidOunce -> 1.0 / 28.4131
+            MetricUnit.USFluidOunce -> 1.0 / 29.5735
+            MetricUnit.UKTablespoon -> 1.0 / 17.7582
+            MetricUnit.USTablespoon -> 1.0 / 14.8
+            MetricUnit.UKTeaspoon -> 1.0 / 5.9194
+            MetricUnit.USTeaspoon -> 1.0 / 4.93
             else -> 1.0 //TODO: handle as error
         }
     }

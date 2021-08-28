@@ -104,4 +104,11 @@
     <string name="product_soy_sauce">Soy sauce</string>
     <string name="product_honey">Honey</string>
     <string name="product_maple_syrup">Maple syrup</string>
+    <string name="weightunit_ounces">Ounces</string>
+    <string name="volumeunit_us_teaspoon">Teaspoons (US)</string>
+    <string name="volumeunit_us_tablespoon">Tablespoons (US)</string>
+    <string name="volumeunit_us_fluidounce">Ounces (US)</string>
+    <string name="volumeunit_uk_teaspoon">Teaspoons (UK)</string>
+    <string name="volumeunit_uk_tablespoon">Tablespoons (UK)</string>
+    <string name="volumeunit_uk_fluidounce">Ounces (UK)</string>
 </resources>

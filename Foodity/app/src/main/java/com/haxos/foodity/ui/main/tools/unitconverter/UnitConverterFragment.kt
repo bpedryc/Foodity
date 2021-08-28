@@ -94,9 +94,11 @@ class UnitConverterFragment : Fragment() {
 
             val availableMetricUnits : List<MetricUnit> = when (selectedUnitCategory) {
                 getString(R.string.unittype_weight) -> listOf(
-                        MetricUnit.Grams, MetricUnit.Kilograms, MetricUnit.Pounds)
+                        MetricUnit.Grams, MetricUnit.Kilograms, MetricUnit.Pounds, MetricUnit.Ounces)
                 getString(R.string.unittype_volume) -> listOf(
-                        MetricUnit.Milliliters, MetricUnit.Liters, MetricUnit.Cups)
+                    MetricUnit.Milliliters, MetricUnit.Liters, MetricUnit.Cups,
+                    MetricUnit.USTeaspoon, MetricUnit.UKTeaspoon, MetricUnit.USTablespoon,
+                    MetricUnit.UKTablespoon, MetricUnit.USFluidOunce, MetricUnit.UKFluidOunce)
                 getString(R.string.unittype_temperature) -> listOf(
                         MetricUnit.Celsius, MetricUnit.Fahrenheit)
                 else -> TODO()

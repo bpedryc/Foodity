@@ -105,4 +105,11 @@
     <string name="product_soy_sauce">Sos sojowy</string>
     <string name="product_honey">Miód</string>
     <string name="product_maple_syrup">Syrop klonowy</string>
+    <string name="weightunit_ounces">Uncje</string>
+    <string name="volumeunit_us_teaspoon">Łyżeczki (US)</string>
+    <string name="volumeunit_us_tablespoon">Łyżki (US)</string>
+    <string name="volumeunit_us_fluidounce">Uncje (US)</string>
+    <string name="volumeunit_uk_teaspoon">Łyżeczki (UK)</string>
+    <string name="volumeunit_uk_tablespoon">Łyżki (UK)</string>
+    <string name="volumeunit_uk_fluidounce">Uncje (UK)</string>
 </resources>
