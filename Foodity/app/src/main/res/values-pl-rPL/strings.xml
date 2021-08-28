@@ -97,4 +97,12 @@
     <string name="dialog_message_missinginternet">Ta aplikacja potrzebuje aktywnego połączenia z internetem do prawidłowego działania</string>
     <string name="dialog_title_register">Polityka prywatności</string>
     <string name="dialog_message_register">Kontynuując, zgadzasz się na wykorzystywanie i przetwarzanie przez aplikację twoich danych osobistych, w tym podaną nazwę użytkownika, email i hasło, a także opcjonalnie imię i nazwisko. Aplikacja korzysta z zapisanych na twoim urządzeniu danych uwierzytelniających dostępnych w ustawieniach systemu w zakładce \"Konta\".</string>
+    <string name="product_sugar">Cukier</string>
+    <string name="product_butter">Masło</string>
+    <string name="product_almonds">Migdały</string>
+    <string name="product_canola_oil">Olej rzepakowy</string>
+    <string name="product_olive_oil">Oliwa</string>
+    <string name="product_soy_sauce">Sos sojowy</string>
+    <string name="product_honey">Miód</string>
+    <string name="product_maple_syrup">Syrop klonowy</string>
 </resources>

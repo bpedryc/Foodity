@@ -96,4 +96,12 @@
     <string name="dialog_message_missinginternet">This app requires an active internet connection</string>
     <string name="dialog_title_register">Privacy policy</string>
     <string name="dialog_message_register">"By continuing, you consent to your username, email, password (optionally first name and last name) being processed for the purpose of the app working correctly. The app accesses account authentication info saved on your device and available under Settings>Accounts  "</string>
+    <string name="product_sugar">Sugar</string>
+    <string name="product_butter">Butter</string>
+    <string name="product_almonds">Almonds</string>
+    <string name="product_canola_oil">Canola oil</string>
+    <string name="product_olive_oil">Olive oil</string>
+    <string name="product_soy_sauce">Soy sauce</string>
+    <string name="product_honey">Honey</string>
+    <string name="product_maple_syrup">Maple syrup</string>
 </resources>
