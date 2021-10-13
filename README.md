@@ -8,23 +8,16 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/github_username/repo_name">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  <a href="https://github.com/bpedryc/Foodity">
+    <img src="./foodity_logo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">project_title</h3>
+<h3 align="center">Foodity</h3>
 
   <p align="center">
-    project_description
-    <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
+    An Android application implemented as a part of the engineering thesis "Foodity - A Social Kitchen Assistant"
+    </br>
     <a href="https://github.com/github_username/repo_name">View Demo</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
   </p>
 </div>
 
@@ -71,14 +64,16 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Built With
 
-* [Next.js](https://nextjs.org/)
-* [React.js](https://reactjs.org/)
-* [Vue.js](https://vuejs.org/)
-* [Angular](https://angular.io/)
-* [Svelte](https://svelte.dev/)
-* [Laravel](https://laravel.com)
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
+* [Kotlin](https://developer.android.com/kotlin)
+* [Spring Boot](https://spring.io/projects/spring-boot)
+* [Hibernate](https://hibernate.org/)
+* [SQLite](https://www.sqlite.org/index.html)
+* [Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
+* [Retrofit](https://square.github.io/retrofit/)
+* [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines)
+* [Android View Binding](https://developer.android.com/topic/libraries/view-binding)
+* [Android Data Binding](https://developer.android.com/topic/libraries/data-binding)
+* [Espresso](https://developer.android.com/training/testing/espresso)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
