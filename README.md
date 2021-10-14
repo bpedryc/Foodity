@@ -18,7 +18,7 @@
     An Android application for writing down all sorts of cooking </br> notes or original recipes and sharing them with friends
     </br>
     </br>
-    <b><a href="https://github.com/github_username/repo_name">View Demo</a></b>
+    <b><a href="#demo">View Demo</a></b>
   </p>
 </div>
 
