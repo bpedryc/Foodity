@@ -26,12 +26,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-</br>
-<div align="center">
-    <img src="./note_preview.png" alt="Logo" width="300" height="500">
-</div>
-<br />
-
 The project provides its users with flexible tools for defining cooking notes - they can be anything: recipes, tea brewing instructions, favourite snack, fancy knife collection - whatever your heart desires! Notes are grouped into categories. The application lets you browse through other users' notes. You can follow other users to see their latest activity. Additionaly users are provided with built-in kitchen tools like a timer or a unit converter to help with cooking.
 
 The project has been implemented as a part of the engineering thesis "Foodity - A Social Kitchen Assistant".
