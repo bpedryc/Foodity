@@ -58,14 +58,22 @@ The project has been implemented as a part of the engineering thesis "Foodity - 
 
 
 
-
-
 <!-- DEMO -->
 ## Demo
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+<img src="./1_showcase_edit.gif" align="left" alt="showcase_edit" width="300" height="660" > 
+Edit your cooking notes in any way you want. A cooking note can be made out of three types of elements: text, list and image. You can upload any image from your device's memory.
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+
+<img src="./2_showcase_browse.gif" align="left" alt="showcase_browse" width="300" height="660">
+Follow your friends' accounts, watch their activity and browse through their notes collection.
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+
+<img src="./3_showcase_tools.gif" align="left" alt="showcase_tools" width="300" height="660">
+Use built-in tools for converting different types of units from all over the world. Spare yourself some kitchen tools and use a scale only!
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
