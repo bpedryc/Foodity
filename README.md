@@ -50,7 +50,16 @@ The project has been implemented as a part of the engineering thesis "Foodity - 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
+## Setting up
 
+1. Clone the repository
+2. Download Keycloak server (WildFLy distribution) from the official website https://www.keycloak.org/downloads 
+3. Place the contents of downloaded "keycloak-..." directory to "*cloned repository path*/FoodityKeycloak/" 
+4. In intelliJ select File>Open, then select directory "*cloned repository path*/FoodityServer" 
+5. In Android Studio select File>Open, then select directory "*cloned repository path*/Foodity" (the selected path should look like "....../Foodity/Foodity") 
+6. First run Keyclaok with a prepared bash script "*cloned repository path*/FoodityKeycloak/run_keycloak.sh"
+7. Then in IntelliJ run the server - navigate to class "FoodityServerApplication" and click on the small green button to the left of function "main(args: Array<String>)"
+8. Lastly run the mobile application in Android Studio - the configuration should be generated automatically
 
 <!-- DEMO -->
 ## Demo
