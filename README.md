@@ -64,7 +64,7 @@ To get a local copy up and running on Windows follow these simple example steps.
   ```sh
   git clone https://github.com/bpedryc/Foodity.git
   ```
-2. Download Keycloak server (WildFLy distribution) from the official website https://www.keycloak.org/downloads 
+2. Download Keycloak server (WildFly distribution) from the official website https://www.keycloak.org/downloads 
 3. Place the contents of downloaded "keycloak-..." directory to "\**cloned repository path\**/FoodityKeycloak/" 
 4. In IntelliJ select File>Open, then select directory "\**cloned repository path\**/FoodityServer" 
 5. In Android Studio select File>Open, then select directory "\**cloned repository path\**/Foodity" (the selected path should look like "....../Foodity/Foodity") 
