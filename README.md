@@ -50,16 +50,36 @@ The project has been implemented as a part of the engineering thesis "Foodity - 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
-## Setting up
+## Getting started
 
+To get a local copy up and running on Windows follow these simple example steps.
+
+### Prerequisites
+1. Android Studio to run the mobile app (https://developer.android.com/studio)
+2. IntelliJ IDEA to run the server app (https://www.jetbrains.com/idea/download)
+3. Git for Windows to run Keycloak shell script (https://gitforwindows.org/)
+
+### Installation and running
 1. Clone the repository
+  ```sh
+  git clone https://github.com/bpedryc/Foodity.git
+  ```
 2. Download Keycloak server (WildFLy distribution) from the official website https://www.keycloak.org/downloads 
-3. Place the contents of downloaded "keycloak-..." directory to "*cloned repository path*/FoodityKeycloak/" 
-4. In intelliJ select File>Open, then select directory "*cloned repository path*/FoodityServer" 
-5. In Android Studio select File>Open, then select directory "*cloned repository path*/Foodity" (the selected path should look like "....../Foodity/Foodity") 
-6. First run Keyclaok with a prepared bash script "*cloned repository path*/FoodityKeycloak/run_keycloak.sh"
-7. Then in IntelliJ run the server - navigate to class "FoodityServerApplication" and click on the small green button to the left of function "main(args: Array<String>)"
+3. Place the contents of downloaded "keycloak-..." directory to "\**cloned repository path\**/FoodityKeycloak/" 
+4. In IntelliJ select File>Open, then select directory "\**cloned repository path\**/FoodityServer" 
+5. In Android Studio select File>Open, then select directory "\**cloned repository path\**/Foodity" (the selected path should look like "....../Foodity/Foodity") 
+6. First run Keycloak with a prepared bash script "\**cloned repository path\**/FoodityKeycloak/run_keycloak.sh"
+  ```sh
+  sh run_keycloak.sh
+  ```
+7. Then in IntelliJ run the server - navigate to the class "FoodityServerApplication" (you can double-press shift key to search for a specific class in IntelliJ) and click on the small green button to the left of the function "main(args: Array<String>)"
 8. Lastly run the mobile application in Android Studio - the configuration should be generated automatically
+  
+<p align="right">(<a href="#top">back to top</a>)</p>  
+  
+### Issues
+  
+If an error occurs when starting the server app in IntelliJ, set Project SDK to Java 11 in project settings (File>Project Structure)
 
 <!-- DEMO -->
 ## Demo
