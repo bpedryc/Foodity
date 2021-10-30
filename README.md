@@ -75,11 +75,11 @@ To get a local copy up and running on Windows follow these simple example steps.
 7. Then in IntelliJ run the server - navigate to the class "FoodityServerApplication" (you can double-press shift key to search for a specific class in IntelliJ) and click on the small green button to the left of the function "main(args: Array<String>)"
 8. Lastly run the mobile application in Android Studio - the configuration should be generated automatically
   
-<p align="right">(<a href="#top">back to top</a>)</p>  
-  
 ### Issues
   
 If an error occurs when starting the server app in IntelliJ, set Project SDK to Java 11 in project settings (File>Project Structure)
+  
+<p align="right">(<a href="#top">back to top</a>)</p>  
 
 <!-- DEMO -->
 ## Demo
