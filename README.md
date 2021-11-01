@@ -77,7 +77,9 @@ To get a local copy up and running on Windows follow these simple example steps.
   
 ### Issues
   
-If an error occurs when starting the server app in IntelliJ, set Project SDK to Java 11 in project settings (File>Project Structure)
+If an error occurs when starting either the server or the mobile app:
+  - In IntelliJ, set Project SDK to version 11 in project settings (File>Project Structure)
+  - In Android Studio, set Gradle JDK to version 11 (File>Settings>Build,Execution,Deployment>Build Tools>Gradle)
   
 <p align="right">(<a href="#top">back to top</a>)</p>  
 
