@@ -59,7 +59,7 @@ To get a local copy up and running on Windows follow these simple example steps.
 2. IntelliJ IDEA to run the server app (https://www.jetbrains.com/idea/download)
 3. Git for Windows to run Keycloak shell script (https://gitforwindows.org/)
 
-### Installation and running
+### Installation
 1. Clone the repository
   ```sh
   git clone https://github.com/bpedryc/Foodity.git
@@ -68,12 +68,22 @@ To get a local copy up and running on Windows follow these simple example steps.
 3. Place the contents of downloaded "keycloak-..." directory to "\**cloned repository path\**/FoodityKeycloak/" 
 4. In IntelliJ select File>Open, then select directory "\**cloned repository path\**/FoodityServer" 
 5. In Android Studio select File>Open, then select directory "\**cloned repository path\**/Foodity" (the selected path should look like "....../Foodity/Foodity") 
-6. First run Keycloak with a prepared bash script "\**cloned repository path\**/FoodityKeycloak/run_keycloak.sh"
+6. Navigate to the file: assets>config.properties. In that file replace server_url value with a local IP address of the machine that you will be running the server on. (The Android emulator or device needs to be in the same network as the server machine)
+
+### Running
+1. First run Keycloak with the prepared bash script "\**cloned repository path\**/FoodityKeycloak/run_keycloak.sh"
   ```sh
   sh run_keycloak.sh
   ```
-7. Then in IntelliJ run the server - navigate to the class "FoodityServerApplication" (you can double-press shift key to search for a specific class in IntelliJ) and click on the small green button to the left of the function "main(args: Array<String>)"
-8. Lastly run the mobile application in Android Studio - the configuration should be generated automatically
+2. Then in IntelliJ run the server - navigate to the class "FoodityServerApplication" (you can double-press shift key to search for a specific class in IntelliJ) and click on the small green button to the left of the function "main(args: Array<String>)"
+3. Lastly run the mobile application in Android Studio - the configuration should be generated automatically
+4. In the application click "Sign Up", enter any username, email and password for your user (email doesn't have to be real), for example: 
+  Username: abc
+  Email: abc@gmail.com
+  Password: abc
+5. Click "Sign Up" and wait for feedback about your account being created
+6. On the login page enter created account username and password, then sign in and try out the app! :)
+  
   
 ### Issues
   
