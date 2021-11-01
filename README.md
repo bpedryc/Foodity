@@ -67,8 +67,9 @@ To get a local copy up and running on Windows follow these simple example steps.
 2. Download Keycloak server (WildFly distribution) from the official website https://www.keycloak.org/downloads 
 3. Place the contents of downloaded "keycloak-..." directory to "\**cloned repository path\**/FoodityKeycloak/" 
 4. In IntelliJ select File>Open, then select directory "\**cloned repository path\**/FoodityServer" 
-5. In Android Studio select File>Open, then select directory "\**cloned repository path\**/Foodity" (the selected path should look like "....../Foodity/Foodity") 
-6. Navigate to the file: assets>config.properties. In that file replace server_url value with a local IP address (with port 8080) of the machine that you will be running the server on. (The Android emulator or device needs to be in the same network as the server machine)
+5. On C:\ drive create a new directory called "uploads" (C:\uploads\)
+6. In Android Studio select File>Open, then select directory "\**cloned repository path\**/Foodity" (the selected path should look like "....../Foodity/Foodity") 
+7. Navigate to the file: assets>config.properties. In that file replace server_url value with a local IP address (with port 8080) of the machine that you will be running the server on. (The Android emulator or device needs to be in the same network as the server machine)
 
 ### Running
 1. First run Keycloak with the prepared bash script "\**cloned repository path\**/FoodityKeycloak/run_keycloak.sh"
