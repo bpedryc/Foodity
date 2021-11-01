@@ -10,16 +10,16 @@ import com.haxos.foodity.BR
 import com.haxos.foodity.R
 import com.haxos.foodity.data.UserSession
 import com.haxos.foodity.data.model.*
-import com.haxos.foodity.retrofit.IProfileService
-import com.haxos.foodity.retrofit.IUserService
+import com.haxos.foodity.retrofit.services.IProfileService
+import com.haxos.foodity.retrofit.services.IUserService
 import com.haxos.foodity.ui.main.notes.content.RecyclerItem
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ModeratorViewModel @Inject constructor(
-        val userSession: UserSession,
-        private val userService: IUserService,
-        private val profileService: IProfileService
+    val userSession: UserSession,
+    private val userService: IUserService,
+    private val profileService: IProfileService
 ) : ViewModel() {
 
     private val _userPageRedirectRequest = MutableLiveData<Event<Long>>()

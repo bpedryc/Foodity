@@ -4,7 +4,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.MutableLiveData
 import com.haxos.foodity.data.ICurrentUserInfo
 import com.haxos.foodity.data.model.Note
-import com.haxos.foodity.retrofit.INotesService
+import com.haxos.foodity.retrofit.services.INotesService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,9 +31,7 @@ class NoteSearchListener(
                     cachedNotes.addAll(responseBody)
                 }
             }
-            override fun onFailure(call: Call<List<Note>>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
+            override fun onFailure(call: Call<List<Note>>, t: Throwable) {}
         })
     }
 
@@ -43,11 +41,11 @@ class NoteSearchListener(
             return true
         }
         searchLiveData.value = cachedNotes.filter {
-            it.name?.contains(newText, true) ?: false
+            it.name.contains(newText, true)
         }
         return true
     }
     override fun onQueryTextSubmit(query: String): Boolean {
-        TODO("Not yet implemented")
+        return false
     }
 }

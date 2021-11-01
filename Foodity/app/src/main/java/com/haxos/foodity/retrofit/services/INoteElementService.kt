@@ -1,8 +1,7 @@
-package com.haxos.foodity.retrofit
+package com.haxos.foodity.retrofit.services
 
 import com.haxos.foodity.data.elementRequest.ImageNoteElementRequest
 import com.haxos.foodity.data.elementRequest.ListNoteElementRequest
-import com.haxos.foodity.data.elementRequest.NoteElementsRequest
 import com.haxos.foodity.data.elementRequest.TextNoteElementRequest
 import com.haxos.foodity.data.model.ImageNoteElement
 import com.haxos.foodity.data.model.ListNoteElement
@@ -12,14 +11,9 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface INoteElementService {
-    @GET("/elements")
-    suspend fun getAll(): Response<List<NoteElement>>
 
     @GET("/elements")
     suspend fun getByNoteId(@Query("noteId") noteId: Long): Response<List<NoteElement>>
-
-    @PUT("/elements")
-    suspend fun edit(@Body request: NoteElementsRequest): Response<List<NoteElement>>
 
     @PUT("/text-elements")
     suspend fun edit(@Body request: TextNoteElementRequest): Response<TextNoteElement>

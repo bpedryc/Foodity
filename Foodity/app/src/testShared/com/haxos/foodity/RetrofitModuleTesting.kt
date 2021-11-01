@@ -8,6 +8,7 @@ import com.haxos.foodity.data.model.ListNoteElement
 import com.haxos.foodity.data.model.NoteElement
 import com.haxos.foodity.data.model.TextNoteElement
 import com.haxos.foodity.retrofit.*
+import com.haxos.foodity.retrofit.services.*
 import com.haxos.foodity.ui.main.notes.content.IFileService
 import dagger.Module
 import dagger.Provides

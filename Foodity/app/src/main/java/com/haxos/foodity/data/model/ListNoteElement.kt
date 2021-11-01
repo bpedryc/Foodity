@@ -11,9 +11,5 @@ class ListNoteElement (
             return false
         }
         return true
-        if (entries == other.entries) {
-            return true
-        }
-        return false
     }
 }

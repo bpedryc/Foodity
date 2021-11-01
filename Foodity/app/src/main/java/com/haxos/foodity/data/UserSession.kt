@@ -6,17 +6,17 @@ import android.app.Activity
 import com.haxos.foodity.data.model.Profile
 import com.haxos.foodity.data.model.Token
 import com.haxos.foodity.data.model.User
-import com.haxos.foodity.retrofit.IAuthService
-import com.haxos.foodity.retrofit.IProfileService
-import com.haxos.foodity.retrofit.IUserService
+import com.haxos.foodity.retrofit.services.IAuthService
+import com.haxos.foodity.retrofit.services.IProfileService
+import com.haxos.foodity.retrofit.services.IUserService
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class UserSession @Inject constructor(
-        private val authService: IAuthService,
-        private val profileService: IProfileService,
-        private val userService: IUserService
+    private val authService: IAuthService,
+    private val profileService: IProfileService,
+    private val userService: IUserService
 ) : ICurrentUserInfo {
 
     override var user: User? = null

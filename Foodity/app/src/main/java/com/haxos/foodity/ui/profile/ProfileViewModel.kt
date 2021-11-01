@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.haxos.foodity.data.ICurrentUserInfo
 import com.haxos.foodity.data.model.Profile
-import com.haxos.foodity.retrofit.IProfileService
+import com.haxos.foodity.retrofit.services.IProfileService
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import javax.inject.Inject

@@ -6,7 +6,6 @@ import android.widget.ImageView
 import androidx.annotation.ColorInt
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.haxos.foodity.R
 import com.koushikdutta.ion.Ion
 
 @BindingAdapter("items")

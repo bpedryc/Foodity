@@ -8,8 +8,8 @@ import com.haxos.foodity.data.ICurrentUserInfo
 import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.data.model.NotesCategory
 import com.haxos.foodity.data.model.NotesCategoryRequest
-import com.haxos.foodity.retrofit.INotesCategoriesService
-import com.haxos.foodity.retrofit.INotesService
+import com.haxos.foodity.retrofit.services.INotesCategoriesService
+import com.haxos.foodity.retrofit.services.INotesService
 import com.haxos.foodity.ui.main.notes.notesearch.INoteSearchingViewModel
 import com.haxos.foodity.ui.main.notes.notesearch.NoteSearchListener
 import kotlinx.coroutines.launch
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 class CategoriesViewModel @Inject constructor(
     private val currentUserInfo: ICurrentUserInfo,
-    private val notesService: INotesService,
+    notesService: INotesService,
     private val categoriesService: INotesCategoriesService
 ): ViewModel(), INoteSearchingViewModel {
 
@@ -71,7 +71,4 @@ class CategoriesViewModel @Inject constructor(
         return currentUserInfo.profileId == profileId
     }
 
-    fun isCurrentUserModerator(): Boolean {
-        return currentUserInfo.userRoles.any {it.contains("moderator")}
-    }
 }

@@ -22,7 +22,7 @@ class Volume(volume: Double, metricUnit: MetricUnit) : IMetricUnit {
             MetricUnit.USTablespoon -> 1.0 / 14.8
             MetricUnit.UKTeaspoon -> 1.0 / 5.9194
             MetricUnit.USTeaspoon -> 1.0 / 4.93
-            else -> 1.0 //TODO: handle as error
+            else -> 1.0
         }
     }
 }

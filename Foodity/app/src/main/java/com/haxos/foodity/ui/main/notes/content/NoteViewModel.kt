@@ -7,18 +7,19 @@ import androidx.lifecycle.viewModelScope
 import com.haxos.foodity.BR
 import com.haxos.foodity.R
 import com.haxos.foodity.data.ICurrentUserInfo
+import com.haxos.foodity.data.UnknownNoteElementTypeException
 import com.haxos.foodity.data.model.*
-import com.haxos.foodity.retrofit.INotesService
+import com.haxos.foodity.retrofit.services.INotesService
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class NoteViewModel @Inject constructor(
-        private val currentUser: ICurrentUserInfo,
-        private val notesService: INotesService,
-        private val elementsRepository: NoteElementsRepository,
-        private val fileService: IFileService
+    private val currentUser: ICurrentUserInfo,
+    private val notesService: INotesService,
+    private val elementsRepository: NoteElementsRepository,
+    private val fileService: IFileService
 ) : ViewModel() {
 
     private val _noteLiveData = MutableLiveData<MutableList<RecyclerItem>>()
@@ -56,7 +57,7 @@ class NoteViewModel @Inject constructor(
             is TextNoteElement -> TextNoteElementViewModel(noteElement, elementActionListener)
             is ListNoteElement -> ListNoteElementViewModel(noteElement, _noteLiveData, editable, elementActionListener)
             is ImageNoteElement ->  ImageNoteElementViewModel(noteElement, elementActionListener, onEditImage = ::requestImageEdit)
-            else -> TODO()
+            else -> throw UnknownNoteElementTypeException()
         }
     }
 
@@ -78,7 +79,7 @@ class NoteViewModel @Inject constructor(
             1 -> ListNoteElement(orderNumber = position, title = "",
                     entries = emptyList<ListNoteElementEntry>().toMutableList())
             2 -> ImageNoteElement(orderNumber = position, title = "", sourcePath = "")
-            else -> TODO()
+            else -> throw UnknownNoteElementTypeException()
         }
     }
 

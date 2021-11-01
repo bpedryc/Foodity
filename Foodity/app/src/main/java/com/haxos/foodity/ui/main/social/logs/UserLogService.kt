@@ -1,7 +1,7 @@
 package com.haxos.foodity.ui.main.social.logs
 
-import com.haxos.foodity.retrofit.INoteLogService
-import com.haxos.foodity.retrofit.IProfileLogService
+import com.haxos.foodity.retrofit.services.INoteLogService
+import com.haxos.foodity.retrofit.services.IProfileLogService
 import javax.inject.Inject
 
 class UserLogService @Inject constructor(

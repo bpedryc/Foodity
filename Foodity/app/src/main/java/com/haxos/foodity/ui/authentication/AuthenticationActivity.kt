@@ -10,7 +10,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.haxos.foodity.R
 import com.haxos.foodity.data.model.KeycloakUser
-import com.haxos.foodity.retrofit.IUserService
+import com.haxos.foodity.retrofit.services.IUserService
 import com.haxos.foodity.ui.authentication.login.LoginFragment
 import com.haxos.foodity.ui.authentication.register.RegisterFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +23,7 @@ import javax.inject.Inject
 class AuthenticationActivity : AppCompatActivity() {
 
     @Inject lateinit var userService: IUserService
-    lateinit var viewPager : ViewPager2
+    private lateinit var viewPager : ViewPager2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,15 +67,9 @@ class AuthenticationActivity : AppCompatActivity() {
         val email: String = findViewById<EditText>(R.id.email).text.toString()
 
         userService.createUser(KeycloakUser(username, email, password))
-                .enqueue(object : Callback<KeycloakUser> {
-                    override fun onResponse(call: Call<KeycloakUser>, response: Response<KeycloakUser>) {
-
-                    }
-
-                    override fun onFailure(call: Call<KeycloakUser>, t: Throwable) {
-                        TODO("Not yet implemented")
-                    }
-
-                })
+            .enqueue(object : Callback<KeycloakUser> {
+                override fun onResponse(call: Call<KeycloakUser>, response: Response<KeycloakUser>) {}
+                override fun onFailure(call: Call<KeycloakUser>, t: Throwable) {}
+            })
     }
 }

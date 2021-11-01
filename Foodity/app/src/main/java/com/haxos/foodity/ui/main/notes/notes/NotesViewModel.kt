@@ -8,14 +8,10 @@ import androidx.lifecycle.viewModelScope
 import com.haxos.foodity.data.ICurrentUserInfo
 import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.data.model.NoteRequest
-import com.haxos.foodity.retrofit.INotesCategoriesService
-import com.haxos.foodity.retrofit.INotesService
+import com.haxos.foodity.retrofit.services.INotesService
 import com.haxos.foodity.ui.main.notes.notesearch.NoteSearchListener
 import com.haxos.foodity.ui.main.notes.notesearch.INoteSearchingViewModel
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 class NotesViewModel @Inject constructor(

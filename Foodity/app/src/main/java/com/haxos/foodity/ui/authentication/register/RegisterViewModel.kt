@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.haxos.foodity.R
-import com.haxos.foodity.retrofit.IUserService
+import com.haxos.foodity.retrofit.services.IUserService
 import com.haxos.foodity.data.model.KeycloakUser
 import com.haxos.foodity.ui.authentication.register.model.RegisterResult
 import retrofit2.Call

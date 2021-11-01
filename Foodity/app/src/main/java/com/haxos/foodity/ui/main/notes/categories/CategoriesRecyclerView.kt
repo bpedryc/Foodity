@@ -12,7 +12,7 @@ class CategoriesRecyclerView @JvmOverloads constructor(
     defStyle: Int = 0
 ) : RecyclerView(context, attrs, defStyle) {
 
-    var contextMenuInfo: CategoryContextMenuInfo? = null
+    private var contextMenuInfo: CategoryContextMenuInfo? = null
 
     override fun getContextMenuInfo(): ContextMenu.ContextMenuInfo {
         return contextMenuInfo ?: super.getContextMenuInfo()

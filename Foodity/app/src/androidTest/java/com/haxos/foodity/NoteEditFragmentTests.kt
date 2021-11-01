@@ -23,7 +23,7 @@ import org.junit.runner.RunWith
 @HiltAndroidTest
 class NoteEditFragmentTests {
 
-    lateinit var mockWebServer: MockWebServer
+    private lateinit var mockWebServer: MockWebServer
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
@@ -57,7 +57,7 @@ class NoteEditFragmentTests {
 
         onView(withText(R.string.dialog_notelement_title))
             .inRoot(isDialog())
-            .check(matches(isDisplayed()));
+            .check(matches(isDisplayed()))
 
         onView(withText(R.string.dialog_noteelement_texttype))
             .perform(click())

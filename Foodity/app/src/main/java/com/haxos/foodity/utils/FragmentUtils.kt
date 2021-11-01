@@ -1,7 +1,6 @@
 package com.haxos.foodity.utils
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 
 fun Fragment.replace(targetFragment: Fragment) {
@@ -17,7 +16,6 @@ fun Fragment.replace(fromFragmentId: Int, targetFragment: Fragment) {
         replace(fromFragmentId, targetFragment)
         setReorderingAllowed(true)
         addToBackStack(null)
-
     }
 }
 
@@ -32,4 +30,3 @@ fun Fragment.add(targetFragment: Fragment) {
         addToBackStack(null)
     }
 }
-

@@ -26,11 +26,3 @@ class ImageNoteElementViewModel (
         onEditImage(this)
     }
 }
-   /* fun editImage(imageView: View) {
-        val activity = imageView.context.scanForActivity()
-        val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment)
-        val currentFragment = navHostFragment?.childFragmentManager?.fragments?.last()
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        activity?.startActivityForResult(intent, 1)
-    }*/

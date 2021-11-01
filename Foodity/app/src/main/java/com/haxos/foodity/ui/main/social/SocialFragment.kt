@@ -5,10 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.haxos.foodity.data.model.Profile
@@ -78,7 +76,7 @@ class SocialFragment : Fragment() {
             }
         }
         profileSearch.adapter = searchAdapter
-        socialViewModel.profileLiveData.observe(viewLifecycleOwner, Observer {
+        socialViewModel.profileLiveData.observe(viewLifecycleOwner, {
             it?.let {
                 searchAdapter.setItems(it)
             }

@@ -1,9 +1,7 @@
-package com.haxos.foodity.retrofit
+package com.haxos.foodity.retrofit.services
 
 import com.haxos.foodity.data.model.Note
 import com.haxos.foodity.data.model.NoteRequest
-import com.haxos.foodity.data.model.NotesCategory
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*

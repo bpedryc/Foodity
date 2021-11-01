@@ -1,7 +1,6 @@
-package com.haxos.foodity.retrofit
+package com.haxos.foodity.retrofit.services
 
 import com.haxos.foodity.data.model.Profile
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -27,12 +26,6 @@ interface IProfileService {
 
     @PUT("/profiles/{id}/ban")
     suspend fun toggleBan(@Path("id") id: Long) : Response<Boolean>
-
-    @GET("/profiles/follower")
-    suspend fun getFollower(
-        @Query("id") profileId: Long,
-        @Query("followerId") followerId: Long
-    ): Response<Profile>
 
 
     @GET("/profiles/{id}/followers")

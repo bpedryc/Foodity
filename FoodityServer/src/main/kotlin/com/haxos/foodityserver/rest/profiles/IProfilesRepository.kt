@@ -10,6 +10,4 @@ interface IProfilesRepository : JpaRepository<Profile, Long> {
     @Query("SELECT p FROM Profile p WHERE p.username = ?1")
     fun findByUsername(username : String): Profile
 
-    /*@Query("SELECT u FROM User u WHERE u.email = ?1")
-    fun findByEmail(email : String): Profile*/
 }

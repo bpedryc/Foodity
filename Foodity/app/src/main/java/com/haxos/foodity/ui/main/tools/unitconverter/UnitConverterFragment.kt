@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.haxos.foodity.R
+import com.haxos.foodity.data.UnknownMetricException
 import com.haxos.foodity.data.model.MetricUnit
 import com.haxos.foodity.databinding.FragmentUnitconverterBinding
 import com.haxos.foodity.utils.enableBackButton
@@ -101,7 +102,7 @@ class UnitConverterFragment : Fragment() {
                     MetricUnit.UKTablespoon, MetricUnit.USFluidOunce, MetricUnit.UKFluidOunce)
                 getString(R.string.unittype_temperature) -> listOf(
                         MetricUnit.Celsius, MetricUnit.Fahrenheit)
-                else -> TODO()
+                else -> throw UnknownMetricException()
             }
             val adapter = UnitAdapter(
                     this@UnitConverterFragment.requireContext(), availableMetricUnits)

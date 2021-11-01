@@ -3,8 +3,7 @@ package com.haxos.foodity.services.authentication
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import com.haxos.foodity.retrofit.IAuthService
-import com.haxos.foodity.services.authentication.AccountAuthenticator
+import com.haxos.foodity.retrofit.services.IAuthService
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

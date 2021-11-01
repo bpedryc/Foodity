@@ -7,7 +7,7 @@ import com.haxos.foodity.data.model.ImageNoteElement
 import com.haxos.foodity.data.model.ListNoteElement
 import com.haxos.foodity.data.model.NoteElement
 import com.haxos.foodity.data.model.TextNoteElement
-import com.haxos.foodity.retrofit.INoteElementService
+import com.haxos.foodity.retrofit.services.INoteElementService
 import retrofit2.Response
 import javax.inject.Inject
 

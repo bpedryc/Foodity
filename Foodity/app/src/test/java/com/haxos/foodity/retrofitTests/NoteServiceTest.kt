@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory
 import com.haxos.foodity.data.model.*
 import com.haxos.foodity.enqueueResponse
-import com.haxos.foodity.retrofit.INoteElementService
+import com.haxos.foodity.retrofit.services.INoteElementService
 import com.haxos.foodity.retrofit.LocalDateTimeAdapter
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking

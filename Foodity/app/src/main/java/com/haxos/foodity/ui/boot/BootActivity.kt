@@ -13,13 +13,11 @@ import com.haxos.foodity.R
 import com.haxos.foodity.data.UserSession
 import com.haxos.foodity.data.model.User
 import com.haxos.foodity.ui.authentication.AuthenticationActivity
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import com.haxos.foodity.ui.main.MainActivity
 import com.haxos.foodity.ui.moderator.ModeratorActivity
-import kotlinx.coroutines.async
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class BootActivity : ComponentActivity()

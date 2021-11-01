@@ -6,7 +6,7 @@ class ConverterProduct (
     @StringRes val name: Int,
     private val milliliterToGrams: Double
 ) {
-    var weightInGrams : Double = 0.0
+    private var weightInGrams : Double = 0.0
 
     fun setWeight(weight: Weight) {
         weightInGrams = weight.getIn(MetricUnit.Grams)
