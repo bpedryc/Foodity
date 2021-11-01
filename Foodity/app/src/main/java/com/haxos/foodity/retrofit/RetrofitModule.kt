@@ -1,5 +1,6 @@
 package com.haxos.foodity.retrofit
 
+import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.typeadapters.RuntimeTypeAdapterFactory
@@ -18,6 +19,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDateTime
 import javax.inject.Singleton
+
+import com.haxos.foodity.utils.Config
+import dagger.hilt.android.qualifiers.ApplicationContext
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -38,9 +43,15 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideResourceRetrofit(gsonConfig: Gson): Retrofit {
+    fun provideResourceRetrofit(
+        @ApplicationContext applicationContext: Context,
+        gsonConfig: Gson
+    ): Retrofit {
+        val serverUrl : String = Config.getValue(applicationContext, "server_url")
+            ?: "http://192.168.1.4:8080/"
+
         return Retrofit.Builder()
-                .baseUrl("http://192.168.1.4:8080/")
+                .baseUrl(serverUrl)
                 .addConverterFactory(GsonConverterFactory.create(gsonConfig))
                 .client(OkHttpClient.Builder().build())
                 .build()
